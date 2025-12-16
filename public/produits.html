@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* ===== VARIABLES ===== */
         :root {
             --primary: #FF6B35;
             --primary-dark: #E55A2B;
@@ -28,7 +27,6 @@
             --radius-sm: 8px;
         }
 
-        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -44,7 +42,6 @@
             padding-bottom: 80px;
         }
 
-        /* ===== HEADER ===== */
         .header {
             background: var(--white);
             padding: 16px 20px;
@@ -79,6 +76,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            text-decoration: none;
+            color: var(--secondary);
         }
 
         .header-title {
@@ -101,14 +100,12 @@
             gap: 6px;
         }
 
-        /* ===== CONTAINER ===== */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px 16px;
         }
 
-        /* ===== SEARCH & FILTER ===== */
         .search-bar {
             display: flex;
             gap: 12px;
@@ -129,17 +126,6 @@
             border-color: var(--primary);
         }
 
-        .filter-btn {
-            width: 48px;
-            height: 48px;
-            background: var(--white);
-            border: 2px solid var(--gray-light);
-            border-radius: var(--radius-sm);
-            font-size: 18px;
-            cursor: pointer;
-        }
-
-        /* ===== STATS BAR ===== */
         .stats-bar {
             display: flex;
             gap: 16px;
@@ -161,7 +147,6 @@
             color: var(--primary);
         }
 
-        /* ===== PRODUCTS LIST ===== */
         .products-list {
             display: flex;
             flex-direction: column;
@@ -269,7 +254,6 @@
             color: var(--error);
         }
 
-        /* ===== EMPTY STATE ===== */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -307,7 +291,6 @@
             cursor: pointer;
         }
 
-        /* ===== MODAL ===== */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -417,110 +400,6 @@
             margin-top: 6px;
         }
 
-        /* ===== IMAGE UPLOAD ===== */
-        .image-upload {
-            border: 2px dashed var(--gray-light);
-            border-radius: var(--radius);
-            padding: 24px;
-            text-align: center;
-            cursor: pointer;
-            transition: border-color 0.2s;
-        }
-
-        .image-upload:hover {
-            border-color: var(--primary);
-        }
-
-        .image-upload-icon {
-            font-size: 40px;
-            margin-bottom: 8px;
-        }
-
-        .image-upload-text {
-            font-size: 14px;
-            color: var(--gray);
-        }
-
-        .image-upload-input {
-            display: none;
-        }
-
-        .image-preview {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-            flex-wrap: wrap;
-        }
-
-        .image-preview-item {
-            width: 60px;
-            height: 60px;
-            border-radius: var(--radius-sm);
-            background: var(--gray-light);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .image-preview-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .image-preview-remove {
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            width: 20px;
-            height: 20px;
-            background: var(--error);
-            color: var(--white);
-            border: none;
-            border-radius: 50%;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        /* ===== TAGS INPUT ===== */
-        .tags-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            padding: 8px;
-            border: 2px solid var(--gray-light);
-            border-radius: var(--radius-sm);
-            min-height: 48px;
-        }
-
-        .tag {
-            background: var(--light);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .tag-remove {
-            background: none;
-            border: none;
-            color: var(--gray);
-            cursor: pointer;
-            font-size: 14px;
-            padding: 0;
-        }
-
-        .tags-input {
-            border: none;
-            outline: none;
-            flex: 1;
-            min-width: 100px;
-            font-family: inherit;
-            font-size: 14px;
-        }
-
-        /* ===== MODAL FOOTER ===== */
         .modal-footer {
             padding: 16px 20px;
             border-top: 1px solid var(--gray-light);
@@ -549,7 +428,6 @@
             color: var(--white);
         }
 
-        /* ===== DELETE CONFIRM MODAL ===== */
         .confirm-modal {
             position: fixed;
             top: 0;
@@ -608,7 +486,6 @@
             color: var(--white);
         }
 
-        /* ===== BOTTOM NAV ===== */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -642,7 +519,29 @@
             font-weight: 500;
         }
 
-        /* ===== DESKTOP ===== */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray);
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .alert.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .alert.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+        }
+
         @media (min-width: 768px) {
             body {
                 padding-bottom: 0;
@@ -670,14 +569,15 @@
             }
         }
     </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-    <!-- HEADER -->
     <header class="header">
         <div class="header-content">
             <div class="header-left">
-                <button class="back-btn" onclick="window.location.href='dashboard.html'">←</button>
+                <a href="Dashboard.html" class="back-btn">←</a>
                 <span class="header-title">Mes Produits</span>
             </div>
             <button class="add-btn" onclick="openAddModal()">
@@ -686,30 +586,24 @@
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
     <main class="container">
+        <div class="alert" id="alert" style="display: none;"></div>
 
-        <!-- SEARCH BAR -->
         <div class="search-bar">
             <input type="text" class="search-input" placeholder="Rechercher un produit..." id="searchInput" oninput="filterProducts()">
-            <button class="filter-btn">⚙️</button>
         </div>
 
-        <!-- STATS BAR -->
         <div class="stats-bar">
-            <div class="stat-chip"><strong id="totalProducts">6</strong> produits</div>
-            <div class="stat-chip"><strong id="inStockCount">5</strong> en stock</div>
-            <div class="stat-chip"><strong id="outStockCount">1</strong> en rupture</div>
+            <div class="stat-chip"><strong id="totalProducts">0</strong> produits</div>
+            <div class="stat-chip"><strong id="inStockCount">0</strong> en stock</div>
+            <div class="stat-chip"><strong id="outStockCount">0</strong> en rupture</div>
         </div>
 
-        <!-- PRODUCTS LIST -->
         <div class="products-list" id="productsList">
-            <!-- Products will be loaded here -->
+            <div class="loading">Chargement...</div>
         </div>
-
     </main>
 
-    <!-- ADD/EDIT MODAL -->
     <div class="modal-overlay" id="productModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -718,24 +612,11 @@
             </div>
             <div class="modal-body">
                 <form id="productForm">
-                    <!-- Image Upload -->
-                    <div class="form-group">
-                        <label class="form-label">Photos</label>
-                        <div class="image-upload" onclick="document.getElementById('imageInput').click()">
-                            <div class="image-upload-icon">📷</div>
-                            <div class="image-upload-text">Clique pour ajouter des photos</div>
-                            <input type="file" class="image-upload-input" id="imageInput" accept="image/*" multiple onchange="handleImageUpload(event)">
-                        </div>
-                        <div class="image-preview" id="imagePreview"></div>
-                    </div>
-
-                    <!-- Name -->
                     <div class="form-group">
                         <label class="form-label" for="productName">Nom du produit *</label>
                         <input type="text" class="form-input" id="productName" placeholder="Ex: Robe rouge fleurie" required>
                     </div>
 
-                    <!-- Price & Stock -->
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label" for="productPrice">Prix (FCFA) *</label>
@@ -743,38 +624,28 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="productStock">Stock</label>
-                            <select class="form-select" id="productStock">
-                                <option value="in-stock">En stock</option>
-                                <option value="low-stock">Stock faible</option>
-                                <option value="out-stock">Rupture</option>
-                            </select>
+                            <input type="number" class="form-input" id="productStock" placeholder="10" value="10">
                         </div>
                     </div>
 
-                    <!-- Description -->
                     <div class="form-group">
                         <label class="form-label" for="productDescription">Description</label>
                         <textarea class="form-textarea" id="productDescription" placeholder="Décris ton produit..."></textarea>
                     </div>
 
-                    <!-- Sizes -->
-                    <div class="form-group">
-                        <label class="form-label">Tailles disponibles</label>
-                        <div class="tags-container" id="sizesContainer">
-                            <input type="text" class="tags-input" id="sizesInput" placeholder="Tape une taille + Entrée">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="productSizes">Tailles</label>
+                            <input type="text" class="form-input" id="productSizes" placeholder="S, M, L, XL">
+                            <p class="form-hint">Sépare par des virgules</p>
                         </div>
-                        <p class="form-hint">Ex: S, M, L, XL ou 38, 39, 40...</p>
-                    </div>
-
-                    <!-- Colors -->
-                    <div class="form-group">
-                        <label class="form-label">Couleurs disponibles</label>
-                        <div class="tags-container" id="colorsContainer">
-                            <input type="text" class="tags-input" id="colorsInput" placeholder="Tape une couleur + Entrée">
+                        <div class="form-group">
+                            <label class="form-label" for="productColors">Couleurs</label>
+                            <input type="text" class="form-input" id="productColors" placeholder="Rouge, Bleu">
+                            <p class="form-hint">Sépare par des virgules</p>
                         </div>
                     </div>
 
-                    <!-- Category -->
                     <div class="form-group">
                         <label class="form-label" for="productCategory">Catégorie</label>
                         <select class="form-select" id="productCategory">
@@ -796,7 +667,6 @@
         </div>
     </div>
 
-    <!-- DELETE CONFIRM MODAL -->
     <div class="confirm-modal" id="confirmModal">
         <div class="confirm-content">
             <div class="confirm-icon">🗑️</div>
@@ -809,9 +679,8 @@
         </div>
     </div>
 
-    <!-- BOTTOM NAVIGATION -->
     <nav class="bottom-nav">
-        <a href="dashboard.html" class="nav-item">
+        <a href="Dashboard.html" class="nav-item">
             <div class="nav-icon">🏠</div>
             <div class="nav-label">Accueil</div>
         </a>
@@ -819,11 +688,11 @@
             <div class="nav-icon">📦</div>
             <div class="nav-label">Produits</div>
         </a>
-        <a href="commandes.html" class="nav-item">
+        <a href="commande.html" class="nav-item">
             <div class="nav-icon">🧾</div>
             <div class="nav-label">Commandes</div>
         </a>
-        <a href="conversations.html" class="nav-item">
+        <a href="conversation.html" class="nav-item">
             <div class="nav-icon">💬</div>
             <div class="nav-label">Messages</div>
         </a>
@@ -834,90 +703,57 @@
     </nav>
 
     <script>
-        // ===== DONNÉES PRODUITS =====
-        let products = [
-            {
-                id: 1,
-                name: "Robe rouge fleurie",
-                price: 5000,
-                description: "Robe légère en coton, parfaite pour l'été.",
-                stock: "in-stock",
-                sizes: ["S", "M", "L", "XL"],
-                colors: ["Rouge", "Bleu"],
-                category: "vetements",
-                images: []
-            },
-            {
-                id: 2,
-                name: "Sac à main noir",
-                price: 3500,
-                description: "Sac élégant en cuir synthétique.",
-                stock: "in-stock",
-                sizes: [],
-                colors: ["Noir", "Marron"],
-                category: "sacs",
-                images: []
-            },
-            {
-                id: 3,
-                name: "Ensemble wax",
-                price: 8000,
-                description: "Ensemble traditionnel en wax authentique.",
-                stock: "in-stock",
-                sizes: ["S", "M", "L"],
-                colors: [],
-                category: "vetements",
-                images: []
-            },
-            {
-                id: 4,
-                name: "Sandales dorées",
-                price: 2500,
-                description: "Sandales confortables avec finition dorée.",
-                stock: "out-stock",
-                sizes: ["37", "38", "39", "40"],
-                colors: ["Doré", "Argenté"],
-                category: "chaussures",
-                images: []
-            },
-            {
-                id: 5,
-                name: "Bracelet perles",
-                price: 1500,
-                description: "Bracelet artisanal fait main.",
-                stock: "low-stock",
-                sizes: [],
-                colors: ["Blanc", "Or"],
-                category: "bijoux",
-                images: []
-            },
-            {
-                id: 6,
-                name: "Foulard soie",
-                price: 2000,
-                description: "Foulard doux en soie.",
-                stock: "in-stock",
-                sizes: [],
-                colors: ["Rouge", "Bleu", "Vert"],
-                category: "accessoires",
-                images: []
-            }
-        ];
+        // Initialiser Supabase
+        const SUPABASE_URL = 'https://kolwacpvfxdrptldipzj.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvbHdhY3B2ZnhkcnB0bGRpcHpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4MjYzOTMsImV4cCI6MjA3NzQwMjM5M30.cXXOxBkX9KaddhfY5JoAvMGz-ohxdCoh5iQlHMUGHqE';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+        // Variables
+        let vendor = null;
+        let products = [];
         let editingProductId = null;
         let deleteProductId = null;
-        let currentSizes = [];
-        let currentColors = [];
 
-        // ===== INITIALISATION =====
-        function init() {
-            renderProducts();
-            updateStats();
-            setupTagsInput('sizesInput', 'sizesContainer', 'sizes');
-            setupTagsInput('colorsInput', 'colorsContainer', 'colors');
+        // Initialisation
+        async function init() {
+            // Vérifier connexion
+            const vendorData = localStorage.getItem('vendor');
+            if (!vendorData) {
+                window.location.href = 'login.html';
+                return;
+            }
+            vendor = JSON.parse(vendorData);
+
+            // Charger les produits
+            await loadProducts();
         }
 
-        // ===== RENDER PRODUCTS =====
+        // Charger les produits depuis Supabase
+        async function loadProducts() {
+            try {
+                const { data, error } = await supabase
+                    .from('teka_products')
+                    .select('*')
+                    .eq('vendor_id', vendor.id)
+                    .order('created_at', { ascending: false });
+
+                if (error) {
+                    console.log('Erreur:', error);
+                    showAlert('Erreur de chargement', 'error');
+                    return;
+                }
+
+                products = data || [];
+                renderProducts();
+                updateStats();
+
+            } catch (err) {
+                console.log('Erreur:', err);
+                showAlert('Erreur de connexion', 'error');
+            }
+        }
+
+        // Afficher les produits
         function renderProducts(filteredProducts = null) {
             const list = document.getElementById('productsList');
             const displayProducts = filteredProducts || products;
@@ -936,15 +772,11 @@
 
             list.innerHTML = displayProducts.map(product => `
                 <div class="product-item">
-                    <div class="product-image">
-                        ${product.images && product.images.length > 0 
-                            ? `<img src="${product.images[0]}" alt="${product.name}">` 
-                            : '📷'}
-                    </div>
+                    <div class="product-image">📷</div>
                     <div class="product-details">
                         <div class="product-name">${product.name}</div>
                         <div class="product-price">${formatPrice(product.price)}</div>
-                        <span class="product-stock ${product.stock}">${getStockLabel(product.stock)}</span>
+                        <span class="product-stock ${getStockClass(product.stock)}">${getStockLabel(product.stock)}</span>
                     </div>
                     <div class="product-actions">
                         <button class="action-btn edit" onclick="editProduct(${product.id})">✏️</button>
@@ -954,33 +786,37 @@
             `).join('');
         }
 
-        // ===== UPDATE STATS =====
+        // Mettre à jour les stats
         function updateStats() {
             const total = products.length;
-            const inStock = products.filter(p => p.stock === 'in-stock' || p.stock === 'low-stock').length;
-            const outStock = products.filter(p => p.stock === 'out-stock').length;
+            const inStock = products.filter(p => p.stock > 0).length;
+            const outStock = products.filter(p => p.stock === 0).length;
 
             document.getElementById('totalProducts').textContent = total;
             document.getElementById('inStockCount').textContent = inStock;
             document.getElementById('outStockCount').textContent = outStock;
         }
 
-        // ===== FORMAT PRICE =====
+        // Formater le prix
         function formatPrice(price) {
             return price.toLocaleString('fr-FR') + ' FCFA';
         }
 
-        // ===== GET STOCK LABEL =====
-        function getStockLabel(stock) {
-            switch(stock) {
-                case 'in-stock': return 'En stock';
-                case 'low-stock': return 'Stock faible';
-                case 'out-stock': return 'Rupture';
-                default: return stock;
-            }
+        // Classe du stock
+        function getStockClass(stock) {
+            if (stock === 0) return 'out-stock';
+            if (stock <= 5) return 'low-stock';
+            return 'in-stock';
         }
 
-        // ===== FILTER PRODUCTS =====
+        // Label du stock
+        function getStockLabel(stock) {
+            if (stock === 0) return 'Rupture';
+            if (stock <= 5) return `Stock faible (${stock})`;
+            return `En stock (${stock})`;
+        }
+
+        // Filtrer les produits
         function filterProducts() {
             const query = document.getElementById('searchInput').value.toLowerCase();
             if (!query) {
@@ -989,24 +825,21 @@
             }
             const filtered = products.filter(p => 
                 p.name.toLowerCase().includes(query) ||
-                p.category.toLowerCase().includes(query)
+                (p.category && p.category.toLowerCase().includes(query))
             );
             renderProducts(filtered);
         }
 
-        // ===== MODAL FUNCTIONS =====
+        // Ouvrir le modal d'ajout
         function openAddModal() {
             editingProductId = null;
             document.getElementById('modalTitle').textContent = 'Ajouter un produit';
             document.getElementById('productForm').reset();
-            document.getElementById('imagePreview').innerHTML = '';
-            currentSizes = [];
-            currentColors = [];
-            renderTags('sizesContainer', currentSizes, 'sizes');
-            renderTags('colorsContainer', currentColors, 'colors');
+            document.getElementById('productStock').value = 10;
             document.getElementById('productModal').classList.add('active');
         }
 
+        // Modifier un produit
         function editProduct(id) {
             const product = products.find(p => p.id === id);
             if (!product) return;
@@ -1016,71 +849,86 @@
             
             document.getElementById('productName').value = product.name;
             document.getElementById('productPrice').value = product.price;
-            document.getElementById('productStock').value = product.stock;
+            document.getElementById('productStock').value = product.stock || 0;
             document.getElementById('productDescription').value = product.description || '';
             document.getElementById('productCategory').value = product.category || '';
-            
-            currentSizes = [...(product.sizes || [])];
-            currentColors = [...(product.colors || [])];
-            renderTags('sizesContainer', currentSizes, 'sizes');
-            renderTags('colorsContainer', currentColors, 'colors');
+            document.getElementById('productSizes').value = product.sizes ? product.sizes.join(', ') : '';
+            document.getElementById('productColors').value = product.colors ? product.colors.join(', ') : '';
 
             document.getElementById('productModal').classList.add('active');
         }
 
+        // Fermer le modal
         function closeModal() {
             document.getElementById('productModal').classList.remove('active');
         }
 
-        function saveProduct() {
+        // Sauvegarder le produit
+        async function saveProduct() {
             const name = document.getElementById('productName').value.trim();
             const price = parseInt(document.getElementById('productPrice').value);
-            const stock = document.getElementById('productStock').value;
+            const stock = parseInt(document.getElementById('productStock').value) || 0;
             const description = document.getElementById('productDescription').value.trim();
             const category = document.getElementById('productCategory').value;
+            const sizesStr = document.getElementById('productSizes').value.trim();
+            const colorsStr = document.getElementById('productColors').value.trim();
+
+            const sizes = sizesStr ? sizesStr.split(',').map(s => s.trim()) : [];
+            const colors = colorsStr ? colorsStr.split(',').map(c => c.trim()) : [];
 
             if (!name || !price) {
-                alert('Remplis le nom et le prix');
+                showAlert('Remplis le nom et le prix', 'error');
                 return;
             }
 
-            if (editingProductId) {
-                // Update existing product
-                const index = products.findIndex(p => p.id === editingProductId);
-                if (index !== -1) {
-                    products[index] = {
-                        ...products[index],
-                        name,
-                        price,
-                        stock,
-                        description,
-                        category,
-                        sizes: currentSizes,
-                        colors: currentColors
-                    };
-                }
-            } else {
-                // Add new product
-                const newProduct = {
-                    id: Date.now(),
-                    name,
-                    price,
-                    stock,
-                    description,
-                    category,
-                    sizes: currentSizes,
-                    colors: currentColors,
-                    images: []
-                };
-                products.push(newProduct);
-            }
+            try {
+                if (editingProductId) {
+                    // Modifier
+                    const { error } = await supabase
+                        .from('teka_products')
+                        .update({
+                            name,
+                            price,
+                            stock,
+                            description,
+                            category,
+                            sizes,
+                            colors
+                        })
+                        .eq('id', editingProductId);
 
-            renderProducts();
-            updateStats();
-            closeModal();
+                    if (error) throw error;
+                    showAlert('Produit modifié !', 'success');
+
+                } else {
+                    // Ajouter
+                    const { error } = await supabase
+                        .from('teka_products')
+                        .insert([{
+                            vendor_id: vendor.id,
+                            name,
+                            price,
+                            stock,
+                            description,
+                            category,
+                            sizes,
+                            colors
+                        }]);
+
+                    if (error) throw error;
+                    showAlert('Produit ajouté !', 'success');
+                }
+
+                closeModal();
+                await loadProducts();
+
+            } catch (error) {
+                console.log('Erreur:', error);
+                showAlert('Erreur lors de la sauvegarde', 'error');
+            }
         }
 
-        // ===== DELETE FUNCTIONS =====
+        // Supprimer un produit
         function deleteProduct(id) {
             deleteProductId = id;
             document.getElementById('confirmModal').classList.add('active');
@@ -1091,81 +939,40 @@
             deleteProductId = null;
         }
 
-        function confirmDelete() {
-            if (deleteProductId) {
-                products = products.filter(p => p.id !== deleteProductId);
-                renderProducts();
-                updateStats();
-            }
-            closeConfirmModal();
-        }
+        async function confirmDelete() {
+            if (!deleteProductId) return;
 
-        // ===== TAGS INPUT =====
-        function setupTagsInput(inputId, containerId, type) {
-            const input = document.getElementById(inputId);
-            input.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    const value = this.value.trim();
-                    if (value) {
-                        if (type === 'sizes') {
-                            currentSizes.push(value);
-                            renderTags(containerId, currentSizes, type);
-                        } else {
-                            currentColors.push(value);
-                            renderTags(containerId, currentColors, type);
-                        }
-                        this.value = '';
-                    }
-                }
-            });
-        }
+            try {
+                const { error } = await supabase
+                    .from('teka_products')
+                    .delete()
+                    .eq('id', deleteProductId);
 
-        function renderTags(containerId, tags, type) {
-            const container = document.getElementById(containerId);
-            const inputId = type === 'sizes' ? 'sizesInput' : 'colorsInput';
-            
-            container.innerHTML = tags.map((tag, index) => `
-                <span class="tag">
-                    ${tag}
-                    <button class="tag-remove" onclick="removeTag('${type}', ${index})">✕</button>
-                </span>
-            `).join('') + `<input type="text" class="tags-input" id="${inputId}" placeholder="Tape + Entrée">`;
-            
-            setupTagsInput(inputId, containerId, type);
-        }
+                if (error) throw error;
 
-        function removeTag(type, index) {
-            if (type === 'sizes') {
-                currentSizes.splice(index, 1);
-                renderTags('sizesContainer', currentSizes, 'sizes');
-            } else {
-                currentColors.splice(index, 1);
-                renderTags('colorsContainer', currentColors, 'colors');
+                showAlert('Produit supprimé', 'success');
+                closeConfirmModal();
+                await loadProducts();
+
+            } catch (error) {
+                console.log('Erreur:', error);
+                showAlert('Erreur lors de la suppression', 'error');
             }
         }
 
-        // ===== IMAGE UPLOAD =====
-        function handleImageUpload(event) {
-            const files = event.target.files;
-            const preview = document.getElementById('imagePreview');
-            
-            for (let file of files) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const div = document.createElement('div');
-                    div.className = 'image-preview-item';
-                    div.innerHTML = `
-                        <img src="${e.target.result}" alt="Preview">
-                        <button class="image-preview-remove" onclick="this.parentElement.remove()">✕</button>
-                    `;
-                    preview.appendChild(div);
-                };
-                reader.readAsDataURL(file);
-            }
+        // Afficher une alerte
+        function showAlert(message, type) {
+            const alert = document.getElementById('alert');
+            alert.textContent = message;
+            alert.className = 'alert ' + type;
+            alert.style.display = 'block';
+
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 3000);
         }
 
-        // ===== START =====
+        // Démarrer
         init();
     </script>
 
