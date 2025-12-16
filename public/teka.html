@@ -1194,8 +1194,13 @@ ${productsList}
             }
         }
 
-        init();
+        try {
+    init();
+} catch(e) {
+    console.log('Erreur ignorée:', e);
+}
     </script>
 
 </body>
 </html>
+
