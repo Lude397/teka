@@ -933,7 +933,7 @@
             }
 
             grid.innerHTML = products.map(product => `
-                <div class="product-card" onclick="openProductModal(${product.id})">
+                <div class="product-card" onclick="openProductModal('${product.id}')">
                     <div class="product-image">
                         ${product.images && product.images.length > 0
                             ? `<img src="${product.images[0]}" alt="${product.name}" loading="lazy">`
