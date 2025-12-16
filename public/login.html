@@ -575,136 +575,130 @@
     <footer class="footer">
         <p>© 2025 Téka. <a href="#">Conditions d'utilisation</a></p>
     </footer>
+    
+<script>
+    // ===== SWITCH TABS =====
+    function switchTab(tab) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        event.target.classList.add('active');
 
-    <script>
-        // ===== SWITCH TABS =====
-        function switchTab(tab) {
-            // Update tabs
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
+        document.querySelectorAll('.form').forEach(f => f.classList.remove('active'));
 
-            // Update forms
-            document.querySelectorAll('.form').forEach(f => f.classList.remove('active'));
+        if (tab === 'login') {
+            document.getElementById('loginForm').classList.add('active');
+        } else {
+            document.getElementById('registerForm').classList.add('active');
+        }
+    }
+
+    // ===== TOGGLE PASSWORD =====
+    function togglePassword(inputId, btn) {
+        const input = document.getElementById(inputId);
+        if (input.type === 'password') {
+            input.type = 'text';
+            btn.textContent = '🙈';
+        } else {
+            input.type = 'password';
+            btn.textContent = '👁️';
+        }
+    }
+
+    // ===== ALERT =====
+    function showAlert(message, type) {
+        const alert = document.getElementById('alert');
+        alert.textContent = message;
+        alert.className = 'alert ' + type;
+        alert.style.display = 'block';
+    }
+
+    function hideAlert() {
+        document.getElementById('alert').style.display = 'none';
+    }
+
+    // ===== LOGIN =====
+    async function login() {
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+
+        if (!email || !password) {
+            showAlert('Remplis tous les champs', 'error');
+            return;
+        }
+
+        try {
+            const { data, error } = await supabase
+                .from('teka_vendors')
+                .select('*')
+                .eq('email', email)
+                .eq('password', password)
+                .single();
+
+            if (error || !data) {
+                showAlert('Email ou mot de passe incorrect', 'error');
+                return;
+            }
+
+            localStorage.setItem('vendor', JSON.stringify(data));
+            window.location.href = 'Dashboard.html';
+
+        } catch (err) {
+            showAlert('Erreur de connexion', 'error');
+        }
+    }
+
+    // ===== REGISTER =====
+    async function register() {
+        const shopName = document.getElementById('registerShop').value;
+        const email = document.getElementById('registerEmail').value;
+        const password = document.getElementById('registerPassword').value;
+
+        if (!shopName || !email || !password) {
+            showAlert('Remplis tous les champs', 'error');
+            return;
+        }
+
+        if (password.length < 6) {
+            showAlert('Mot de passe trop court (min 6 caractères)', 'error');
+            return;
+        }
+
+        const shopSlug = shopName.toLowerCase().replace(/\s+/g, '-');
+
+        try {
+            const { data, error } = await supabase
+                .from('teka_vendors')
+                .insert([{
+                    shop_name: shopName,
+                    shop_slug: shopSlug,
+                    email: email,
+                    password: password
+                }])
+                .select()
+                .single();
+
+            if (error) {
+                if (error.code === '23505') {
+                    showAlert('Cet email existe déjà', 'error');
+                } else {
+                    showAlert('Erreur lors de l\'inscription', 'error');
+                }
+                return;
+            }
+
+            localStorage.setItem('vendor', JSON.stringify(data));
+            showAlert('Compte créé ! Redirection...', 'success');
             
-            if (tab === 'login') {
-                document.getElementById('loginForm').classList.add('active');
-            } else {
-                document.getElementById('registerForm').classList.add('active');
-            }
-
-            // Hide alert
-            hideAlert();
-        }
-
-        // ===== TOGGLE PASSWORD =====
-        function togglePassword(inputId, btn) {
-            const input = document.getElementById(inputId);
-            if (input.type === 'password') {
-                input.type = 'text';
-                btn.textContent = '🙈';
-            } else {
-                input.type = 'password';
-                btn.textContent = '👁';
-            }
-        }
-
-        // ===== SHOW ALERT =====
-        function showAlert(type, message) {
-            const alert = document.getElementById('alert');
-            const icon = document.getElementById('alertIcon');
-            const msg = document.getElementById('alertMessage');
-
-            alert.className = 'alert show alert-' + type;
-            icon.textContent = type === 'success' ? '✓' : '✕';
-            msg.textContent = message;
-        }
-
-        function hideAlert() {
-            document.getElementById('alert').className = 'alert';
-        }
-
-        // ===== SET LOADING =====
-        function setLoading(btnId, loading) {
-            const btn = document.getElementById(btnId);
-            if (loading) {
-                btn.classList.add('btn-loading');
-                btn.disabled = true;
-            } else {
-                btn.classList.remove('btn-loading');
-                btn.disabled = false;
-            }
-        }
-
-        // ===== HANDLE LOGIN =====
-        function handleLogin(event) {
-            event.preventDefault();
-            hideAlert();
-
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-
-            // Validation simple
-            if (!email || !password) {
-                showAlert('error', 'Remplis tous les champs');
-                return;
-            }
-
-            // Simuler connexion
-            setLoading('loginBtn', true);
-
             setTimeout(() => {
-                setLoading('loginBtn', false);
-                
-                // Pour la démo, on simule une connexion réussie
-                showAlert('success', 'Connexion réussie ! Redirection...');
-                
-                setTimeout(() => {
-                    // Rediriger vers le dashboard
-                    window.location.href = 'dashboard.html';
-                }, 1500);
-
+                window.location.href = 'Dashboard.html';
             }, 1500);
+
+        } catch (err) {
+            showAlert('Erreur de connexion', 'error');
         }
-
-        // ===== HANDLE REGISTER =====
-        function handleRegister(event) {
-            event.preventDefault();
-            hideAlert();
-
-            const shopName = document.getElementById('shopName').value;
-            const email = document.getElementById('registerEmail').value;
-            const phone = document.getElementById('registerPhone').value;
-            const password = document.getElementById('registerPassword').value;
-
-            // Validation simple
-            if (!shopName || !email || !phone || !password) {
-                showAlert('error', 'Remplis tous les champs');
-                return;
-            }
-
-            if (password.length < 6) {
-                showAlert('error', 'Mot de passe trop court (min 6 caractères)');
-                return;
-            }
-
-            // Simuler inscription
-            setLoading('registerBtn', true);
-
-            setTimeout(() => {
-                setLoading('registerBtn', false);
-                
-                // Pour la démo, on simule une inscription réussie
-                showAlert('success', 'Compte créé ! Redirection...');
-                
-                setTimeout(() => {
-                    // Rediriger vers le dashboard
-                    window.location.href = 'dashboard.html';
-                }, 1500);
-
-            }, 1500);
-        }
-    </script>
+    }
+                    </script>
 
 </body>
 
 </html>
+
