@@ -647,60 +647,64 @@
     }
 
     // ===== REGISTER =====
-    async function register() {
-        const shopName = document.getElementById('registerShop').value;
-        const email = document.getElementById('registerEmail').value;
-        const password = document.getElementById('registerPassword').value;
+async function register() {
+    const shopName = document.getElementById('shopName').value;
+    const email = document.getElementById('registerEmail').value;
+    const phone = document.getElementById('registerPhone').value;
+    const password = document.getElementById('registerPassword').value;
 
-        if (!shopName || !email || !password) {
-            showAlert('Remplis tous les champs', 'error');
-            return;
-        }
-
-        if (password.length < 6) {
-            showAlert('Mot de passe trop court (min 6 caractères)', 'error');
-            return;
-        }
-
-        const shopSlug = shopName.toLowerCase().replace(/\s+/g, '-');
-
-        try {
-            const { data, error } = await supabase
-                .from('teka_vendors')
-                .insert([{
-                    shop_name: shopName,
-                    shop_slug: shopSlug,
-                    email: email,
-                    password: password
-                }])
-                .select()
-                .single();
-
-            if (error) {
-                if (error.code === '23505') {
-                    showAlert('Cet email existe déjà', 'error');
-                } else {
-                    showAlert('Erreur lors de l\'inscription', 'error');
-                }
-                return;
-            }
-
-            localStorage.setItem('vendor', JSON.stringify(data));
-            showAlert('Compte créé ! Redirection...', 'success');
-            
-            setTimeout(() => {
-                window.location.href = 'Dashboard.html';
-            }, 1500);
-
-        } catch (err) {
-            showAlert('Erreur de connexion', 'error');
-        }
+    if (!shopName || !email || !password) {
+        showAlert('Remplis tous les champs', 'error');
+        return;
     }
-                    </script>
+
+    if (password.length < 6) {
+        showAlert('Mot de passe trop court (min 6 caractères)', 'error');
+        return;
+    }
+
+    const shopSlug = shopName.toLowerCase().replace(/\s+/g, '-');
+
+    try {
+        const { data, error } = await supabase
+            .from('teka_vendors')
+            .insert([{
+                shop_name: shopName,
+                shop_slug: shopSlug,
+                email: email,
+                phone: phone,
+                password: password
+            }])
+            .select()
+            .single();
+
+        if (error) {
+            if (error.code === '23505') {
+                showAlert('Cet email existe déjà', 'error');
+            } else {
+                showAlert('Erreur lors de l\'inscription', 'error');
+                console.log(error);
+            }
+            return;
+        }
+
+        localStorage.setItem('vendor', JSON.stringify(data));
+        showAlert('Compte créé ! Redirection...', 'success');
+        
+        setTimeout(() => {
+            window.location.href = 'Dashboard.html';
+        }, 1500);
+
+    } catch (err) {
+        showAlert('Erreur de connexion', 'error');
+        console.log(err);
+    }
+}                    </script>
 
 </body>
 
 </html>
+
 
 
 
