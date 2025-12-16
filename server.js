@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
-const path = require('path');
 
 const app = express();
 
@@ -10,10 +9,6 @@ const API_KEY = process.env.DEEPSEEK_API_KEY;
 app.use(cors());
 app.use(express.json());
 
-// Servir les fichiers HTML
-app.use(express.static('public'));
-
-// Route pour le chat
 app.post('/chat', async (req, res) => {
     try {
         const { systemPrompt, chatHistory } = req.body;
@@ -42,21 +37,4 @@ app.post('/chat', async (req, res) => {
     }
 });
 
-// Page d'accueil - redirige vers teka.html
-app.get('/', (req, res) => {
-    res.sendFile('teka.html', { root: 'public' });
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`✅ Serveur Teka démarré sur le port ${PORT}`);
-});
-```
-
-5. Clique **Commit changes**
-
----
-
-Attends 1-2 minutes puis reteste :
-```
-https://teka-peach.vercel.app
+module.exports = app;
