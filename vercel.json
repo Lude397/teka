@@ -13,12 +13,3 @@
     }
   ]
 }
-```
-
-5. Clique **Commit changes**
-
----
-
-Attends 1-2 minutes, puis reteste :
-```
-https://teka-peach.vercel.app
