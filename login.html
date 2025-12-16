@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Téka - Connexion Vendeur</title>
+    
+    <!-- Police légère -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===== VARIABLES ===== */
+        :root {
+            --primary: #FF6B35;
+            --primary-dark: #E55A2B;
+            --secondary: #1A1A2E;
+            --light: #FAFAFA;
+            --gray: #6B7280;
+            --gray-light: #E5E7EB;
+            --success: #10B981;
+            --error: #EF4444;
+            --white: #FFFFFF;
+            --shadow: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-lg: 0 4px 16px rgba(0,0,0,0.12);
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--light);
+            color: var(--secondary);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .logo-tagline {
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 400px;
+            padding: 32px 24px;
+        }
+
+        .login-title {
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .login-subtitle {
+            font-size: 14px;
+            color: var(--gray);
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        /* ===== TABS ===== */
+        .tabs {
+            display: flex;
+            background: var(--gray-light);
+            border-radius: var(--radius-sm);
+            padding: 4px;
+            margin-bottom: 24px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray);
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            background: var(--white);
+            color: var(--secondary);
+            box-shadow: var(--shadow);
+        }
+
+        /* ===== FORMS ===== */
+        .form {
+            display: none;
+        }
+
+        .form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--secondary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 14px;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+        }
+
+        .form-input.error {
+            border-color: var(--error);
+        }
+
+        .form-error {
+            font-size: 12px;
+            color: var(--error);
+            margin-top: 6px;
+            display: none;
+        }
+
+        .form-error.show {
+            display: block;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 6px;
+        }
+
+        /* ===== PASSWORD FIELD ===== */
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 18px;
+            padding: 4px;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary:disabled {
+            background: var(--gray-light);
+            color: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ===== LOADING ===== */
+        .btn-loading {
+            position: relative;
+            color: transparent !important;
+        }
+
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin: -10px 0 0 -10px;
+            border: 3px solid var(--white);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== DIVIDER ===== */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--gray-light);
+        }
+
+        .divider span {
+            padding: 0 16px;
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        /* ===== FORGOT PASSWORD ===== */
+        .forgot-link {
+            display: block;
+            text-align: right;
+            font-size: 13px;
+            color: var(--primary);
+            text-decoration: none;
+            margin-bottom: 24px;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== FEATURES ===== */
+        .features {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .features-title {
+            font-size: 12px;
+            color: var(--gray);
+            text-align: center;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--secondary);
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--success);
+            font-size: 12px;
+        }
+
+        /* ===== ALERT ===== */
+        .alert {
+            padding: 14px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert.show {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== DESKTOP ===== */
+        @media (min-width: 768px) {
+            .header {
+                padding: 32px;
+            }
+
+            .login-card {
+                padding: 40px 32px;
+            }
+
+            .feature-list {
+                flex-direction: row;
+                justify-content: center;
+                gap: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">S</div>
+            <div>
+                <div class="logo-text">Téka</div>
+            </div>
+        </div>
+        <p class="logo-tagline">Ton assistant qui vend pour toi</p>
+    </header>
+
+    <!-- MAIN -->
+    <main class="main">
+        <div class="login-card">
+            <h1 class="login-title">Bienvenue 👋</h1>
+            <p class="login-subtitle">Connecte-toi ou crée ton compte vendeur</p>
+
+            <!-- TABS -->
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('login')">Connexion</button>
+                <button class="tab" onclick="switchTab('register')">Inscription</button>
+            </div>
+
+            <!-- ALERT -->
+            <div class="alert" id="alert">
+                <span id="alertIcon">✓</span>
+                <span id="alertMessage"></span>
+            </div>
+
+            <!-- LOGIN FORM -->
+            <form class="form active" id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label" for="loginEmail">Email ou téléphone</label>
+                    <input 
+                        type="text" 
+                        class="form-input" 
+                        id="loginEmail" 
+                        placeholder="exemple@email.com"
+                        required
+                    >
+                    <p class="form-error" id="loginEmailError">Email invalide</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="loginPassword">Mot de passe</label>
+                    <div class="password-wrapper">
+                        <input 
+                            type="password" 
+                            class="form-input" 
+                            id="loginPassword" 
+                            placeholder="••••••••"
+                            required
+                        >
+                        <button type="button" class="password-toggle" onclick="togglePassword('loginPassword', this)">
+                            👁
+                        </button>
+                    </div>
+                </div>
+
+                <a href="#" class="forgot-link">Mot de passe oublié ?</a>
+
+                <button type="submit" class="btn btn-primary" id="loginBtn">
+                    Se connecter
+                </button>
+            </form>
+
+            <!-- REGISTER FORM -->
+            <form class="form" id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label class="form-label" for="shopName">Nom de ta boutique</label>
+                    <input 
+                        type="text" 
+                        class="form-input" 
+                        id="shopName" 
+                        placeholder="Ex: Marie Fashion"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="registerEmail">Email</label>
+                    <input 
+                        type="email" 
+                        class="form-input" 
+                        id="registerEmail" 
+                        placeholder="exemple@email.com"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="registerPhone">Téléphone</label>
+                    <input 
+                        type="tel" 
+                        class="form-input" 
+                        id="registerPhone" 
+                        placeholder="06 XXX XX XX"
+                        required
+                    >
+                    <p class="form-hint">Pour recevoir les notifications de vente</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="registerPassword">Mot de passe</label>
+                    <div class="password-wrapper">
+                        <input 
+                            type="password" 
+                            class="form-input" 
+                            id="registerPassword" 
+                            placeholder="Minimum 6 caractères"
+                            minlength="6"
+                            required
+                        >
+                        <button type="button" class="password-toggle" onclick="togglePassword('registerPassword', this)">
+                            👁
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="registerBtn">
+                    Créer mon compte
+                </button>
+            </form>
+
+            <!-- FEATURES -->
+            <div class="features">
+                <p class="features-title">Pourquoi Téka ?</p>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>IA qui vend 24h/24</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Notifications instantanées</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✓</span>
+                        <span>Suivi des ventes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>© 2025 Téka. <a href="#">Conditions d'utilisation</a></p>
+    </footer>
+
+    <script>
+        // ===== SWITCH TABS =====
+        function switchTab(tab) {
+            // Update tabs
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update forms
+            document.querySelectorAll('.form').forEach(f => f.classList.remove('active'));
+            
+            if (tab === 'login') {
+                document.getElementById('loginForm').classList.add('active');
+            } else {
+                document.getElementById('registerForm').classList.add('active');
+            }
+
+            // Hide alert
+            hideAlert();
+        }
+
+        // ===== TOGGLE PASSWORD =====
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                btn.textContent = '👁';
+            }
+        }
+
+        // ===== SHOW ALERT =====
+        function showAlert(type, message) {
+            const alert = document.getElementById('alert');
+            const icon = document.getElementById('alertIcon');
+            const msg = document.getElementById('alertMessage');
+
+            alert.className = 'alert show alert-' + type;
+            icon.textContent = type === 'success' ? '✓' : '✕';
+            msg.textContent = message;
+        }
+
+        function hideAlert() {
+            document.getElementById('alert').className = 'alert';
+        }
+
+        // ===== SET LOADING =====
+        function setLoading(btnId, loading) {
+            const btn = document.getElementById(btnId);
+            if (loading) {
+                btn.classList.add('btn-loading');
+                btn.disabled = true;
+            } else {
+                btn.classList.remove('btn-loading');
+                btn.disabled = false;
+            }
+        }
+
+        // ===== HANDLE LOGIN =====
+        function handleLogin(event) {
+            event.preventDefault();
+            hideAlert();
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Validation simple
+            if (!email || !password) {
+                showAlert('error', 'Remplis tous les champs');
+                return;
+            }
+
+            // Simuler connexion
+            setLoading('loginBtn', true);
+
+            setTimeout(() => {
+                setLoading('loginBtn', false);
+                
+                // Pour la démo, on simule une connexion réussie
+                showAlert('success', 'Connexion réussie ! Redirection...');
+                
+                setTimeout(() => {
+                    // Rediriger vers le dashboard
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+
+            }, 1500);
+        }
+
+        // ===== HANDLE REGISTER =====
+        function handleRegister(event) {
+            event.preventDefault();
+            hideAlert();
+
+            const shopName = document.getElementById('shopName').value;
+            const email = document.getElementById('registerEmail').value;
+            const phone = document.getElementById('registerPhone').value;
+            const password = document.getElementById('registerPassword').value;
+
+            // Validation simple
+            if (!shopName || !email || !phone || !password) {
+                showAlert('error', 'Remplis tous les champs');
+                return;
+            }
+
+            if (password.length < 6) {
+                showAlert('error', 'Mot de passe trop court (min 6 caractères)');
+                return;
+            }
+
+            // Simuler inscription
+            setLoading('registerBtn', true);
+
+            setTimeout(() => {
+                setLoading('registerBtn', false);
+                
+                // Pour la démo, on simule une inscription réussie
+                showAlert('success', 'Compte créé ! Redirection...');
+                
+                setTimeout(() => {
+                    // Rediriger vers le dashboard
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+
+            }, 1500);
+        }
+    </script>
+
+</body>
+</html>

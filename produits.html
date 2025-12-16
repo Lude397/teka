@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Téka - Mes Produits</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===== VARIABLES ===== */
+        :root {
+            --primary: #FF6B35;
+            --primary-dark: #E55A2B;
+            --secondary: #1A1A2E;
+            --light: #FAFAFA;
+            --gray: #6B7280;
+            --gray-light: #E5E7EB;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+            --white: #FFFFFF;
+            --shadow: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-lg: 0 4px 16px rgba(0,0,0,0.12);
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--light);
+            color: var(--secondary);
+            line-height: 1.5;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: var(--white);
+            padding: 16px 20px;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--light);
+            border: none;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .add-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 16px;
+        }
+
+        /* ===== SEARCH & FILTER ===== */
+        .search-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+        }
+
+        .filter-btn {
+            width: 48px;
+            height: 48px;
+            background: var(--white);
+            border: 2px solid var(--gray-light);
+            border-radius: var(--radius-sm);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* ===== STATS BAR ===== */
+        .stats-bar {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .stat-chip {
+            background: var(--white);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            white-space: nowrap;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-chip strong {
+            color: var(--primary);
+        }
+
+        /* ===== PRODUCTS LIST ===== */
+        .products-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .product-item {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 12px;
+            box-shadow: var(--shadow);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .product-image {
+            width: 70px;
+            height: 70px;
+            background: var(--gray-light);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .product-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .product-price {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .product-stock {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .product-stock.in-stock {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .product-stock.low-stock {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .product-stock.out-stock {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+        }
+
+        .product-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-btn.edit {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3B82F6;
+        }
+
+        .action-btn.delete {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+        }
+
+        /* ===== EMPTY STATE ===== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .empty-state-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .empty-state-text {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+
+        .empty-state-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 14px 28px;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            border-radius: var(--radius) var(--radius) 0 0;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            background: var(--white);
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            background: var(--light);
+            border: none;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            border-color: var(--primary);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 6px;
+        }
+
+        /* ===== IMAGE UPLOAD ===== */
+        .image-upload {
+            border: 2px dashed var(--gray-light);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .image-upload:hover {
+            border-color: var(--primary);
+        }
+
+        .image-upload-icon {
+            font-size: 40px;
+            margin-bottom: 8px;
+        }
+
+        .image-upload-text {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .image-upload-input {
+            display: none;
+        }
+
+        .image-preview {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .image-preview-item {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-sm);
+            background: var(--gray-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-preview-remove {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 20px;
+            height: 20px;
+            background: var(--error);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* ===== TAGS INPUT ===== */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 8px;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--radius-sm);
+            min-height: 48px;
+        }
+
+        .tag {
+            background: var(--light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tag-remove {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 0;
+        }
+
+        .tags-input {
+            border: none;
+            outline: none;
+            flex: 1;
+            min-width: 100px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        /* ===== MODAL FOOTER ===== */
+        .modal-footer {
+            padding: 16px 20px;
+            border-top: 1px solid var(--gray-light);
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--secondary);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* ===== DELETE CONFIRM MODAL ===== */
+        .confirm-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 300;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .confirm-modal.active {
+            display: flex;
+        }
+
+        .confirm-content {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 24px;
+            max-width: 320px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .confirm-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .confirm-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .confirm-text {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+
+        .confirm-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .confirm-buttons .btn {
+            flex: 1;
+        }
+
+        .btn-danger {
+            background: var(--error);
+            color: var(--white);
+        }
+
+        /* ===== BOTTOM NAV ===== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            z-index: 100;
+        }
+
+        .nav-item {
+            flex: 1;
+            padding: 12px 8px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 10px;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-icon {
+            font-size: 22px;
+            margin-bottom: 4px;
+        }
+
+        .nav-label {
+            font-weight: 500;
+        }
+
+        /* ===== DESKTOP ===== */
+        @media (min-width: 768px) {
+            body {
+                padding-bottom: 0;
+            }
+
+            .products-list {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+
+            .modal-content {
+                border-radius: var(--radius);
+                margin: auto;
+            }
+
+            .bottom-nav {
+                display: none;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .products-list {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <button class="back-btn" onclick="window.location.href='dashboard.html'">←</button>
+                <span class="header-title">Mes Produits</span>
+            </div>
+            <button class="add-btn" onclick="openAddModal()">
+                <span>+</span> Ajouter
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="container">
+
+        <!-- SEARCH BAR -->
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Rechercher un produit..." id="searchInput" oninput="filterProducts()">
+            <button class="filter-btn">⚙️</button>
+        </div>
+
+        <!-- STATS BAR -->
+        <div class="stats-bar">
+            <div class="stat-chip"><strong id="totalProducts">6</strong> produits</div>
+            <div class="stat-chip"><strong id="inStockCount">5</strong> en stock</div>
+            <div class="stat-chip"><strong id="outStockCount">1</strong> en rupture</div>
+        </div>
+
+        <!-- PRODUCTS LIST -->
+        <div class="products-list" id="productsList">
+            <!-- Products will be loaded here -->
+        </div>
+
+    </main>
+
+    <!-- ADD/EDIT MODAL -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Ajouter un produit</h2>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm">
+                    <!-- Image Upload -->
+                    <div class="form-group">
+                        <label class="form-label">Photos</label>
+                        <div class="image-upload" onclick="document.getElementById('imageInput').click()">
+                            <div class="image-upload-icon">📷</div>
+                            <div class="image-upload-text">Clique pour ajouter des photos</div>
+                            <input type="file" class="image-upload-input" id="imageInput" accept="image/*" multiple onchange="handleImageUpload(event)">
+                        </div>
+                        <div class="image-preview" id="imagePreview"></div>
+                    </div>
+
+                    <!-- Name -->
+                    <div class="form-group">
+                        <label class="form-label" for="productName">Nom du produit *</label>
+                        <input type="text" class="form-input" id="productName" placeholder="Ex: Robe rouge fleurie" required>
+                    </div>
+
+                    <!-- Price & Stock -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="productPrice">Prix (FCFA) *</label>
+                            <input type="number" class="form-input" id="productPrice" placeholder="5000" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="productStock">Stock</label>
+                            <select class="form-select" id="productStock">
+                                <option value="in-stock">En stock</option>
+                                <option value="low-stock">Stock faible</option>
+                                <option value="out-stock">Rupture</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group">
+                        <label class="form-label" for="productDescription">Description</label>
+                        <textarea class="form-textarea" id="productDescription" placeholder="Décris ton produit..."></textarea>
+                    </div>
+
+                    <!-- Sizes -->
+                    <div class="form-group">
+                        <label class="form-label">Tailles disponibles</label>
+                        <div class="tags-container" id="sizesContainer">
+                            <input type="text" class="tags-input" id="sizesInput" placeholder="Tape une taille + Entrée">
+                        </div>
+                        <p class="form-hint">Ex: S, M, L, XL ou 38, 39, 40...</p>
+                    </div>
+
+                    <!-- Colors -->
+                    <div class="form-group">
+                        <label class="form-label">Couleurs disponibles</label>
+                        <div class="tags-container" id="colorsContainer">
+                            <input type="text" class="tags-input" id="colorsInput" placeholder="Tape une couleur + Entrée">
+                        </div>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="form-group">
+                        <label class="form-label" for="productCategory">Catégorie</label>
+                        <select class="form-select" id="productCategory">
+                            <option value="">Sélectionner...</option>
+                            <option value="vetements">Vêtements</option>
+                            <option value="chaussures">Chaussures</option>
+                            <option value="sacs">Sacs</option>
+                            <option value="accessoires">Accessoires</option>
+                            <option value="bijoux">Bijoux</option>
+                            <option value="autres">Autres</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Annuler</button>
+                <button class="btn btn-primary" onclick="saveProduct()">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DELETE CONFIRM MODAL -->
+    <div class="confirm-modal" id="confirmModal">
+        <div class="confirm-content">
+            <div class="confirm-icon">🗑️</div>
+            <h3 class="confirm-title">Supprimer ce produit ?</h3>
+            <p class="confirm-text">Cette action est irréversible.</p>
+            <div class="confirm-buttons">
+                <button class="btn btn-secondary" onclick="closeConfirmModal()">Annuler</button>
+                <button class="btn btn-danger" onclick="confirmDelete()">Supprimer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <nav class="bottom-nav">
+        <a href="dashboard.html" class="nav-item">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">Accueil</div>
+        </a>
+        <a href="produits.html" class="nav-item active">
+            <div class="nav-icon">📦</div>
+            <div class="nav-label">Produits</div>
+        </a>
+        <a href="commandes.html" class="nav-item">
+            <div class="nav-icon">🧾</div>
+            <div class="nav-label">Commandes</div>
+        </a>
+        <a href="conversations.html" class="nav-item">
+            <div class="nav-icon">💬</div>
+            <div class="nav-label">Messages</div>
+        </a>
+        <a href="trafic.html" class="nav-item">
+            <div class="nav-icon">📊</div>
+            <div class="nav-label">Trafic</div>
+        </a>
+    </nav>
+
+    <script>
+        // ===== DONNÉES PRODUITS =====
+        let products = [
+            {
+                id: 1,
+                name: "Robe rouge fleurie",
+                price: 5000,
+                description: "Robe légère en coton, parfaite pour l'été.",
+                stock: "in-stock",
+                sizes: ["S", "M", "L", "XL"],
+                colors: ["Rouge", "Bleu"],
+                category: "vetements",
+                images: []
+            },
+            {
+                id: 2,
+                name: "Sac à main noir",
+                price: 3500,
+                description: "Sac élégant en cuir synthétique.",
+                stock: "in-stock",
+                sizes: [],
+                colors: ["Noir", "Marron"],
+                category: "sacs",
+                images: []
+            },
+            {
+                id: 3,
+                name: "Ensemble wax",
+                price: 8000,
+                description: "Ensemble traditionnel en wax authentique.",
+                stock: "in-stock",
+                sizes: ["S", "M", "L"],
+                colors: [],
+                category: "vetements",
+                images: []
+            },
+            {
+                id: 4,
+                name: "Sandales dorées",
+                price: 2500,
+                description: "Sandales confortables avec finition dorée.",
+                stock: "out-stock",
+                sizes: ["37", "38", "39", "40"],
+                colors: ["Doré", "Argenté"],
+                category: "chaussures",
+                images: []
+            },
+            {
+                id: 5,
+                name: "Bracelet perles",
+                price: 1500,
+                description: "Bracelet artisanal fait main.",
+                stock: "low-stock",
+                sizes: [],
+                colors: ["Blanc", "Or"],
+                category: "bijoux",
+                images: []
+            },
+            {
+                id: 6,
+                name: "Foulard soie",
+                price: 2000,
+                description: "Foulard doux en soie.",
+                stock: "in-stock",
+                sizes: [],
+                colors: ["Rouge", "Bleu", "Vert"],
+                category: "accessoires",
+                images: []
+            }
+        ];
+
+        let editingProductId = null;
+        let deleteProductId = null;
+        let currentSizes = [];
+        let currentColors = [];
+
+        // ===== INITIALISATION =====
+        function init() {
+            renderProducts();
+            updateStats();
+            setupTagsInput('sizesInput', 'sizesContainer', 'sizes');
+            setupTagsInput('colorsInput', 'colorsContainer', 'colors');
+        }
+
+        // ===== RENDER PRODUCTS =====
+        function renderProducts(filteredProducts = null) {
+            const list = document.getElementById('productsList');
+            const displayProducts = filteredProducts || products;
+
+            if (displayProducts.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <div class="empty-state-icon">📦</div>
+                        <h3 class="empty-state-title">Aucun produit</h3>
+                        <p class="empty-state-text">Commence par ajouter tes premiers produits</p>
+                        <button class="empty-state-btn" onclick="openAddModal()">+ Ajouter un produit</button>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = displayProducts.map(product => `
+                <div class="product-item">
+                    <div class="product-image">
+                        ${product.images && product.images.length > 0 
+                            ? `<img src="${product.images[0]}" alt="${product.name}">` 
+                            : '📷'}
+                    </div>
+                    <div class="product-details">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">${formatPrice(product.price)}</div>
+                        <span class="product-stock ${product.stock}">${getStockLabel(product.stock)}</span>
+                    </div>
+                    <div class="product-actions">
+                        <button class="action-btn edit" onclick="editProduct(${product.id})">✏️</button>
+                        <button class="action-btn delete" onclick="deleteProduct(${product.id})">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ===== UPDATE STATS =====
+        function updateStats() {
+            const total = products.length;
+            const inStock = products.filter(p => p.stock === 'in-stock' || p.stock === 'low-stock').length;
+            const outStock = products.filter(p => p.stock === 'out-stock').length;
+
+            document.getElementById('totalProducts').textContent = total;
+            document.getElementById('inStockCount').textContent = inStock;
+            document.getElementById('outStockCount').textContent = outStock;
+        }
+
+        // ===== FORMAT PRICE =====
+        function formatPrice(price) {
+            return price.toLocaleString('fr-FR') + ' FCFA';
+        }
+
+        // ===== GET STOCK LABEL =====
+        function getStockLabel(stock) {
+            switch(stock) {
+                case 'in-stock': return 'En stock';
+                case 'low-stock': return 'Stock faible';
+                case 'out-stock': return 'Rupture';
+                default: return stock;
+            }
+        }
+
+        // ===== FILTER PRODUCTS =====
+        function filterProducts() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            if (!query) {
+                renderProducts();
+                return;
+            }
+            const filtered = products.filter(p => 
+                p.name.toLowerCase().includes(query) ||
+                p.category.toLowerCase().includes(query)
+            );
+            renderProducts(filtered);
+        }
+
+        // ===== MODAL FUNCTIONS =====
+        function openAddModal() {
+            editingProductId = null;
+            document.getElementById('modalTitle').textContent = 'Ajouter un produit';
+            document.getElementById('productForm').reset();
+            document.getElementById('imagePreview').innerHTML = '';
+            currentSizes = [];
+            currentColors = [];
+            renderTags('sizesContainer', currentSizes, 'sizes');
+            renderTags('colorsContainer', currentColors, 'colors');
+            document.getElementById('productModal').classList.add('active');
+        }
+
+        function editProduct(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            editingProductId = id;
+            document.getElementById('modalTitle').textContent = 'Modifier le produit';
+            
+            document.getElementById('productName').value = product.name;
+            document.getElementById('productPrice').value = product.price;
+            document.getElementById('productStock').value = product.stock;
+            document.getElementById('productDescription').value = product.description || '';
+            document.getElementById('productCategory').value = product.category || '';
+            
+            currentSizes = [...(product.sizes || [])];
+            currentColors = [...(product.colors || [])];
+            renderTags('sizesContainer', currentSizes, 'sizes');
+            renderTags('colorsContainer', currentColors, 'colors');
+
+            document.getElementById('productModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').classList.remove('active');
+        }
+
+        function saveProduct() {
+            const name = document.getElementById('productName').value.trim();
+            const price = parseInt(document.getElementById('productPrice').value);
+            const stock = document.getElementById('productStock').value;
+            const description = document.getElementById('productDescription').value.trim();
+            const category = document.getElementById('productCategory').value;
+
+            if (!name || !price) {
+                alert('Remplis le nom et le prix');
+                return;
+            }
+
+            if (editingProductId) {
+                // Update existing product
+                const index = products.findIndex(p => p.id === editingProductId);
+                if (index !== -1) {
+                    products[index] = {
+                        ...products[index],
+                        name,
+                        price,
+                        stock,
+                        description,
+                        category,
+                        sizes: currentSizes,
+                        colors: currentColors
+                    };
+                }
+            } else {
+                // Add new product
+                const newProduct = {
+                    id: Date.now(),
+                    name,
+                    price,
+                    stock,
+                    description,
+                    category,
+                    sizes: currentSizes,
+                    colors: currentColors,
+                    images: []
+                };
+                products.push(newProduct);
+            }
+
+            renderProducts();
+            updateStats();
+            closeModal();
+        }
+
+        // ===== DELETE FUNCTIONS =====
+        function deleteProduct(id) {
+            deleteProductId = id;
+            document.getElementById('confirmModal').classList.add('active');
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('active');
+            deleteProductId = null;
+        }
+
+        function confirmDelete() {
+            if (deleteProductId) {
+                products = products.filter(p => p.id !== deleteProductId);
+                renderProducts();
+                updateStats();
+            }
+            closeConfirmModal();
+        }
+
+        // ===== TAGS INPUT =====
+        function setupTagsInput(inputId, containerId, type) {
+            const input = document.getElementById(inputId);
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const value = this.value.trim();
+                    if (value) {
+                        if (type === 'sizes') {
+                            currentSizes.push(value);
+                            renderTags(containerId, currentSizes, type);
+                        } else {
+                            currentColors.push(value);
+                            renderTags(containerId, currentColors, type);
+                        }
+                        this.value = '';
+                    }
+                }
+            });
+        }
+
+        function renderTags(containerId, tags, type) {
+            const container = document.getElementById(containerId);
+            const inputId = type === 'sizes' ? 'sizesInput' : 'colorsInput';
+            
+            container.innerHTML = tags.map((tag, index) => `
+                <span class="tag">
+                    ${tag}
+                    <button class="tag-remove" onclick="removeTag('${type}', ${index})">✕</button>
+                </span>
+            `).join('') + `<input type="text" class="tags-input" id="${inputId}" placeholder="Tape + Entrée">`;
+            
+            setupTagsInput(inputId, containerId, type);
+        }
+
+        function removeTag(type, index) {
+            if (type === 'sizes') {
+                currentSizes.splice(index, 1);
+                renderTags('sizesContainer', currentSizes, 'sizes');
+            } else {
+                currentColors.splice(index, 1);
+                renderTags('colorsContainer', currentColors, 'colors');
+            }
+        }
+
+        // ===== IMAGE UPLOAD =====
+        function handleImageUpload(event) {
+            const files = event.target.files;
+            const preview = document.getElementById('imagePreview');
+            
+            for (let file of files) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const div = document.createElement('div');
+                    div.className = 'image-preview-item';
+                    div.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview">
+                        <button class="image-preview-remove" onclick="this.parentElement.remove()">✕</button>
+                    `;
+                    preview.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // ===== START =====
+        init();
+    </script>
+
+</body>
+</html>
