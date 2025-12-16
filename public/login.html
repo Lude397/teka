@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Téka - Connexion Vendeur</title>
     
-    <!-- Police légère -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* ===== VARIABLES ===== */
         :root {
             --primary: #FF6B35;
             --primary-dark: #E55A2B;
@@ -28,7 +26,6 @@
             --radius-sm: 8px;
         }
 
-        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -45,7 +42,6 @@
             flex-direction: column;
         }
 
-        /* ===== HEADER ===== */
         .header {
             padding: 20px;
             text-align: center;
@@ -83,7 +79,6 @@
             margin-top: 4px;
         }
 
-        /* ===== MAIN CONTENT ===== */
         .main {
             flex: 1;
             display: flex;
@@ -115,7 +110,6 @@
             margin-bottom: 32px;
         }
 
-        /* ===== TABS ===== */
         .tabs {
             display: flex;
             background: var(--gray-light);
@@ -144,7 +138,6 @@
             box-shadow: var(--shadow);
         }
 
-        /* ===== FORMS ===== */
         .form {
             display: none;
         }
@@ -180,28 +173,12 @@
             border-color: var(--primary);
         }
 
-        .form-input.error {
-            border-color: var(--error);
-        }
-
-        .form-error {
-            font-size: 12px;
-            color: var(--error);
-            margin-top: 6px;
-            display: none;
-        }
-
-        .form-error.show {
-            display: block;
-        }
-
         .form-hint {
             font-size: 12px;
             color: var(--gray);
             margin-top: 6px;
         }
 
-        /* ===== PASSWORD FIELD ===== */
         .password-wrapper {
             position: relative;
         }
@@ -219,7 +196,6 @@
             padding: 4px;
         }
 
-        /* ===== BUTTONS ===== */
         .btn {
             width: 100%;
             padding: 16px;
@@ -242,63 +218,6 @@
             transform: translateY(-2px);
         }
 
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-
-        .btn-primary:disabled {
-            background: var(--gray-light);
-            color: var(--gray);
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* ===== LOADING ===== */
-        .btn-loading {
-            position: relative;
-            color: transparent !important;
-        }
-
-        .btn-loading::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            top: 50%;
-            left: 50%;
-            margin: -10px 0 0 -10px;
-            border: 3px solid var(--white);
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* ===== DIVIDER ===== */
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 24px 0;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--gray-light);
-        }
-
-        .divider span {
-            padding: 0 16px;
-            font-size: 12px;
-            color: var(--gray);
-        }
-
-        /* ===== FORGOT PASSWORD ===== */
         .forgot-link {
             display: block;
             text-align: right;
@@ -308,11 +227,6 @@
             margin-bottom: 24px;
         }
 
-        .forgot-link:hover {
-            text-decoration: underline;
-        }
-
-        /* ===== FEATURES ===== */
         .features {
             margin-top: 32px;
             padding-top: 24px;
@@ -354,7 +268,6 @@
             font-size: 12px;
         }
 
-        /* ===== ALERT ===== */
         .alert {
             padding: 14px 16px;
             border-radius: var(--radius-sm);
@@ -363,23 +276,18 @@
             display: none;
         }
 
-        .alert.show {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .alert-success {
+        .alert.success {
             background: rgba(16, 185, 129, 0.1);
             color: var(--success);
+            display: block;
         }
 
-        .alert-error {
+        .alert.error {
             background: rgba(239, 68, 68, 0.1);
             color: var(--error);
+            display: block;
         }
 
-        /* ===== FOOTER ===== */
         .footer {
             padding: 20px;
             text-align: center;
@@ -395,11 +303,6 @@
             text-decoration: none;
         }
 
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* ===== DESKTOP ===== */
         @media (min-width: 768px) {
             .header {
                 padding: 32px;
@@ -416,17 +319,11 @@
             }
         }
     </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-    const SUPABASE_URL = 'https://kolwacpvfxdrptldipzj.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvbHdhY3B2ZnhkcnB0bGRpcHpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4MjYzOTMsImV4cCI6MjA3NzQwMjM5M30.cXXOxBkX9KaddhfY5JoAvMGz-ohxdCoh5iQlHMUGHqE';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-</script>
-    
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-    <!-- HEADER -->
     <header class="header">
         <div class="logo">
             <div class="logo-icon">T</div>
@@ -437,120 +334,65 @@
         <p class="logo-tagline">Ton assistant qui vend pour toi</p>
     </header>
 
-    <!-- MAIN -->
     <main class="main">
         <div class="login-card">
             <h1 class="login-title">Bienvenue 👋</h1>
             <p class="login-subtitle">Connecte-toi ou crée ton compte vendeur</p>
 
-            <!-- TABS -->
             <div class="tabs">
                 <button class="tab active" onclick="switchTab('login')">Connexion</button>
                 <button class="tab" onclick="switchTab('register')">Inscription</button>
             </div>
 
-            <!-- ALERT -->
-            <div class="alert" id="alert">
-                <span id="alertIcon">✓</span>
-                <span id="alertMessage"></span>
-            </div>
+            <div class="alert" id="alert"></div>
 
-            <!-- LOGIN FORM -->
-            <form class="form active" id="loginForm" onsubmit="handleLogin(event)">
+            <form class="form active" id="loginForm">
                 <div class="form-group">
                     <label class="form-label" for="loginEmail">Email ou téléphone</label>
-                    <input 
-                        type="text" 
-                        class="form-input" 
-                        id="loginEmail" 
-                        placeholder="exemple@email.com"
-                        required
-                    >
-                    <p class="form-error" id="loginEmailError">Email invalide</p>
+                    <input type="text" class="form-input" id="loginEmail" placeholder="exemple@email.com" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="loginPassword">Mot de passe</label>
                     <div class="password-wrapper">
-                        <input 
-                            type="password" 
-                            class="form-input" 
-                            id="loginPassword" 
-                            placeholder="••••••••"
-                            required
-                        >
-                        <button type="button" class="password-toggle" onclick="togglePassword('loginPassword', this)">
-                            👁
-                        </button>
+                        <input type="password" class="form-input" id="loginPassword" placeholder="••••••••" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword('loginPassword', this)">👁</button>
                     </div>
                 </div>
 
                 <a href="#" class="forgot-link">Mot de passe oublié ?</a>
 
-                <button type="button" class="btn btn-primary" id="loginBtn" onclick="login()">
-                    Se connecter
-                </button>
+                <button type="button" class="btn btn-primary" onclick="login()">Se connecter</button>
             </form>
 
-            <!-- REGISTER FORM -->
             <form class="form" id="registerForm">
                 <div class="form-group">
                     <label class="form-label" for="shopName">Nom de ta boutique</label>
-                    <input 
-                        type="text" 
-                        class="form-input" 
-                        id="shopName" 
-                        placeholder="Ex: Marie Fashion"
-                        required
-                    >
+                    <input type="text" class="form-input" id="shopName" placeholder="Ex: Marie Fashion" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="registerEmail">Email</label>
-                    <input 
-                        type="email" 
-                        class="form-input" 
-                        id="registerEmail" 
-                        placeholder="exemple@email.com"
-                        required
-                    >
+                    <input type="email" class="form-input" id="registerEmail" placeholder="exemple@email.com" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="registerPhone">Téléphone</label>
-                    <input 
-                        type="tel" 
-                        class="form-input" 
-                        id="registerPhone" 
-                        placeholder="06 XXX XX XX"
-                        required
-                    >
+                    <input type="tel" class="form-input" id="registerPhone" placeholder="06 XXX XX XX" required>
                     <p class="form-hint">Pour recevoir les notifications de vente</p>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="registerPassword">Mot de passe</label>
                     <div class="password-wrapper">
-                        <input 
-                            type="password" 
-                            class="form-input" 
-                            id="registerPassword" 
-                            placeholder="Minimum 6 caractères"
-                            minlength="6"
-                            required
-                        >
-                        <button type="button" class="password-toggle" onclick="togglePassword('registerPassword', this)">
-                            👁
-                        </button>
+                        <input type="password" class="form-input" id="registerPassword" placeholder="Minimum 6 caractères" minlength="6" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword('registerPassword', this)">👁</button>
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-primary" id="registerBtn" onclick="register()">
-                    Créer mon compte
-                </button>
+                <button type="button" class="btn btn-primary" onclick="register()">Créer mon compte</button>
             </form>
 
-            <!-- FEATURES -->
             <div class="features">
                 <p class="features-title">Pourquoi Téka ?</p>
                 <div class="feature-list">
@@ -571,142 +413,140 @@
         </div>
     </main>
 
-    <!-- FOOTER -->
     <footer class="footer">
         <p>© 2025 Téka. <a href="#">Conditions d'utilisation</a></p>
     </footer>
-    
-<script>
-    // ===== SWITCH TABS =====
-    function switchTab(tab) {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        event.target.classList.add('active');
 
-        document.querySelectorAll('.form').forEach(f => f.classList.remove('active'));
+    <script>
+        // Initialiser Supabase
+        const SUPABASE_URL = 'https://kolwacpvfxdrptldipzj.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvbHdhY3B2ZnhkcnB0bGRpcHpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4MjYzOTMsImV4cCI6MjA3NzQwMjM5M30.cXXOxBkX9KaddhfY5JoAvMGz-ohxdCoh5iQlHMUGHqE';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        if (tab === 'login') {
-            document.getElementById('loginForm').classList.add('active');
-        } else {
-            document.getElementById('registerForm').classList.add('active');
-        }
-    }
-
-    // ===== TOGGLE PASSWORD =====
-    function togglePassword(inputId, btn) {
-        const input = document.getElementById(inputId);
-        if (input.type === 'password') {
-            input.type = 'text';
-            btn.textContent = '🙈';
-        } else {
-            input.type = 'password';
-            btn.textContent = '👁️';
-        }
-    }
-
-    // ===== ALERT =====
-    function showAlert(message, type) {
-        const alert = document.getElementById('alert');
-        alert.textContent = message;
-        alert.className = 'alert ' + type;
-        alert.style.display = 'block';
-    }
-
-    function hideAlert() {
-        document.getElementById('alert').style.display = 'none';
-    }
-
-    // ===== LOGIN =====
-    async function login() {
-        const email = document.getElementById('loginEmail').value;
-        const password = document.getElementById('loginPassword').value;
-
-        if (!email || !password) {
-            showAlert('Remplis tous les champs', 'error');
-            return;
+        // Switch tabs
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('.form').forEach(f => f.classList.remove('active'));
+            if (tab === 'login') {
+                document.getElementById('loginForm').classList.add('active');
+            } else {
+                document.getElementById('registerForm').classList.add('active');
+            }
+            hideAlert();
         }
 
-        try {
-            const { data, error } = await supabase
-                .from('teka_vendors')
-                .select('*')
-                .eq('email', email)
-                .eq('password', password)
-                .single();
+        // Toggle password
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                btn.textContent = '👁';
+            }
+        }
 
-            if (error || !data) {
-                showAlert('Email ou mot de passe incorrect', 'error');
+        // Alert
+        function showAlert(message, type) {
+            const alert = document.getElementById('alert');
+            alert.textContent = message;
+            alert.className = 'alert ' + type;
+        }
+
+        function hideAlert() {
+            const alert = document.getElementById('alert');
+            alert.className = 'alert';
+            alert.textContent = '';
+        }
+
+        // Login
+        async function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (!email || !password) {
+                showAlert('Remplis tous les champs', 'error');
                 return;
             }
 
-            localStorage.setItem('vendor', JSON.stringify(data));
-            window.location.href = 'Dashboard.html';
+            try {
+                const { data, error } = await supabase
+                    .from('teka_vendors')
+                    .select('*')
+                    .eq('email', email)
+                    .eq('password', password)
+                    .single();
 
-        } catch (err) {
-            showAlert('Erreur de connexion', 'error');
-        }
-    }
+                if (error || !data) {
+                    showAlert('Email ou mot de passe incorrect', 'error');
+                    return;
+                }
 
-    // ===== REGISTER =====
-async function register() {
-    const shopName = document.getElementById('shopName').value;
-    const email = document.getElementById('registerEmail').value;
-    const phone = document.getElementById('registerPhone').value;
-    const password = document.getElementById('registerPassword').value;
+                localStorage.setItem('vendor', JSON.stringify(data));
+                window.location.href = 'Dashboard.html';
 
-    if (!shopName || !email || !password) {
-        showAlert('Remplis tous les champs', 'error');
-        return;
-    }
-
-    if (password.length < 6) {
-        showAlert('Mot de passe trop court (min 6 caractères)', 'error');
-        return;
-    }
-
-    const shopSlug = shopName.toLowerCase().replace(/\s+/g, '-');
-
-    try {
-        const { data, error } = await supabase
-            .from('teka_vendors')
-            .insert([{
-                shop_name: shopName,
-                shop_slug: shopSlug,
-                email: email,
-                phone: phone,
-                password: password
-            }])
-            .select()
-            .single();
-
-        if (error) {
-            if (error.code === '23505') {
-                showAlert('Cet email existe déjà', 'error');
-            } else {
-                showAlert('Erreur lors de l\'inscription', 'error');
-                console.log(error);
+            } catch (err) {
+                showAlert('Erreur de connexion', 'error');
             }
-            return;
         }
 
-        localStorage.setItem('vendor', JSON.stringify(data));
-        showAlert('Compte créé ! Redirection...', 'success');
-        
-        setTimeout(() => {
-            window.location.href = 'Dashboard.html';
-        }, 1500);
+        // Register
+        async function register() {
+            const shopName = document.getElementById('shopName').value;
+            const email = document.getElementById('registerEmail').value;
+            const phone = document.getElementById('registerPhone').value;
+            const password = document.getElementById('registerPassword').value;
 
-    } catch (err) {
-        showAlert('Erreur de connexion', 'error');
-        console.log(err);
-    }
-}                    </script>
+            if (!shopName || !email || !password) {
+                showAlert('Remplis tous les champs', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showAlert('Mot de passe trop court (min 6 caractères)', 'error');
+                return;
+            }
+
+            const shopSlug = shopName.toLowerCase().replace(/\s+/g, '-');
+
+            try {
+                const { data, error } = await supabase
+                    .from('teka_vendors')
+                    .insert([{
+                        shop_name: shopName,
+                        shop_slug: shopSlug,
+                        email: email,
+                        phone: phone,
+                        password: password
+                    }])
+                    .select()
+                    .single();
+
+                if (error) {
+                    if (error.code === '23505') {
+                        showAlert('Cet email existe déjà', 'error');
+                    } else {
+                        showAlert('Erreur lors de l\'inscription', 'error');
+                        console.log(error);
+                    }
+                    return;
+                }
+
+                localStorage.setItem('vendor', JSON.stringify(data));
+                showAlert('Compte créé ! Redirection...', 'success');
+
+                setTimeout(() => {
+                    window.location.href = 'Dashboard.html';
+                }, 1500);
+
+            } catch (err) {
+                showAlert('Erreur de connexion', 'error');
+                console.log(err);
+            }
+        }
+    </script>
 
 </body>
-
 </html>
-
-
-
-
-
-
