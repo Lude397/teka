@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* ===== VARIABLES ===== */
         :root {
             --primary: #FF6B35;
             --primary-dark: #E55A2B;
@@ -29,7 +28,6 @@
             --radius-sm: 8px;
         }
 
-        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -45,7 +43,6 @@
             padding-bottom: 80px;
         }
 
-        /* ===== HEADER ===== */
         .header {
             background: var(--white);
             padding: 16px 20px;
@@ -132,14 +129,25 @@
             cursor: pointer;
         }
 
-        /* ===== CONTAINER ===== */
+        .logout-btn {
+            background: none;
+            border: none;
+            color: var(--gray);
+            font-size: 12px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .logout-btn:hover {
+            color: var(--error);
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px 16px;
         }
 
-        /* ===== WELCOME ===== */
         .welcome {
             margin-bottom: 24px;
         }
@@ -155,7 +163,6 @@
             color: var(--gray);
         }
 
-        /* ===== STATS GRID ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -229,7 +236,6 @@
             color: rgba(255,255,255,0.9);
         }
 
-        /* ===== SECTION ===== */
         .section {
             margin-bottom: 24px;
         }
@@ -252,7 +258,6 @@
             text-decoration: none;
         }
 
-        /* ===== QUICK ACTIONS ===== */
         .quick-actions {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -291,7 +296,6 @@
             font-weight: 500;
         }
 
-        /* ===== RECENT ORDERS ===== */
         .orders-list {
             display: flex;
             flex-direction: column;
@@ -350,25 +354,6 @@
             color: var(--gray);
         }
 
-        .order-status {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: 500;
-        }
-
-        .order-status.pending {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--warning);
-        }
-
-        .order-status.completed {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-        }
-
-        /* ===== EMPTY STATE ===== */
         .empty-state {
             text-align: center;
             padding: 40px 20px;
@@ -393,7 +378,6 @@
             color: var(--gray);
         }
 
-        /* ===== SHOP LINK ===== */
         .shop-link-card {
             background: var(--white);
             border-radius: var(--radius);
@@ -444,7 +428,6 @@
             cursor: pointer;
         }
 
-        /* ===== BOTTOM NAV ===== */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -479,7 +462,6 @@
             font-weight: 500;
         }
 
-        /* ===== DESKTOP ===== */
         @media (min-width: 768px) {
             body {
                 padding-bottom: 0;
@@ -501,75 +483,64 @@
             .bottom-nav {
                 display: none;
             }
-
-            /* Desktop sidebar would go here */
-        }
-
-        @media (min-width: 1024px) {
-            .quick-actions {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 16px;
-            }
         }
     </style>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-    <!-- HEADER -->
     <header class="header">
         <div class="header-content">
             <div class="header-left">
-                <div class="logo-icon">S</div>
+                <div class="logo-icon">T</div>
                 <span class="header-title">Téka</span>
             </div>
             <div class="header-right">
                 <button class="notification-btn">
                     🔔
-                    <span class="notification-badge">3</span>
+                    <span class="notification-badge" id="notifBadge">0</span>
                 </button>
-                <button class="profile-btn" id="profileBtn">MF</button>
+                <button class="profile-btn" id="profileBtn">--</button>
+                <button class="logout-btn" onclick="logout()">Déconnexion</button>
             </div>
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
     <main class="container">
 
-        <!-- WELCOME -->
         <div class="welcome">
-            <h1>Salut, Marie 👋</h1>
+            <h1 id="welcomeTitle">Salut 👋</h1>
             <p>Voici le résumé de ta boutique aujourd'hui</p>
         </div>
 
-        <!-- STATS -->
         <div class="stats-grid">
             <div class="stat-card highlight">
                 <div class="stat-icon">💰</div>
-                <div class="stat-value" id="totalRevenue">45 000</div>
+                <div class="stat-value" id="totalRevenue">0</div>
                 <div class="stat-label">FCFA aujourd'hui</div>
-                <div class="stat-trend up">↑ +12% vs hier</div>
+                <div class="stat-trend up">↑ Nouveau</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">🛒</div>
-                <div class="stat-value" id="totalOrders">8</div>
+                <div class="stat-value" id="totalOrders">0</div>
                 <div class="stat-label">Commandes</div>
-                <div class="stat-trend up">↑ +3 vs hier</div>
+                <div class="stat-trend up">↑ Nouveau</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">👁</div>
-                <div class="stat-value" id="totalVisitors">124</div>
-                <div class="stat-label">Visiteurs</div>
-                <div class="stat-trend up">↑ +18%</div>
+                <div class="stat-icon">📦</div>
+                <div class="stat-value" id="totalProducts">0</div>
+                <div class="stat-label">Produits</div>
+                <div class="stat-trend up">↑ Nouveau</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">💬</div>
-                <div class="stat-value" id="totalChats">32</div>
+                <div class="stat-value" id="totalChats">0</div>
                 <div class="stat-label">Conversations</div>
-                <div class="stat-trend down">↓ -5%</div>
+                <div class="stat-trend up">↑ Nouveau</div>
             </div>
         </div>
 
-        <!-- SHOP LINK -->
         <div class="section">
             <div class="section-header">
                 <h2 class="section-title">Lien de ta boutique</h2>
@@ -578,13 +549,12 @@
                 <div class="shop-link-icon">🔗</div>
                 <div class="shop-link-info">
                     <div class="shop-link-label">Partage ce lien sur TikTok</div>
-                    <div class="shop-link-url" id="shopUrl">Téka.co/marie-fashion</div>
+                    <div class="shop-link-url" id="shopUrl">teka-peach.vercel.app/teka.html</div>
                 </div>
                 <button class="shop-link-btn" onclick="copyShopLink()">Copier</button>
             </div>
         </div>
 
-        <!-- QUICK ACTIONS -->
         <div class="section">
             <div class="section-header">
                 <h2 class="section-title">Actions rapides</h2>
@@ -594,11 +564,11 @@
                     <div class="quick-action-icon">📦</div>
                     <div class="quick-action-label">Produits</div>
                 </a>
-                <a href="commandes.html" class="quick-action">
+                <a href="commande.html" class="quick-action">
                     <div class="quick-action-icon">🧾</div>
                     <div class="quick-action-label">Commandes</div>
                 </a>
-                <a href="conversations.html" class="quick-action">
+                <a href="conversation.html" class="quick-action">
                     <div class="quick-action-icon">💬</div>
                     <div class="quick-action-label">Messages</div>
                 </a>
@@ -609,54 +579,24 @@
             </div>
         </div>
 
-        <!-- RECENT ORDERS -->
         <div class="section">
             <div class="section-header">
                 <h2 class="section-title">Dernières commandes</h2>
-                <a href="commandes.html" class="section-link">Voir tout →</a>
+                <a href="commande.html" class="section-link">Voir tout →</a>
             </div>
             <div class="orders-list" id="ordersList">
-                <div class="order-card">
-                    <div class="order-avatar">👤</div>
-                    <div class="order-info">
-                        <div class="order-product">Robe rouge fleurie</div>
-                        <div class="order-client">Paul M. • Bacongo</div>
-                    </div>
-                    <div class="order-right">
-                        <div class="order-amount">+5 000 FCFA</div>
-                        <div class="order-time">Il y a 23 min</div>
-                    </div>
-                </div>
-                <div class="order-card">
-                    <div class="order-avatar">👤</div>
-                    <div class="order-info">
-                        <div class="order-product">Ensemble wax</div>
-                        <div class="order-client">Grâce K. • Poto-Poto</div>
-                    </div>
-                    <div class="order-right">
-                        <div class="order-amount">+8 000 FCFA</div>
-                        <div class="order-time">Il y a 1h</div>
-                    </div>
-                </div>
-                <div class="order-card">
-                    <div class="order-avatar">👤</div>
-                    <div class="order-info">
-                        <div class="order-product">Sac à main noir</div>
-                        <div class="order-client">Sarah L. • Moungali</div>
-                    </div>
-                    <div class="order-right">
-                        <div class="order-amount">+3 500 FCFA</div>
-                        <div class="order-time">Il y a 2h</div>
-                    </div>
+                <div class="empty-state">
+                    <div class="empty-state-icon">📦</div>
+                    <div class="empty-state-title">Aucune commande</div>
+                    <div class="empty-state-text">Tes commandes apparaîtront ici</div>
                 </div>
             </div>
         </div>
 
     </main>
 
-    <!-- BOTTOM NAVIGATION -->
     <nav class="bottom-nav">
-        <a href="dashboard.html" class="nav-item active">
+        <a href="Dashboard.html" class="nav-item active">
             <div class="nav-icon">🏠</div>
             <div class="nav-label">Accueil</div>
         </a>
@@ -664,11 +604,11 @@
             <div class="nav-icon">📦</div>
             <div class="nav-label">Produits</div>
         </a>
-        <a href="commandes.html" class="nav-item">
+        <a href="commande.html" class="nav-item">
             <div class="nav-icon">🧾</div>
             <div class="nav-label">Commandes</div>
         </a>
-        <a href="conversations.html" class="nav-item">
+        <a href="conversation.html" class="nav-item">
             <div class="nav-icon">💬</div>
             <div class="nav-label">Messages</div>
         </a>
@@ -679,30 +619,127 @@
     </nav>
 
     <script>
-        // ===== DONNÉES VENDEUR (simulées) =====
-        const vendorData = {
-            name: "Marie",
-            shopName: "Marie Fashion",
-            shopSlug: "marie-fashion",
-            initials: "MF"
-        };
+        // Initialiser Supabase
+        const SUPABASE_URL = 'https://kolwacpvfxdrptldipzj.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvbHdhY3B2ZnhkcnB0bGRpcHpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4MjYzOTMsImV4cCI6MjA3NzQwMjM5M30.cXXOxBkX9KaddhfY5JoAvMGz-ohxdCoh5iQlHMUGHqE';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // ===== INITIALISATION =====
-        function init() {
-            document.getElementById('profileBtn').textContent = vendorData.initials;
-            document.getElementById('shopUrl').textContent = `Téka.co/${vendorData.shopSlug}`;
+        // Données du vendeur
+        let vendor = null;
+
+        // Initialisation
+        async function init() {
+            // Vérifier si le vendeur est connecté
+            const vendorData = localStorage.getItem('vendor');
+            
+            if (!vendorData) {
+                // Pas connecté, rediriger vers login
+                window.location.href = 'login.html';
+                return;
+            }
+
+            vendor = JSON.parse(vendorData);
+
+            // Afficher les infos du vendeur
+            displayVendorInfo();
+
+            // Charger les statistiques
+            await loadStats();
         }
 
-        // ===== COPIER LIEN BOUTIQUE =====
+        // Afficher les infos du vendeur
+        function displayVendorInfo() {
+            // Nom dans le welcome
+            const firstName = vendor.shop_name.split(' ')[0];
+            document.getElementById('welcomeTitle').textContent = `Salut, ${firstName} 👋`;
+
+            // Initiales dans le bouton profil
+            const initials = vendor.shop_name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+            document.getElementById('profileBtn').textContent = initials;
+
+            // Lien de la boutique
+            document.getElementById('shopUrl').textContent = `teka-peach.vercel.app/teka.html?shop=${vendor.shop_slug}`;
+        }
+
+        // Charger les statistiques
+        async function loadStats() {
+            try {
+                // Compter les produits
+                const { count: productsCount } = await supabase
+                    .from('teka_products')
+                    .select('*', { count: 'exact', head: true })
+                    .eq('vendor_id', vendor.id);
+
+                document.getElementById('totalProducts').textContent = productsCount || 0;
+
+                // Compter les commandes
+                const { count: ordersCount } = await supabase
+                    .from('teka_orders')
+                    .select('*', { count: 'exact', head: true })
+                    .eq('vendor_id', vendor.id);
+
+                document.getElementById('totalOrders').textContent = ordersCount || 0;
+
+                // Calculer le revenu total
+                const { data: orders } = await supabase
+                    .from('teka_orders')
+                    .select('total')
+                    .eq('vendor_id', vendor.id);
+
+                const totalRevenue = orders ? orders.reduce((sum, o) => sum + (o.total || 0), 0) : 0;
+                document.getElementById('totalRevenue').textContent = formatNumber(totalRevenue);
+
+                // Charger les dernières commandes
+                await loadRecentOrders();
+
+            } catch (error) {
+                console.log('Erreur chargement stats:', error);
+            }
+        }
+
+        // Charger les dernières commandes
+        async function loadRecentOrders() {
+            try {
+                const { data: orders, error } = await supabase
+                    .from('teka_orders')
+                    .select('*, teka_products(name)')
+                    .eq('vendor_id', vendor.id)
+                    .order('created_at', { ascending: false })
+                    .limit(5);
+
+                if (error || !orders || orders.length === 0) {
+                    return; // Garder l'état vide
+                }
+
+                const ordersList = document.getElementById('ordersList');
+                ordersList.innerHTML = orders.map(order => `
+                    <div class="order-card">
+                        <div class="order-avatar">👤</div>
+                        <div class="order-info">
+                            <div class="order-product">${order.teka_products?.name || 'Produit'}</div>
+                            <div class="order-client">${order.customer_name} • ${order.customer_address || ''}</div>
+                        </div>
+                        <div class="order-right">
+                            <div class="order-amount">+${formatNumber(order.total)} FCFA</div>
+                            <div class="order-time">${timeAgo(order.created_at)}</div>
+                        </div>
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                console.log('Erreur chargement commandes:', error);
+            }
+        }
+
+        // Copier le lien de la boutique
         function copyShopLink() {
-            const url = `https://Téka.co/${vendorData.shopSlug}`;
+            const url = `https://teka-peach.vercel.app/teka.html?shop=${vendor.shop_slug}`;
             
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(url).then(() => {
                     showToast('Lien copié ! 📋');
                 });
             } else {
-                // Fallback pour les anciens navigateurs
                 const input = document.createElement('input');
                 input.value = url;
                 document.body.appendChild(input);
@@ -713,9 +750,14 @@
             }
         }
 
-        // ===== TOAST NOTIFICATION =====
+        // Déconnexion
+        function logout() {
+            localStorage.removeItem('vendor');
+            window.location.href = 'login.html';
+        }
+
+        // Toast notification
         function showToast(message) {
-            // Créer le toast s'il n'existe pas
             let toast = document.getElementById('toast');
             if (!toast) {
                 toast = document.createElement('div');
@@ -745,12 +787,24 @@
             }, 2000);
         }
 
-        // ===== FORMAT NOMBRES =====
+        // Formater les nombres
         function formatNumber(num) {
             return num.toLocaleString('fr-FR');
         }
 
-        // ===== DÉMARRAGE =====
+        // Temps écoulé
+        function timeAgo(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const seconds = Math.floor((now - date) / 1000);
+
+            if (seconds < 60) return "À l'instant";
+            if (seconds < 3600) return `Il y a ${Math.floor(seconds / 60)} min`;
+            if (seconds < 86400) return `Il y a ${Math.floor(seconds / 3600)}h`;
+            return `Il y a ${Math.floor(seconds / 86400)}j`;
+        }
+
+        // Démarrer
         init();
     </script>
 
