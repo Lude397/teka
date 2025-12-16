@@ -1,22 +1,23 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
+const path = require('path');
 
 const app = express();
 
-// Ta clé API DeepSeek
-const API_KEY = 'sk-ec158b00f5a34c4baeec6cb54112509f';
+const API_KEY = process.env.DEEPSEEK_API_KEY;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
+
+// Servir les fichiers HTML
+app.use(express.static('public'));
 
 // Route pour le chat
 app.post('/chat', async (req, res) => {
     try {
         const { systemPrompt, chatHistory } = req.body;
 
-        // Construire les messages avec l'historique
         const messages = [
             { role: 'system', content: systemPrompt },
             ...chatHistory
@@ -41,7 +42,21 @@ app.post('/chat', async (req, res) => {
     }
 });
 
-// Démarrer le serveur
-app.listen(3000, () => {
-    console.log('✅ Serveur Teka démarré sur http://localhost:3000');
+// Page d'accueil - redirige vers teka.html
+app.get('/', (req, res) => {
+    res.sendFile('teka.html', { root: 'public' });
 });
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`✅ Serveur Teka démarré sur le port ${PORT}`);
+});
+```
+
+5. Clique **Commit changes**
+
+---
+
+Attends 1-2 minutes puis reteste :
+```
+https://teka-peach.vercel.app
