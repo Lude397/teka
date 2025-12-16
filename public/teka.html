@@ -1103,7 +1103,7 @@ ${shopData.products.map(p => `- ${p.name} : ${p.price} FCFA (${p.stock ? 'en sto
     chatHistory.push({ role: 'user', content: userMessage });
 
     try {
-        const response = await fetch('http://localhost:3000/chat', {
+        const response = await fetch('/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -1139,4 +1139,5 @@ ${shopData.products.map(p => `- ${p.name} : ${p.price} FCFA (${p.stock ? 'en sto
     </script>
 
 </body>
+
 </html>
