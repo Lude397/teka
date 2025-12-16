@@ -602,6 +602,31 @@
                 grid-template-columns: repeat(4, 1fr);
             }
         }
+
+            .image-fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 400;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.image-fullscreen.active {
+    display: flex;
+}
+
+.image-fullscreen img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+        
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -660,7 +685,7 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeProductModal()">✕</button>
             <div class="modal-images">
-                <img id="modalImage" src="" alt="">
+                <img id="modalImage" src="" alt="" onclick="openFullscreen(this.src)" style="cursor: zoom-in;">
                 <div id="modalImagePlaceholder" class="product-image-placeholder">📷</div>
             </div>
             <div class="modal-body">
@@ -1027,9 +1052,23 @@ ${productsList}
             }
         }
 
+        function openFullscreen(imageSrc) {
+    document.getElementById('fullscreenImage').src = imageSrc;
+    document.getElementById('imageFullscreen').classList.add('active');
+}
+
+function closeFullscreen() {
+    document.getElementById('imageFullscreen').classList.remove('active');
+}
+
         // Démarrage
         init();
     </script>
 
+    <div class="image-fullscreen" id="imageFullscreen" onclick="closeFullscreen()">
+    <img id="fullscreenImage" src="" alt="">
+</div>
+    
 </body>
 </html>
+
