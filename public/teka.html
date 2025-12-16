@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Téka - Boutique</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #FF6B35;
+            --primary-dark: #E55A2B;
+            --secondary: #1A1A2E;
+            --light: #FAFAFA;
+            --gray: #6B7280;
+            --gray-light: #E5E7EB;
+            --success: #10B981;
+            --white: #FFFFFF;
+            --shadow: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-lg: 0 4px 16px rgba(0,0,0,0.12);
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--light);
+            color: var(--secondary);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--white);
+            padding: 16px 20px;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .shop-logo {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .shop-info h1 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .shop-info p {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        .assistant-banner {
+            background: linear-gradient(135deg, var(--secondary) 0%, #2D2D44 100%);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 24px;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .assistant-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .assistant-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .assistant-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .assistant-status {
+            font-size: 12px;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .assistant-status::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+        }
+
+        .assistant-message {
+            font-size: 14px;
+            margin-bottom: 16px;
+            opacity: 0.95;
+        }
+
+        .assistant-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 14px 24px;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--secondary);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .product-image {
+            width: 100%;
+            aspect-ratio: 1;
+            background: var(--gray-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: var(--gray);
+        }
+
+        .product-stock {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--success);
+            color: var(--white);
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .product-stock.out {
+            background: #EF4444;
+        }
+
+        .product-info {
+            padding: 12px;
+        }
+
+        .product-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--secondary);
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .product-price {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            border-radius: var(--radius) var(--radius) 0 0;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--white);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            z-index: 10;
+        }
+
+        .modal-images {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            background: var(--gray-light);
+            cursor: zoom-in;
+        }
+
+        .modal-images img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-zoom-hint {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .modal-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .modal-description {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .modal-options {
+            margin-bottom: 20px;
+        }
+
+        .modal-option-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .modal-sizes {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .size-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--gray-light);
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .size-btn:hover, .size-btn.active {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .modal-ask-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 16px 24px;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* FULLSCREEN IMAGE */
+        .image-fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 400;
+            display: none;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .image-fullscreen.active {
+            display: flex;
+        }
+
+        .fullscreen-close {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+            z-index: 401;
+        }
+
+        .fullscreen-image-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 16px 16px;
+        }
+
+        .fullscreen-image-container img {
+            max-width: 100%;
+            max-height: 60vh;
+            object-fit: contain;
+            border-radius: var(--radius);
+        }
+
+        .fullscreen-info {
+            background: var(--white);
+            border-radius: var(--radius) var(--radius) 0 0;
+            padding: 24px;
+            margin-top: auto;
+        }
+
+        .fullscreen-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .fullscreen-price {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .fullscreen-description {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .fullscreen-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .fullscreen-detail {
+            background: var(--light);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .fullscreen-detail strong {
+            color: var(--primary);
+        }
+
+        .fullscreen-ask-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 16px 24px;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .chat-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 300;
+            display: none;
+        }
+
+        .chat-overlay.active {
+            display: block;
+        }
+
+        .chat-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 85vh;
+            max-height: 600px;
+            background: var(--white);
+            border-radius: var(--radius) var(--radius) 0 0;
+            z-index: 301;
+            display: none;
+            flex-direction: column;
+        }
+
+        .chat-container.active {
+            display: flex;
+        }
+
+        .chat-header {
+            padding: 16px 20px;
+            background: var(--secondary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        .chat-header-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .chat-header-info h3 {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .chat-header-info p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .chat-close {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-message {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .chat-message.bot {
+            background: var(--gray-light);
+            color: var(--secondary);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-message.user {
+            background: var(--primary);
+            color: var(--white);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-input-container {
+            padding: 12px 16px;
+            border-top: 1px solid var(--gray-light);
+            display: flex;
+            gap: 12px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid var(--gray-light);
+            border-radius: 24px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary);
+        }
+
+        .chat-send {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+            background: var(--gray-light);
+            border-radius: 16px;
+            align-self: flex-start;
+            width: fit-content;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--gray);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        .loading-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .loading-page .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--gray-light);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            flex-direction: column;
+            gap: 16px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .error-page h1 {
+            font-size: 24px;
+            color: var(--secondary);
+        }
+
+        .error-page p {
+            color: var(--gray);
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: 24px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+
+            .chat-container {
+                width: 400px;
+                right: 24px;
+                left: auto;
+                bottom: 24px;
+                height: 500px;
+                border-radius: var(--radius);
+            }
+
+            .fullscreen-image-container img {
+                max-height: 70vh;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <div id="loadingPage" class="loading-page">
+        <div class="spinner"></div>
+        <p>Chargement de la boutique...</p>
+    </div>
+
+    <div id="errorPage" class="error-page" style="display: none;">
+        <h1>😕 Boutique introuvable</h1>
+        <p>Cette boutique n'existe pas ou n'est plus disponible.</p>
+    </div>
+
+    <div id="mainContent" style="display: none;">
+        <header class="header">
+            <div class="header-content">
+                <div class="shop-logo" id="shopLogo">--</div>
+                <div class="shop-info">
+                    <h1 id="shopName">Chargement...</h1>
+                    <p id="shopTagline">Mode & Accessoires</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="container">
+            <section class="assistant-banner">
+                <div>
+                    <div class="assistant-header">
+                        <div class="assistant-avatar">🤖</div>
+                        <div>
+                            <div class="assistant-title">Je suis l'assistant de <span id="assistantShopName">la boutique</span></div>
+                            <div class="assistant-status">En ligne</div>
+                        </div>
+                    </div>
+                    <p class="assistant-message">
+                        👋 Salut ! Je suis là pour t'aider à trouver ce que tu cherches. 
+                        Pose-moi tes questions sur les produits, les tailles, la livraison...
+                    </p>
+                </div>
+                <button class="assistant-btn" onclick="openChat()">
+                    💬 Discuter avec moi
+                </button>
+            </section>
+
+            <section>
+                <h2 class="section-title">Nos produits</h2>
+                <div class="products-grid" id="productsGrid"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- PRODUCT MODAL -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeProductModal()">✕</button>
+            <div class="modal-images" onclick="openFullscreen()">
+                <img id="modalImage" src="" alt="">
+                <div id="modalImagePlaceholder" class="product-image-placeholder">📷</div>
+                <div class="modal-zoom-hint" id="zoomHint">🔍 Agrandir</div>
+            </div>
+            <div class="modal-body">
+                <h2 class="modal-name" id="modalName"></h2>
+                <div class="modal-price" id="modalPrice"></div>
+                <p class="modal-description" id="modalDescription"></p>
+                
+                <div class="modal-options" id="modalSizes" style="display: none;">
+                    <div class="modal-option-title">Tailles disponibles</div>
+                    <div class="modal-sizes" id="modalSizesContainer"></div>
+                </div>
+                
+                <div class="modal-options" id="modalColors" style="display: none;">
+                    <div class="modal-option-title">Couleurs disponibles</div>
+                    <div class="modal-sizes" id="modalColorsContainer"></div>
+                </div>
+                
+                <button class="modal-ask-btn" onclick="askAboutProduct()">
+                    💬 Poser une question
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FULLSCREEN IMAGE -->
+    <div class="image-fullscreen" id="imageFullscreen">
+        <button class="fullscreen-close" onclick="closeFullscreen()">✕</button>
+        <div class="fullscreen-image-container">
+            <img id="fullscreenImage" src="" alt="">
+        </div>
+        <div class="fullscreen-info">
+            <h2 class="fullscreen-name" id="fullscreenName"></h2>
+            <div class="fullscreen-price" id="fullscreenPrice"></div>
+            <p class="fullscreen-description" id="fullscreenDescription"></p>
+            <div class="fullscreen-details" id="fullscreenDetails"></div>
+            <button class="fullscreen-ask-btn" onclick="closeFullscreen(); askAboutProduct();">
+                💬 Poser une question sur ce produit
+            </button>
+        </div>
+    </div>
+
+    <!-- CHAT -->
+    <div class="chat-overlay" id="chatOverlay" onclick="closeChat()"></div>
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <div class="chat-header-avatar">🤖</div>
+            <div class="chat-header-info">
+                <h3>Assistant de <span id="chatShopName">la boutique</span></h3>
+                <p>Je réponds instantanément</p>
+            </div>
+            <button class="chat-close" onclick="closeChat()">✕</button>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input-container">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Pose ta question..." onkeypress="handleKeyPress(event)">
+            <button class="chat-send" onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+
+    <script>
+        // Supabase
+        const SUPABASE_URL = 'https://kolwacpvfxdrptldipzj.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvbHdhY3B2ZnhkcnB0bGRpcHpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4MjYzOTMsImV4cCI6MjA3NzQwMjM5M30.cXXOxBkX9KaddhfY5JoAvMGz-ohxdCoh5iQlHMUGHqE';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        let vendor = null;
+        let products = [];
+        let currentProduct = null;
+        let chatHistory = [];
+
+        async function init() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const shopSlug = urlParams.get('shop');
+
+            if (!shopSlug) {
+                showError();
+                return;
+            }
+
+            try {
+                const { data: vendorData, error: vendorError } = await supabase
+                    .from('teka_vendors')
+                    .select('*')
+                    .eq('shop_slug', shopSlug)
+                    .single();
+
+                if (vendorError || !vendorData) {
+                    showError();
+                    return;
+                }
+
+                vendor = vendorData;
+
+                const { data: productsData } = await supabase
+                    .from('teka_products')
+                    .select('*')
+                    .eq('vendor_id', vendor.id)
+                    .order('created_at', { ascending: false });
+
+                products = productsData || [];
+
+                showMainContent();
+                updatePageInfo();
+                renderProducts();
+
+            } catch (error) {
+                console.log('Erreur:', error);
+                showError();
+            }
+        }
+
+        function showError() {
+            document.getElementById('loadingPage').style.display = 'none';
+            document.getElementById('errorPage').style.display = 'flex';
+        }
+
+        function showMainContent() {
+            document.getElementById('loadingPage').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+        }
+
+        function updatePageInfo() {
+            const shopName = vendor.shop_name;
+            const initials = shopName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+
+            document.title = `${shopName} - Téka`;
+            document.getElementById('shopName').textContent = shopName;
+            document.getElementById('shopLogo').textContent = initials;
+            document.getElementById('assistantShopName').textContent = shopName;
+            document.getElementById('chatShopName').textContent = shopName;
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+
+            if (products.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--gray);">Aucun produit disponible pour le moment.</p>';
+                return;
+            }
+
+            grid.innerHTML = products.map(product => `
+                <div class="product-card" onclick="openProductModal(${product.id})">
+                    <div class="product-image">
+                        ${product.images && product.images.length > 0
+                            ? `<img src="${product.images[0]}" alt="${product.name}" loading="lazy">`
+                            : `<div class="product-image-placeholder">📷</div>`
+                        }
+                        <span class="product-stock ${product.stock > 0 ? '' : 'out'}">
+                            ${product.stock > 0 ? 'En stock' : 'Rupture'}
+                        </span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-price">${formatPrice(product.price)}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function formatPrice(price) {
+            return price.toLocaleString('fr-FR') + ' FCFA';
+        }
+
+        function openProductModal(productId) {
+            currentProduct = products.find(p => p.id === productId);
+            if (!currentProduct) return;
+
+            document.getElementById('modalName').textContent = currentProduct.name;
+            document.getElementById('modalPrice').textContent = formatPrice(currentProduct.price);
+            document.getElementById('modalDescription').textContent = currentProduct.description || 'Pas de description disponible.';
+
+            const imgEl = document.getElementById('modalImage');
+            const placeholderEl = document.getElementById('modalImagePlaceholder');
+            const zoomHint = document.getElementById('zoomHint');
+
+            if (currentProduct.images && currentProduct.images.length > 0) {
+                imgEl.src = currentProduct.images[0];
+                imgEl.style.display = 'block';
+                placeholderEl.style.display = 'none';
+                zoomHint.style.display = 'flex';
+            } else {
+                imgEl.style.display = 'none';
+                placeholderEl.style.display = 'flex';
+                zoomHint.style.display = 'none';
+            }
+
+            // Tailles
+            const sizesSection = document.getElementById('modalSizes');
+            const sizesContainer = document.getElementById('modalSizesContainer');
+            if (currentProduct.sizes && currentProduct.sizes.length > 0) {
+                sizesSection.style.display = 'block';
+                sizesContainer.innerHTML = currentProduct.sizes.map(size =>
+                    `<button class="size-btn" onclick="selectSize(this)">${size}</button>`
+                ).join('');
+            } else {
+                sizesSection.style.display = 'none';
+            }
+
+            // Couleurs
+            const colorsSection = document.getElementById('modalColors');
+            const colorsContainer = document.getElementById('modalColorsContainer');
+            if (currentProduct.colors && currentProduct.colors.length > 0) {
+                colorsSection.style.display = 'block';
+                colorsContainer.innerHTML = currentProduct.colors.map(color =>
+                    `<button class="size-btn" onclick="selectColor(this)">${color}</button>`
+                ).join('');
+            } else {
+                colorsSection.style.display = 'none';
+            }
+
+            document.getElementById('productModal').classList.add('active');
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.remove('active');
+        }
+
+        function selectSize(btn) {
+            document.querySelectorAll('#modalSizesContainer .size-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function selectColor(btn) {
+            document.querySelectorAll('#modalColorsContainer .size-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        // Fullscreen
+        function openFullscreen() {
+            if (!currentProduct || !currentProduct.images || currentProduct.images.length === 0) return;
+
+            document.getElementById('fullscreenImage').src = currentProduct.images[0];
+            document.getElementById('fullscreenName').textContent = currentProduct.name;
+            document.getElementById('fullscreenPrice').textContent = formatPrice(currentProduct.price);
+            document.getElementById('fullscreenDescription').textContent = currentProduct.description || 'Pas de description disponible.';
+
+            // Details (tailles et couleurs)
+            let detailsHtml = '';
+            if (currentProduct.sizes && currentProduct.sizes.length > 0) {
+                detailsHtml += `<div class="fullscreen-detail"><strong>Tailles:</strong> ${currentProduct.sizes.join(', ')}</div>`;
+            }
+            if (currentProduct.colors && currentProduct.colors.length > 0) {
+                detailsHtml += `<div class="fullscreen-detail"><strong>Couleurs:</strong> ${currentProduct.colors.join(', ')}</div>`;
+            }
+            if (currentProduct.stock > 0) {
+                detailsHtml += `<div class="fullscreen-detail"><strong>Stock:</strong> ${currentProduct.stock} disponibles</div>`;
+            }
+            document.getElementById('fullscreenDetails').innerHTML = detailsHtml;
+
+            document.getElementById('imageFullscreen').classList.add('active');
+            closeProductModal();
+        }
+
+        function closeFullscreen() {
+            document.getElementById('imageFullscreen').classList.remove('active');
+        }
+
+        // Chat
+        function openChat() {
+            document.getElementById('chatOverlay').classList.add('active');
+            document.getElementById('chatContainer').classList.add('active');
+
+            const messagesContainer = document.getElementById('chatMessages');
+            if (messagesContainer.children.length === 0) {
+                addBotMessage(`Salut ! 👋 Je suis l'assistant de ${vendor.shop_name}. Comment puis-je t'aider ?`);
+            }
+        }
+
+        function closeChat() {
+            document.getElementById('chatOverlay').classList.remove('active');
+            document.getElementById('chatContainer').classList.remove('active');
+        }
+
+        function askAboutProduct() {
+            closeProductModal();
+            openChat();
+            if (currentProduct) {
+                addBotMessage(`Tu regardes "${currentProduct.name}" à ${formatPrice(currentProduct.price)}. 😊 Qu'est-ce que tu veux savoir ?`);
+            }
+        }
+
+        function addBotMessage(text) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageEl = document.createElement('div');
+            messageEl.className = 'chat-message bot';
+            messageEl.textContent = text;
+            messagesContainer.appendChild(messageEl);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function addUserMessage(text) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageEl = document.createElement('div');
+            messageEl.className = 'chat-message user';
+            messageEl.textContent = text;
+            messagesContainer.appendChild(messageEl);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            input.value = '';
+            addUserMessage(text);
+            simulateBotResponse(text);
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function showTypingIndicator() {
+            const messagesContainer = document.getElementById('chatMessages');
+            const typingEl = document.createElement('div');
+            typingEl.className = 'typing-indicator';
+            typingEl.id = 'typingIndicator';
+            typingEl.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            messagesContainer.appendChild(typingEl);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const typingEl = document.getElementById('typingIndicator');
+            if (typingEl) typingEl.remove();
+        }
+
+        async function simulateBotResponse(userMessage) {
+            showTypingIndicator();
+
+            const productsList = products.map(p => `- ${p.name} : ${p.price} FCFA (stock: ${p.stock})`).join('\n');
+
+            let systemPrompt = `Tu es un EXPERT EN VENTE et le meilleur conseiller de la boutique "${vendor.shop_name}".
+
+Tu as 10 ans d'expérience en vente et tu sais exactement comment aider les clients à trouver ce qu'ils cherchent et conclure des ventes.
+
+PERSONNALITÉ :
+- Amical et professionnel
+- Tu tutoies le client
+- Enthousiaste sans être agressif
+- Tu utilises des émojis avec modération
+
+RÈGLES STRICTES :
+- Réponses courtes (2-3 phrases)
+- Termine toujours par une question ou suggestion
+- NE JAMAIS inventer de produits, réductions ou cadeaux
+- NE JAMAIS modifier les prix
+- Propose UNIQUEMENT les produits de la liste ci-dessous
+
+LIVRAISON :
+- Brazzaville : 1000 FCFA (24-48h)
+- Pointe-Noire : 2000 FCFA (3-5 jours)
+- Autres villes : 3000 FCFA (5-7 jours)
+
+PAIEMENT :
+- Mobile Money (Airtel Money, MTN Money)
+- Paiement à la livraison
+
+PRODUITS DISPONIBLES :
+${productsList}
+`;
+
+            if (currentProduct) {
+                systemPrompt += `\n\nLe client regarde : ${currentProduct.name} à ${currentProduct.price} FCFA.`;
+            }
+
+            chatHistory.push({ role: 'user', content: userMessage });
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        systemPrompt: systemPrompt,
+                        chatHistory: chatHistory
+                    })
+                });
+
+                const data = await response.json();
+                hideTypingIndicator();
+
+                if (data.choices && data.choices[0]) {
+                    const botResponse = data.choices[0].message.content;
+                    chatHistory.push({ role: 'assistant', content: botResponse });
+                    addBotMessage(botResponse);
+                } else {
+                    addBotMessage("Désolé, je n'ai pas compris. Tu peux reformuler ?");
+                }
+            } catch (error) {
+                hideTypingIndicator();
+                addBotMessage("Oups, j'ai un petit souci. Réessaie dans un instant !");
+                console.error('Erreur API:', error);
+            }
+        }
+
+        init();
+    </script>
+
+</body>
+</html>
