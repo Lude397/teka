@@ -400,6 +400,63 @@
             margin-top: 6px;
         }
 
+        .image-upload {
+            border: 2px dashed var(--gray-light);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .image-upload:hover {
+            border-color: var(--primary);
+        }
+
+        .image-upload-icon {
+            font-size: 40px;
+            margin-bottom: 8px;
+        }
+
+        .image-upload-text {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .image-upload input {
+            display: none;
+        }
+
+        .image-preview {
+            margin-top: 12px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .image-preview img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+        }
+
+        .image-preview-remove {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 24px;
+            height: 24px;
+            background: var(--error);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .modal-footer {
             padding: 16px 20px;
             border-top: 1px solid var(--gray-light);
@@ -426,6 +483,11 @@
         .btn-primary {
             background: var(--primary);
             color: var(--white);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         .confirm-modal {
@@ -613,6 +675,16 @@
             <div class="modal-body">
                 <form id="productForm">
                     <div class="form-group">
+                        <label class="form-label">Photo du produit</label>
+                        <div class="image-upload" id="imageUpload" onclick="document.getElementById('imageInput').click()">
+                            <div class="image-upload-icon">📷</div>
+                            <div class="image-upload-text">Prendre une photo ou choisir</div>
+                            <input type="file" id="imageInput" accept="image/*" capture="environment" onchange="handleImageSelect(event)">
+                        </div>
+                        <div id="imagePreviewContainer"></div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="form-label" for="productName">Nom du produit *</label>
                         <input type="text" class="form-input" id="productName" placeholder="Ex: Robe rouge fleurie" required>
                     </div>
@@ -662,7 +734,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeModal()">Annuler</button>
-                <button class="btn btn-primary" onclick="saveProduct()">Enregistrer</button>
+                <button class="btn btn-primary" id="saveBtn" onclick="saveProduct()">Enregistrer</button>
             </div>
         </div>
     </div>
@@ -713,22 +785,21 @@
         let products = [];
         let editingProductId = null;
         let deleteProductId = null;
+        let selectedImage = null;
+        let currentImageUrl = null;
 
         // Initialisation
         async function init() {
-            // Vérifier connexion
             const vendorData = localStorage.getItem('vendor');
             if (!vendorData) {
                 window.location.href = 'login.html';
                 return;
             }
             vendor = JSON.parse(vendorData);
-
-            // Charger les produits
             await loadProducts();
         }
 
-        // Charger les produits depuis Supabase
+        // Charger les produits
         async function loadProducts() {
             try {
                 const { data, error } = await supabase
@@ -749,7 +820,6 @@
 
             } catch (err) {
                 console.log('Erreur:', err);
-                showAlert('Erreur de connexion', 'error');
             }
         }
 
@@ -772,7 +842,11 @@
 
             list.innerHTML = displayProducts.map(product => `
                 <div class="product-item">
-                    <div class="product-image">📷</div>
+                    <div class="product-image">
+                        ${product.images && product.images.length > 0 
+                            ? `<img src="${product.images[0]}" alt="${product.name}">` 
+                            : '📷'}
+                    </div>
                     <div class="product-details">
                         <div class="product-name">${product.name}</div>
                         <div class="product-price">${formatPrice(product.price)}</div>
@@ -786,7 +860,7 @@
             `).join('');
         }
 
-        // Mettre à jour les stats
+        // Stats
         function updateStats() {
             const total = products.length;
             const inStock = products.filter(p => p.stock > 0).length;
@@ -797,26 +871,22 @@
             document.getElementById('outStockCount').textContent = outStock;
         }
 
-        // Formater le prix
         function formatPrice(price) {
             return price.toLocaleString('fr-FR') + ' FCFA';
         }
 
-        // Classe du stock
         function getStockClass(stock) {
             if (stock === 0) return 'out-stock';
             if (stock <= 5) return 'low-stock';
             return 'in-stock';
         }
 
-        // Label du stock
         function getStockLabel(stock) {
             if (stock === 0) return 'Rupture';
             if (stock <= 5) return `Stock faible (${stock})`;
             return `En stock (${stock})`;
         }
 
-        // Filtrer les produits
         function filterProducts() {
             const query = document.getElementById('searchInput').value.toLowerCase();
             if (!query) {
@@ -830,23 +900,80 @@
             renderProducts(filtered);
         }
 
-        // Ouvrir le modal d'ajout
+        // Image handling
+        function handleImageSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            selectedImage = file;
+
+            // Afficher preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('imagePreviewContainer').innerHTML = `
+                    <div class="image-preview">
+                        <img src="${e.target.result}" alt="Preview">
+                        <button class="image-preview-remove" onclick="removeImage(event)">✕</button>
+                    </div>
+                `;
+                document.getElementById('imageUpload').style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeImage(event) {
+            event.stopPropagation();
+            selectedImage = null;
+            currentImageUrl = null;
+            document.getElementById('imagePreviewContainer').innerHTML = '';
+            document.getElementById('imageUpload').style.display = 'block';
+            document.getElementById('imageInput').value = '';
+        }
+
+        // Upload image to Supabase Storage
+        async function uploadImage(file) {
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${vendor.id}_${Date.now()}.${fileExt}`;
+
+            const { data, error } = await supabase.storage
+                .from('products')
+                .upload(fileName, file);
+
+            if (error) {
+                console.log('Upload error:', error);
+                throw error;
+            }
+
+            // Get public URL
+            const { data: urlData } = supabase.storage
+                .from('products')
+                .getPublicUrl(fileName);
+
+            return urlData.publicUrl;
+        }
+
+        // Modal
         function openAddModal() {
             editingProductId = null;
+            selectedImage = null;
+            currentImageUrl = null;
             document.getElementById('modalTitle').textContent = 'Ajouter un produit';
             document.getElementById('productForm').reset();
             document.getElementById('productStock').value = 10;
+            document.getElementById('imagePreviewContainer').innerHTML = '';
+            document.getElementById('imageUpload').style.display = 'block';
             document.getElementById('productModal').classList.add('active');
         }
 
-        // Modifier un produit
         function editProduct(id) {
             const product = products.find(p => p.id === id);
             if (!product) return;
 
             editingProductId = id;
+            selectedImage = null;
+            currentImageUrl = product.images && product.images.length > 0 ? product.images[0] : null;
+
             document.getElementById('modalTitle').textContent = 'Modifier le produit';
-            
             document.getElementById('productName').value = product.name;
             document.getElementById('productPrice').value = product.price;
             document.getElementById('productStock').value = product.stock || 0;
@@ -855,15 +982,27 @@
             document.getElementById('productSizes').value = product.sizes ? product.sizes.join(', ') : '';
             document.getElementById('productColors').value = product.colors ? product.colors.join(', ') : '';
 
+            // Show existing image
+            if (currentImageUrl) {
+                document.getElementById('imagePreviewContainer').innerHTML = `
+                    <div class="image-preview">
+                        <img src="${currentImageUrl}" alt="Preview">
+                        <button class="image-preview-remove" onclick="removeImage(event)">✕</button>
+                    </div>
+                `;
+                document.getElementById('imageUpload').style.display = 'none';
+            } else {
+                document.getElementById('imagePreviewContainer').innerHTML = '';
+                document.getElementById('imageUpload').style.display = 'block';
+            }
+
             document.getElementById('productModal').classList.add('active');
         }
 
-        // Fermer le modal
         function closeModal() {
             document.getElementById('productModal').classList.remove('active');
         }
 
-        // Sauvegarder le produit
         async function saveProduct() {
             const name = document.getElementById('productName').value.trim();
             const price = parseInt(document.getElementById('productPrice').value);
@@ -881,39 +1020,43 @@
                 return;
             }
 
+            // Disable button
+            const saveBtn = document.getElementById('saveBtn');
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Enregistrement...';
+
             try {
+                let imageUrl = currentImageUrl;
+
+                // Upload new image if selected
+                if (selectedImage) {
+                    imageUrl = await uploadImage(selectedImage);
+                }
+
+                const productData = {
+                    name,
+                    price,
+                    stock,
+                    description,
+                    category,
+                    sizes,
+                    colors,
+                    images: imageUrl ? [imageUrl] : []
+                };
+
                 if (editingProductId) {
-                    // Modifier
                     const { error } = await supabase
                         .from('teka_products')
-                        .update({
-                            name,
-                            price,
-                            stock,
-                            description,
-                            category,
-                            sizes,
-                            colors
-                        })
+                        .update(productData)
                         .eq('id', editingProductId);
 
                     if (error) throw error;
                     showAlert('Produit modifié !', 'success');
-
                 } else {
-                    // Ajouter
+                    productData.vendor_id = vendor.id;
                     const { error } = await supabase
                         .from('teka_products')
-                        .insert([{
-                            vendor_id: vendor.id,
-                            name,
-                            price,
-                            stock,
-                            description,
-                            category,
-                            sizes,
-                            colors
-                        }]);
+                        .insert([productData]);
 
                     if (error) throw error;
                     showAlert('Produit ajouté !', 'success');
@@ -925,10 +1068,13 @@
             } catch (error) {
                 console.log('Erreur:', error);
                 showAlert('Erreur lors de la sauvegarde', 'error');
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Enregistrer';
             }
         }
 
-        // Supprimer un produit
+        // Delete
         function deleteProduct(id) {
             deleteProductId = id;
             document.getElementById('confirmModal').classList.add('active');
@@ -960,7 +1106,6 @@
             }
         }
 
-        // Afficher une alerte
         function showAlert(message, type) {
             const alert = document.getElementById('alert');
             alert.textContent = message;
@@ -972,7 +1117,6 @@
             }, 3000);
         }
 
-        // Démarrer
         init();
     </script>
 
