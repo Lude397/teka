@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Téka - Conversations</title>
+    <title>Teka - Conversations</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
-        /* ===== VARIABLES ===== */
         :root {
             --primary: #FF6B35;
             --primary-dark: #E55A2B;
@@ -30,12 +31,7 @@
             --radius-sm: 8px;
         }
 
-        /* ===== RESET & BASE ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -46,7 +42,6 @@
             padding-bottom: 80px;
         }
 
-        /* ===== HEADER ===== */
         .header {
             background: var(--white);
             padding: 16px 20px;
@@ -75,13 +70,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            text-decoration: none;
+            color: var(--secondary);
         }
 
-        .header-title {
-            font-size: 18px;
-            font-weight: 600;
-            flex: 1;
-        }
+        .header-title { font-size: 18px; font-weight: 600; flex: 1; }
 
         .header-badge {
             background: var(--primary);
@@ -92,19 +85,9 @@
             font-weight: 600;
         }
 
-        /* ===== CONTAINER ===== */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 16px;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px 16px; }
 
-        /* ===== SEARCH & FILTER ===== */
-        .search-filter {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
+        .search-filter { display: flex; gap: 12px; margin-bottom: 16px; }
 
         .search-input {
             flex: 1;
@@ -116,9 +99,7 @@
             outline: none;
         }
 
-        .search-input:focus {
-            border-color: var(--primary);
-        }
+        .search-input:focus { border-color: var(--primary); }
 
         .filter-select {
             padding: 12px 16px;
@@ -131,7 +112,6 @@
             cursor: pointer;
         }
 
-        /* ===== TABS ===== */
         .tabs {
             display: flex;
             gap: 8px;
@@ -155,22 +135,10 @@
             transition: all 0.2s;
         }
 
-        .tab.active {
-            background: var(--primary);
-            color: var(--white);
-        }
+        .tab.active { background: var(--primary); color: var(--white); }
+        .tab-count { margin-left: 6px; opacity: 0.7; }
 
-        .tab-count {
-            margin-left: 6px;
-            opacity: 0.7;
-        }
-
-        /* ===== CONVERSATIONS LIST ===== */
-        .conversations-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        .conversations-list { display: flex; flex-direction: column; gap: 12px; }
 
         .conversation-card {
             background: var(--white);
@@ -181,13 +149,8 @@
             transition: transform 0.2s;
         }
 
-        .conversation-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .conversation-card.unread {
-            border-left: 4px solid var(--primary);
-        }
+        .conversation-card:hover { transform: translateY(-2px); }
+        .conversation-card.unread { border-left: 4px solid var(--primary); }
 
         .conversation-header {
             display: flex;
@@ -207,9 +170,7 @@
             font-size: 20px;
         }
 
-        .conversation-info {
-            flex: 1;
-        }
+        .conversation-info { flex: 1; }
 
         .conversation-visitor {
             font-size: 14px;
@@ -227,35 +188,13 @@
             font-weight: 500;
         }
 
-        .badge.sale {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-        }
+        .badge.sale { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .badge.pending { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+        .badge.lost { background: rgba(239, 68, 68, 0.1); color: var(--error); }
 
-        .badge.pending {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--warning);
-        }
-
-        .badge.lost {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--error);
-        }
-
-        .conversation-meta {
-            font-size: 12px;
-            color: var(--gray);
-        }
-
-        .conversation-time {
-            text-align: right;
-        }
-
-        .conversation-hour {
-            font-size: 12px;
-            color: var(--gray);
-            margin-bottom: 4px;
-        }
+        .conversation-meta { font-size: 12px; color: var(--gray); }
+        .conversation-time { text-align: right; }
+        .conversation-hour { font-size: 12px; color: var(--gray); margin-bottom: 4px; }
 
         .conversation-unread {
             width: 10px;
@@ -294,9 +233,15 @@
             align-items: center;
             justify-content: center;
             font-size: 12px;
+            overflow: hidden;
         }
 
-        /* ===== CHAT DETAIL MODAL ===== */
+        .conversation-product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .chat-modal {
             position: fixed;
             top: 0;
@@ -309,9 +254,7 @@
             flex-direction: column;
         }
 
-        .chat-modal.active {
-            display: flex;
-        }
+        .chat-modal.active { display: flex; }
 
         .chat-modal-header {
             background: var(--white);
@@ -332,30 +275,13 @@
             cursor: pointer;
         }
 
-        .chat-modal-info {
-            flex: 1;
-        }
+        .chat-modal-info { flex: 1; }
+        .chat-modal-visitor { font-size: 16px; font-weight: 600; }
+        .chat-modal-meta { font-size: 12px; color: var(--gray); }
 
-        .chat-modal-visitor {
-            font-size: 16px;
-            font-weight: 600;
-        }
+        .chat-modal-body { flex: 1; overflow-y: auto; padding: 20px; }
 
-        .chat-modal-meta {
-            font-size: 12px;
-            color: var(--gray);
-        }
-
-        .chat-modal-body {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-        }
-
-        .chat-date-divider {
-            text-align: center;
-            margin: 16px 0;
-        }
+        .chat-date-divider { text-align: center; margin: 16px 0; }
 
         .chat-date-divider span {
             background: var(--gray-light);
@@ -372,14 +298,8 @@
             flex-direction: column;
         }
 
-        .chat-message.bot {
-            align-self: flex-start;
-        }
-
-        .chat-message.user {
-            align-self: flex-end;
-            align-items: flex-end;
-        }
+        .chat-message.assistant { align-self: flex-start; }
+        .chat-message.user { align-self: flex-end; align-items: flex-end; }
 
         .chat-bubble {
             padding: 12px 16px;
@@ -388,7 +308,7 @@
             line-height: 1.5;
         }
 
-        .chat-message.bot .chat-bubble {
+        .chat-message.assistant .chat-bubble {
             background: var(--white);
             border-bottom-left-radius: 4px;
             box-shadow: var(--shadow);
@@ -405,44 +325,6 @@
             color: var(--gray);
             margin-top: 4px;
             padding: 0 4px;
-        }
-
-        .chat-product-card {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 12px;
-            margin-top: 8px;
-            box-shadow: var(--shadow);
-            display: flex;
-            gap: 12px;
-            max-width: 250px;
-        }
-
-        .chat-product-img {
-            width: 50px;
-            height: 50px;
-            background: var(--gray-light);
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-
-        .chat-product-info {
-            flex: 1;
-        }
-
-        .chat-product-name {
-            font-size: 13px;
-            font-weight: 500;
-            margin-bottom: 2px;
-        }
-
-        .chat-product-price {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--primary);
         }
 
         .chat-modal-footer {
@@ -466,11 +348,29 @@
             gap: 6px;
         }
 
-        .chat-insight-content {
-            color: var(--gray);
+        .chat-insight-content { color: var(--gray); }
+
+        .chat-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
         }
 
-        /* ===== EMPTY STATE ===== */
+        .chat-action-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .chat-action-btn.primary { background: var(--primary); color: var(--white); }
+        .chat-action-btn.success { background: var(--success); color: var(--white); }
+        .chat-action-btn.danger { background: rgba(239, 68, 68, 0.1); color: var(--error); }
+
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -479,23 +379,12 @@
             box-shadow: var(--shadow);
         }
 
-        .empty-state-icon {
-            font-size: 64px;
-            margin-bottom: 16px;
-        }
+        .empty-state-icon { font-size: 64px; margin-bottom: 16px; }
+        .empty-state-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .empty-state-text { font-size: 14px; color: var(--gray); }
 
-        .empty-state-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
+        .loading { text-align: center; padding: 40px; color: var(--gray); }
 
-        .empty-state-text {
-            font-size: 14px;
-            color: var(--gray);
-        }
-
-        /* ===== BOTTOM NAV ===== */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -516,59 +405,29 @@
             font-size: 10px;
         }
 
-        .nav-item.active {
-            color: var(--primary);
-        }
+        .nav-item.active { color: var(--primary); }
+        .nav-icon { font-size: 22px; margin-bottom: 4px; }
+        .nav-label { font-weight: 500; }
 
-        .nav-icon {
-            font-size: 22px;
-            margin-bottom: 4px;
-        }
-
-        .nav-label {
-            font-weight: 500;
-        }
-
-        /* ===== DESKTOP ===== */
         @media (min-width: 768px) {
-            body {
-                padding-bottom: 0;
-            }
-
-            .conversations-list {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
-            }
-
-            .chat-modal {
-                left: auto;
-                width: 450px;
-                right: 0;
-                box-shadow: -4px 0 20px rgba(0,0,0,0.1);
-            }
-
-            .bottom-nav {
-                display: none;
-            }
+            body { padding-bottom: 0; }
+            .conversations-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .chat-modal { left: auto; width: 450px; right: 0; box-shadow: -4px 0 20px rgba(0,0,0,0.1); }
+            .bottom-nav { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
     <header class="header">
         <div class="header-content">
-            <button class="back-btn" onclick="window.location.href='dashboard.html'">←</button>
+            <a href="Dashboard.html" class="back-btn">←</a>
             <span class="header-title">Conversations</span>
-            <span class="header-badge" id="totalConversations">32</span>
+            <span class="header-badge" id="totalConversations">0</span>
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
     <main class="container">
-
-        <!-- SEARCH & FILTER -->
         <div class="search-filter">
             <input type="text" class="search-input" placeholder="Rechercher..." id="searchInput" oninput="filterConversations()">
             <select class="filter-select" id="filterSelect" onchange="filterConversations()">
@@ -579,331 +438,293 @@
             </select>
         </div>
 
-        <!-- TABS -->
         <div class="tabs">
-            <button class="tab active" onclick="selectTab(this, 'all')">
-                Tous <span class="tab-count">32</span>
-            </button>
-            <button class="tab" onclick="selectTab(this, 'today')">
-                Aujourd'hui <span class="tab-count">12</span>
-            </button>
-            <button class="tab" onclick="selectTab(this, 'week')">
-                Cette semaine <span class="tab-count">28</span>
-            </button>
+            <button class="tab active" onclick="selectTab(this, 'all')">Tous <span class="tab-count" id="countAll">0</span></button>
+            <button class="tab" onclick="selectTab(this, 'today')">Aujourd'hui <span class="tab-count" id="countToday">0</span></button>
+            <button class="tab" onclick="selectTab(this, 'week')">Cette semaine <span class="tab-count" id="countWeek">0</span></button>
         </div>
 
-        <!-- CONVERSATIONS LIST -->
         <div class="conversations-list" id="conversationsList">
-            <!-- Generated by JS -->
+            <div class="loading">Chargement...</div>
         </div>
-
     </main>
 
-    <!-- CHAT DETAIL MODAL -->
     <div class="chat-modal" id="chatModal">
         <div class="chat-modal-header">
             <button class="chat-modal-close" onclick="closeChatModal()">←</button>
             <div class="chat-modal-info">
                 <div class="chat-modal-visitor" id="modalVisitor">Visiteur</div>
-                <div class="chat-modal-meta" id="modalMeta">Mobile • Brazzaville</div>
+                <div class="chat-modal-meta" id="modalMeta">Mobile</div>
             </div>
         </div>
-        <div class="chat-modal-body" id="chatModalBody">
-            <!-- Chat messages will be loaded here -->
-        </div>
+        <div class="chat-modal-body" id="chatModalBody"></div>
         <div class="chat-modal-footer">
             <div class="chat-insight">
-                <div class="chat-insight-title">💡 Résumé IA</div>
-                <div class="chat-insight-content" id="chatInsight">
-                    Le client s'intéressait à la robe rouge. Il a posé des questions sur les tailles et la livraison.
-                </div>
+                <div class="chat-insight-title">Resume</div>
+                <div class="chat-insight-content" id="chatInsight">Conversation avec un client.</div>
+            </div>
+            <div class="chat-actions">
+                <button class="chat-action-btn success" onclick="markAsSale()">Marquer vendu</button>
+                <button class="chat-action-btn danger" onclick="markAsLost()">Marquer perdu</button>
             </div>
         </div>
     </div>
 
-    <!-- BOTTOM NAVIGATION -->
     <nav class="bottom-nav">
-        <a href="dashboard.html" class="nav-item">
-            <div class="nav-icon">🏠</div>
-            <div class="nav-label">Accueil</div>
-        </a>
-        <a href="produits.html" class="nav-item">
-            <div class="nav-icon">📦</div>
-            <div class="nav-label">Produits</div>
-        </a>
-        <a href="commandes.html" class="nav-item">
-            <div class="nav-icon">🧾</div>
-            <div class="nav-label">Commandes</div>
-        </a>
-        <a href="conversations.html" class="nav-item active">
-            <div class="nav-icon">💬</div>
-            <div class="nav-label">Messages</div>
-        </a>
-        <a href="trafic.html" class="nav-item">
-            <div class="nav-icon">📊</div>
-            <div class="nav-label">Trafic</div>
-        </a>
+        <a href="Dashboard.html" class="nav-item"><div class="nav-icon">🏠</div><div class="nav-label">Accueil</div></a>
+        <a href="produits.html" class="nav-item"><div class="nav-icon">📦</div><div class="nav-label">Produits</div></a>
+        <a href="commande.html" class="nav-item"><div class="nav-icon">🧾</div><div class="nav-label">Commandes</div></a>
+        <a href="conversation.html" class="nav-item active"><div class="nav-icon">💬</div><div class="nav-label">Messages</div></a>
+        <a href="trafic.html" class="nav-item"><div class="nav-icon">📊</div><div class="nav-label">Trafic</div></a>
     </nav>
 
     <script>
-        // ===== DONNÉES CONVERSATIONS =====
-        const conversations = [
-            {
-                id: 1,
-                visitor: 'Visiteur #1247',
-                device: 'Mobile Android',
-                city: 'Brazzaville',
-                time: '14:32',
-                date: "Aujourd'hui",
-                status: 'sale',
-                unread: true,
-                preview: "Merci beaucoup ! Je viens de payer. C'est ma taille M que j'ai commandé.",
-                product: { name: 'Robe rouge fleurie', price: 5000 },
-                messages: [
-                    { type: 'bot', text: "Salut ! 👋 Je suis l'assistant de Marie Fashion. Comment puis-je t'aider ?", time: '14:20' },
-                    { type: 'user', text: "Bonjour, je veux voir la robe rouge", time: '14:21' },
-                    { type: 'bot', text: "Excellent choix ! La robe rouge fleurie est disponible en tailles S, M, L et XL. Elle est à 5 000 FCFA. Tu fais quelle taille ?", time: '14:21', product: { name: 'Robe rouge fleurie', price: 5000 } },
-                    { type: 'user', text: "Je fais du M. Vous livrez à Bacongo ?", time: '14:23' },
-                    { type: 'bot', text: "Oui on livre à Bacongo ! 🚚 La livraison coûte 1 500 FCFA. Total : 6 500 FCFA. Tu veux commander ?", time: '14:23' },
-                    { type: 'user', text: "Oui je prends", time: '14:28' },
-                    { type: 'bot', text: "Super ! Voici le lien pour payer : [Lien paiement]. Une fois payé, Marie te contactera pour la livraison. 😊", time: '14:28' },
-                    { type: 'user', text: "Merci beaucoup ! Je viens de payer. C'est ma taille M que j'ai commandé.", time: '14:32' }
-                ],
-                insight: "Vente conclue ! Le client a acheté la robe rouge taille M avec livraison à Bacongo. Durée conversation : 12 min."
-            },
-            {
-                id: 2,
-                visitor: 'Visiteur #1246',
-                device: 'Mobile iPhone',
-                city: 'Pointe-Noire',
-                time: '13:45',
-                date: "Aujourd'hui",
-                status: 'pending',
-                unread: true,
-                preview: "D'accord, je réfléchis et je reviens vers vous",
-                product: { name: 'Ensemble wax', price: 8000 },
-                messages: [
-                    { type: 'bot', text: "Salut ! 👋 Je suis l'assistant de Marie Fashion. Qu'est-ce qui te ferait plaisir ?", time: '13:30' },
-                    { type: 'user', text: "Je cherche un ensemble wax", time: '13:32' },
-                    { type: 'bot', text: "On a un bel ensemble wax à 8 000 FCFA ! Disponible en S, M et L. Tu veux voir ?", time: '13:32', product: { name: 'Ensemble wax', price: 8000 } },
-                    { type: 'user', text: "C'est un peu cher. Vous faites des réductions ?", time: '13:38' },
-                    { type: 'bot', text: "Je comprends ! Pour une première commande, on peut t'offrir la livraison gratuite. Ça te dit ?", time: '13:38' },
-                    { type: 'user', text: "D'accord, je réfléchis et je reviens vers vous", time: '13:45' }
-                ],
-                insight: "Client intéressé mais hésite sur le prix. A mentionné vouloir une réduction. Potentiel de conversion si relance."
-            },
-            {
-                id: 3,
-                visitor: 'Visiteur #1245',
-                device: 'Ordinateur',
-                city: 'Brazzaville',
-                time: '12:15',
-                date: "Aujourd'hui",
-                status: 'lost',
-                unread: false,
-                preview: "Ah dommage, je voulais du 42. Merci quand même",
-                product: { name: 'Sandales dorées', price: 2500 },
-                messages: [
-                    { type: 'bot', text: "Bienvenue chez Marie Fashion ! 👋 Je peux t'aider ?", time: '12:05' },
-                    { type: 'user', text: "Vous avez les sandales dorées en 42 ?", time: '12:08' },
-                    { type: 'bot', text: "Les sandales dorées sont disponibles en 37, 38, 39, 40 et 41. Malheureusement pas en 42 pour le moment. 😕", time: '12:08' },
-                    { type: 'user', text: "Ah dommage, je voulais du 42. Merci quand même", time: '12:15' }
-                ],
-                insight: "Vente perdue - taille 42 non disponible pour les sandales. Considérer l'ajout de cette taille au stock."
-            },
-            {
-                id: 4,
-                visitor: 'Visiteur #1244',
-                device: 'Mobile Android',
-                city: 'Kinshasa',
-                time: '11:30',
-                date: "Aujourd'hui",
-                status: 'sale',
-                unread: false,
-                preview: "C'est payé ! Merci",
-                product: { name: 'Bracelet perles', price: 1500 },
-                messages: [
-                    { type: 'bot', text: "Salut ! 👋 Comment puis-je t'aider ?", time: '11:15' },
-                    { type: 'user', text: "Le bracelet en perles c'est combien ?", time: '11:18' },
-                    { type: 'bot', text: "Le bracelet perles artisanal est à 1 500 FCFA. Disponible en blanc, or et rose. 💫", time: '11:18', product: { name: 'Bracelet perles', price: 1500 } },
-                    { type: 'user', text: "Je prends en or. Comment payer ?", time: '11:22' },
-                    { type: 'bot', text: "Parfait ! Tu peux payer par Mobile Money. Voici le lien : [Lien]. Une fois payé, dis-moi !", time: '11:22' },
-                    { type: 'user', text: "C'est payé ! Merci", time: '11:30' }
-                ],
-                insight: "Vente rapide ! Bracelet or commandé. Client de Kinshasa - vérifier les frais de livraison international."
-            },
-            {
-                id: 5,
-                visitor: 'Visiteur #1243',
-                device: 'Mobile Android',
-                city: 'Brazzaville',
-                time: '10:05',
-                date: "Aujourd'hui",
-                status: 'pending',
-                unread: false,
-                preview: "OK je vais voir avec ma sœur pour la taille",
-                product: { name: 'Robe rouge fleurie', price: 5000 },
-                messages: [
-                    { type: 'bot', text: "Salut ! 👋 Bienvenue chez Marie Fashion !", time: '09:50' },
-                    { type: 'user', text: "Bonjour ! La robe rouge c'est pour offrir, elle taille comment ?", time: '09:55' },
-                    { type: 'bot', text: "Super idée cadeau ! 🎁 La robe taille normalement. Pour une personne qui fait habituellement du M en magasin, je conseille M ici aussi.", time: '09:55' },
-                    { type: 'user', text: "OK je vais voir avec ma sœur pour la taille", time: '10:05' }
-                ],
-                insight: "Achat cadeau potentiel. Le client doit vérifier la taille avec le destinataire. Possibilité de relance."
+        var SUPABASE_URL = 'https://kolwacpvfxdrptldipzj.supabase.co';
+        var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvbHdhY3B2ZnhkcnB0bGRpcHpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4MjYzOTMsImV4cCI6MjA3NzQwMjM5M30.cXXOxBkX9KaddhfY5JoAvMGz-ohxdCoh5iQlHMUGHqE';
+        var supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        var vendor = null;
+        var conversations = [];
+        var products = {};
+        var currentConversation = null;
+        var currentPeriod = 'all';
+
+        async function init() {
+            var vendorData = localStorage.getItem('vendor');
+            if (!vendorData) {
+                window.location.href = 'login.html';
+                return;
             }
-        ];
-
-        // ===== INITIALISATION =====
-        function init() {
-            renderConversations();
-            updateTotalCount();
+            vendor = JSON.parse(vendorData);
+            await loadProducts();
+            await loadConversations();
         }
 
-        // ===== UPDATE COUNT =====
-        function updateTotalCount() {
-            document.getElementById('totalConversations').textContent = conversations.length;
+        async function loadProducts() {
+            var result = await supabaseClient.from('teka_products').select('*').eq('vendor_id', vendor.id);
+            if (result.data) {
+                result.data.forEach(function(p) { products[p.id] = p; });
+            }
         }
 
-        // ===== RENDER CONVERSATIONS =====
-        function renderConversations(filtered = null) {
-            const list = document.getElementById('conversationsList');
-            const data = filtered || conversations;
+        async function loadConversations() {
+            var result = await supabaseClient
+                .from('teka_conversations')
+                .select('*')
+                .eq('vendor_id', vendor.id)
+                .order('updated_at', { ascending: false });
 
-            if (data.length === 0) {
-                list.innerHTML = `
-                    <div class="empty-state" style="grid-column: 1 / -1;">
-                        <div class="empty-state-icon">💬</div>
-                        <h3 class="empty-state-title">Aucune conversation</h3>
-                        <p class="empty-state-text">Les conversations avec tes clients apparaîtront ici</p>
-                    </div>
-                `;
+            if (result.error) {
+                console.log('Erreur:', result.error);
                 return;
             }
 
-            list.innerHTML = data.map(conv => `
-                <div class="conversation-card ${conv.unread ? 'unread' : ''}" onclick="openChatModal(${conv.id})">
-                    <div class="conversation-header">
-                        <div class="conversation-avatar">👤</div>
-                        <div class="conversation-info">
-                            <div class="conversation-visitor">
-                                ${conv.visitor}
-                                <span class="badge ${conv.status}">${getStatusLabel(conv.status)}</span>
-                            </div>
-                            <div class="conversation-meta">${conv.device} • ${conv.city}</div>
-                        </div>
-                        <div class="conversation-time">
-                            <div class="conversation-hour">${conv.time}</div>
-                            ${conv.unread ? '<div class="conversation-unread"></div>' : ''}
-                        </div>
-                    </div>
-                    <div class="conversation-preview">${conv.preview}</div>
-                    ${conv.product ? `
-                        <div class="conversation-product">
-                            <div class="conversation-product-img">📷</div>
-                            <span>${conv.product.name} • ${formatPrice(conv.product.price)}</span>
-                        </div>
-                    ` : ''}
-                </div>
-            `).join('');
+            conversations = result.data || [];
+            updateCounts();
+            renderConversations();
         }
 
-        // ===== GET STATUS LABEL =====
-        function getStatusLabel(status) {
-            switch(status) {
-                case 'sale': return '✓ Vendu';
-                case 'pending': return '⏳ En cours';
-                case 'lost': return '✗ Perdu';
-                default: return status;
+        function updateCounts() {
+            var now = new Date();
+            var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            var weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+            var countToday = conversations.filter(function(c) {
+                return new Date(c.created_at) >= today;
+            }).length;
+
+            var countWeek = conversations.filter(function(c) {
+                return new Date(c.created_at) >= weekAgo;
+            }).length;
+
+            document.getElementById('totalConversations').textContent = conversations.length;
+            document.getElementById('countAll').textContent = conversations.length;
+            document.getElementById('countToday').textContent = countToday;
+            document.getElementById('countWeek').textContent = countWeek;
+        }
+
+        function formatDate(dateStr) {
+            var date = new Date(dateStr);
+            var now = new Date();
+            var diff = now - date;
+
+            if (diff < 86400000) {
+                return "Aujourd'hui, " + date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
             }
+            if (diff < 172800000) {
+                return "Hier, " + date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+            }
+            return date.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
         }
 
-        // ===== FORMAT PRICE =====
-        function formatPrice(price) {
-            return price.toLocaleString('fr-FR') + ' FCFA';
+        function formatTime(dateStr) {
+            var date = new Date(dateStr);
+            return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
         }
 
-        // ===== FILTER CONVERSATIONS =====
+        function getStatusLabel(status) {
+            var labels = {
+                'sale': 'Vendu',
+                'pending': 'En cours',
+                'lost': 'Perdu'
+            };
+            return labels[status] || status;
+        }
+
+        function getLastMessage(conv) {
+            if (!conv.messages || conv.messages.length === 0) return 'Aucun message';
+            var lastMsg = conv.messages[conv.messages.length - 1];
+            return lastMsg.content || 'Message';
+        }
+
+        function renderConversations(filtered) {
+            var list = document.getElementById('conversationsList');
+            var data = filtered || conversations;
+
+            // Filtrer par periode
+            if (currentPeriod !== 'all') {
+                var now = new Date();
+                var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                var weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+                if (currentPeriod === 'today') {
+                    data = data.filter(function(c) { return new Date(c.created_at) >= today; });
+                } else if (currentPeriod === 'week') {
+                    data = data.filter(function(c) { return new Date(c.created_at) >= weekAgo; });
+                }
+            }
+
+            if (data.length === 0) {
+                list.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;"><div class="empty-state-icon">💬</div><h3 class="empty-state-title">Aucune conversation</h3><p class="empty-state-text">Les conversations avec tes clients apparaitront ici</p></div>';
+                return;
+            }
+
+            var html = '';
+            data.forEach(function(conv) {
+                var product = conv.product_id ? products[conv.product_id] : null;
+                var productHtml = '';
+                
+                if (product) {
+                    var productImg = product.images && product.images.length > 0 
+                        ? '<img src="' + product.images[0] + '" alt="">' 
+                        : '📷';
+                    productHtml = '<div class="conversation-product"><div class="conversation-product-img">' + productImg + '</div><span>' + product.name + '</span></div>';
+                }
+
+                html += '<div class="conversation-card" onclick="openChatModal(\'' + conv.id + '\')">' +
+                    '<div class="conversation-header">' +
+                        '<div class="conversation-avatar">👤</div>' +
+                        '<div class="conversation-info">' +
+                            '<div class="conversation-visitor">' + (conv.visitor_name || 'Visiteur') + ' <span class="badge ' + conv.status + '">' + getStatusLabel(conv.status) + '</span></div>' +
+                            '<div class="conversation-meta">' + (conv.visitor_device || 'Appareil inconnu') + '</div>' +
+                        '</div>' +
+                        '<div class="conversation-time">' +
+                            '<div class="conversation-hour">' + formatTime(conv.updated_at) + '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="conversation-preview">' + getLastMessage(conv) + '</div>' +
+                    productHtml +
+                '</div>';
+            });
+
+            list.innerHTML = html;
+        }
+
         function filterConversations() {
-            const search = document.getElementById('searchInput').value.toLowerCase();
-            const status = document.getElementById('filterSelect').value;
+            var search = document.getElementById('searchInput').value.toLowerCase();
+            var status = document.getElementById('filterSelect').value;
 
-            let filtered = conversations;
+            var filtered = conversations;
 
             if (search) {
-                filtered = filtered.filter(c => 
-                    c.visitor.toLowerCase().includes(search) ||
-                    c.preview.toLowerCase().includes(search) ||
-                    (c.product && c.product.name.toLowerCase().includes(search))
-                );
+                filtered = filtered.filter(function(c) {
+                    var visitorMatch = (c.visitor_name || '').toLowerCase().indexOf(search) !== -1;
+                    var messageMatch = getLastMessage(c).toLowerCase().indexOf(search) !== -1;
+                    var product = c.product_id ? products[c.product_id] : null;
+                    var productMatch = product && product.name.toLowerCase().indexOf(search) !== -1;
+                    return visitorMatch || messageMatch || productMatch;
+                });
             }
 
             if (status !== 'all') {
-                filtered = filtered.filter(c => c.status === status);
+                filtered = filtered.filter(function(c) { return c.status === status; });
             }
 
             renderConversations(filtered);
         }
 
-        // ===== SELECT TAB =====
         function selectTab(btn, period) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
             btn.classList.add('active');
-            // Filtrer par période si nécessaire
+            currentPeriod = period;
+            renderConversations();
         }
 
-        // ===== OPEN CHAT MODAL =====
         function openChatModal(id) {
-            const conv = conversations.find(c => c.id === id);
-            if (!conv) return;
+            currentConversation = conversations.find(function(c) { return c.id === id; });
+            if (!currentConversation) return;
 
-            // Mark as read
-            conv.unread = false;
-            renderConversations();
+            document.getElementById('modalVisitor').textContent = currentConversation.visitor_name || 'Visiteur';
+            document.getElementById('modalMeta').textContent = (currentConversation.visitor_device || 'Appareil') + ' - ' + formatDate(currentConversation.created_at);
 
-            // Update modal header
-            document.getElementById('modalVisitor').textContent = conv.visitor;
-            document.getElementById('modalMeta').textContent = `${conv.device} • ${conv.city} • ${conv.date} à ${conv.time}`;
-            document.getElementById('chatInsight').textContent = conv.insight;
+            var summary = currentConversation.summary || 'Conversation avec un client potentiel.';
+            document.getElementById('chatInsight').textContent = summary;
 
-            // Render messages
-            const body = document.getElementById('chatModalBody');
-            body.innerHTML = `
-                <div class="chat-date-divider">
-                    <span>${conv.date}</span>
-                </div>
-                ${conv.messages.map(msg => `
-                    <div class="chat-message ${msg.type}">
-                        <div class="chat-bubble">${msg.text}</div>
-                        ${msg.product ? `
-                            <div class="chat-product-card">
-                                <div class="chat-product-img">📷</div>
-                                <div class="chat-product-info">
-                                    <div class="chat-product-name">${msg.product.name}</div>
-                                    <div class="chat-product-price">${formatPrice(msg.product.price)}</div>
-                                </div>
-                            </div>
-                        ` : ''}
-                        <div class="chat-time">${msg.time}</div>
-                    </div>
-                `).join('')}
-            `;
+            var body = document.getElementById('chatModalBody');
+            var messages = currentConversation.messages || [];
 
-            // Show modal
+            if (messages.length === 0) {
+                body.innerHTML = '<div class="empty-state"><div class="empty-state-icon">💬</div><p>Aucun message</p></div>';
+            } else {
+                var html = '<div class="chat-date-divider"><span>' + formatDate(currentConversation.created_at) + '</span></div>';
+                
+                messages.forEach(function(msg) {
+                    var role = msg.role === 'assistant' ? 'assistant' : 'user';
+                    html += '<div class="chat-message ' + role + '">' +
+                        '<div class="chat-bubble">' + (msg.content || '') + '</div>' +
+                    '</div>';
+                });
+
+                body.innerHTML = html;
+            }
+
             document.getElementById('chatModal').classList.add('active');
-            
-            // Scroll to bottom
             body.scrollTop = body.scrollHeight;
         }
 
-        // ===== CLOSE CHAT MODAL =====
         function closeChatModal() {
             document.getElementById('chatModal').classList.remove('active');
+            currentConversation = null;
         }
 
-        // ===== START =====
+        async function markAsSale() {
+            if (!currentConversation) return;
+            await updateConversationStatus('sale');
+        }
+
+        async function markAsLost() {
+            if (!currentConversation) return;
+            await updateConversationStatus('lost');
+        }
+
+        async function updateConversationStatus(newStatus) {
+            var result = await supabaseClient
+                .from('teka_conversations')
+                .update({ status: newStatus })
+                .eq('id', currentConversation.id);
+
+            if (result.error) {
+                alert('Erreur lors de la mise a jour');
+                console.log(result.error);
+                return;
+            }
+
+            closeChatModal();
+            await loadConversations();
+        }
+
         init();
     </script>
 
 </body>
-
 </html>
