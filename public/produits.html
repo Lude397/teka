@@ -854,7 +854,7 @@
                         <span class="product-stock ${getStockClass(product.stock)}">${getStockLabel(product.stock)}</span>
                     </div>
                     <div class="product-actions">
-                        <button class="action-btn edit" onclick="editProduct(${product.id})">✏️</button>
+                        <button class="action-btn edit" onclick="editProduct('${product.id}')">✏️</button>
                         <button class="action-btn delete" onclick="deleteProduct(${product.id})">🗑️</button>
                     </div>
                 </div>
@@ -1123,5 +1123,6 @@
 
 </body>
 </html>
+
 
 
