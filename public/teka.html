@@ -1038,8 +1038,9 @@
                     quantity: pendingOrder.quantity,
                     size: pendingOrder.size || null,
                     color: pendingOrder.color || null,
-                    total_price: total,
+                    price: product.price,
                     delivery_fee: deliveryFee,
+                    total: total,
                     status: 'pending'
                 };
                 
