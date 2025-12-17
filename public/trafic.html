@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Téka - Trafic</title>
+    <title>Teka - Trafic</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
-        /* ===== VARIABLES ===== */
         :root {
             --primary: #FF6B35;
             --primary-dark: #E55A2B;
@@ -30,12 +31,7 @@
             --radius-sm: 8px;
         }
 
-        /* ===== RESET & BASE ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -46,7 +42,6 @@
             padding-bottom: 80px;
         }
 
-        /* ===== HEADER ===== */
         .header {
             background: var(--white);
             padding: 16px 20px;
@@ -75,21 +70,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            text-decoration: none;
+            color: var(--secondary);
         }
 
-        .header-title {
-            font-size: 18px;
-            font-weight: 600;
-        }
+        .header-title { font-size: 18px; font-weight: 600; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px 16px; }
 
-        /* ===== CONTAINER ===== */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 16px;
-        }
-
-        /* ===== PERIOD SELECTOR ===== */
         .period-selector {
             display: flex;
             background: var(--white);
@@ -113,12 +100,8 @@
             transition: all 0.2s;
         }
 
-        .period-btn.active {
-            background: var(--primary);
-            color: var(--white);
-        }
+        .period-btn.active { background: var(--primary); color: var(--white); }
 
-        /* ===== STATS GRID ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -145,16 +128,8 @@
             background: var(--light);
         }
 
-        .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: var(--gray);
-        }
+        .stat-value { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+        .stat-label { font-size: 12px; color: var(--gray); }
 
         .stat-trend {
             display: flex;
@@ -164,18 +139,10 @@
             margin-top: 8px;
         }
 
-        .stat-trend.up {
-            color: var(--success);
-        }
+        .stat-trend.up { color: var(--success); }
+        .stat-trend.down { color: var(--error); }
 
-        .stat-trend.down {
-            color: var(--error);
-        }
-
-        /* ===== SECTION ===== */
-        .section {
-            margin-bottom: 24px;
-        }
+        .section { margin-bottom: 24px; }
 
         .section-header {
             display: flex;
@@ -184,12 +151,8 @@
             margin-bottom: 16px;
         }
 
-        .section-title {
-            font-size: 16px;
-            font-weight: 600;
-        }
+        .section-title { font-size: 16px; font-weight: 600; }
 
-        /* ===== CHART CARD ===== */
         .chart-card {
             background: var(--white);
             border-radius: var(--radius);
@@ -197,13 +160,8 @@
             box-shadow: var(--shadow);
         }
 
-        .chart-title {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
+        .chart-title { font-size: 14px; font-weight: 600; margin-bottom: 16px; }
 
-        /* ===== SIMPLE BAR CHART ===== */
         .bar-chart {
             display: flex;
             align-items: flex-end;
@@ -229,16 +187,9 @@
             opacity: 0.7;
         }
 
-        .bar.highlight {
-            opacity: 1;
-        }
+        .bar.highlight { opacity: 1; }
+        .bar-label { font-size: 10px; color: var(--gray); }
 
-        .bar-label {
-            font-size: 10px;
-            color: var(--gray);
-        }
-
-        /* ===== PEAK HOURS ===== */
         .peak-hours {
             display: flex;
             gap: 12px;
@@ -261,23 +212,10 @@
             color: var(--white);
         }
 
-        .peak-hour-time {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
+        .peak-hour-time { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+        .peak-hour-count { font-size: 12px; opacity: 0.8; }
 
-        .peak-hour-count {
-            font-size: 12px;
-            opacity: 0.8;
-        }
-
-        /* ===== VISITORS LIST ===== */
-        .visitors-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+        .visitors-list { display: flex; flex-direction: column; gap: 8px; }
 
         .visitor-card {
             background: var(--white);
@@ -300,61 +238,12 @@
             font-size: 18px;
         }
 
-        .visitor-info {
-            flex: 1;
-        }
-
-        .visitor-device {
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 2px;
-        }
-
-        .visitor-details {
-            font-size: 12px;
-            color: var(--gray);
-        }
-
-        .visitor-time {
-            text-align: right;
-        }
-
-        .visitor-hour {
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 2px;
-        }
-
-        .visitor-date {
-            font-size: 11px;
-            color: var(--gray);
-        }
-
-        .visitor-products {
-            margin-top: 8px;
-            padding-top: 8px;
-            border-top: 1px solid var(--gray-light);
-        }
-
-        .visitor-products-label {
-            font-size: 11px;
-            color: var(--gray);
-            margin-bottom: 4px;
-        }
-
-        .visitor-products-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .product-tag {
-            background: var(--light);
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            color: var(--secondary);
-        }
+        .visitor-info { flex: 1; }
+        .visitor-device { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+        .visitor-details { font-size: 12px; color: var(--gray); }
+        .visitor-time { text-align: right; }
+        .visitor-hour { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+        .visitor-date { font-size: 11px; color: var(--gray); }
 
         .visitor-chat-btn {
             background: var(--primary);
@@ -368,13 +257,10 @@
             display: flex;
             align-items: center;
             gap: 4px;
+            margin-top: 6px;
         }
 
-        /* ===== DEVICE BREAKDOWN ===== */
-        .device-breakdown {
-            display: flex;
-            gap: 12px;
-        }
+        .device-breakdown { display: flex; gap: 12px; }
 
         .device-card {
             flex: 1;
@@ -385,23 +271,10 @@
             text-align: center;
         }
 
-        .device-icon {
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
+        .device-icon { font-size: 28px; margin-bottom: 8px; }
+        .device-percent { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+        .device-label { font-size: 12px; color: var(--gray); }
 
-        .device-percent {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .device-label {
-            font-size: 12px;
-            color: var(--gray);
-        }
-
-        /* ===== LOCATION LIST ===== */
         .location-list {
             background: var(--white);
             border-radius: var(--radius);
@@ -417,14 +290,8 @@
             border-bottom: 1px solid var(--gray-light);
         }
 
-        .location-item:last-child {
-            border-bottom: none;
-        }
-
-        .location-name {
-            font-size: 14px;
-            font-weight: 500;
-        }
+        .location-item:last-child { border-bottom: none; }
+        .location-name { font-size: 14px; font-weight: 500; }
 
         .location-bar-container {
             flex: 1;
@@ -441,13 +308,8 @@
             border-radius: 4px;
         }
 
-        .location-count {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--primary);
-        }
+        .location-count { font-size: 14px; font-weight: 600; color: var(--primary); }
 
-        /* ===== EMPTY STATE ===== */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -456,23 +318,12 @@
             box-shadow: var(--shadow);
         }
 
-        .empty-state-icon {
-            font-size: 64px;
-            margin-bottom: 16px;
-        }
+        .empty-state-icon { font-size: 64px; margin-bottom: 16px; }
+        .empty-state-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .empty-state-text { font-size: 14px; color: var(--gray); }
 
-        .empty-state-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
+        .loading { text-align: center; padding: 40px; color: var(--gray); }
 
-        .empty-state-text {
-            font-size: 14px;
-            color: var(--gray);
-        }
-
-        /* ===== BOTTOM NAV ===== */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -493,349 +344,340 @@
             font-size: 10px;
         }
 
-        .nav-item.active {
-            color: var(--primary);
-        }
+        .nav-item.active { color: var(--primary); }
+        .nav-icon { font-size: 22px; margin-bottom: 4px; }
+        .nav-label { font-weight: 500; }
 
-        .nav-icon {
-            font-size: 22px;
-            margin-bottom: 4px;
-        }
-
-        .nav-label {
-            font-weight: 500;
-        }
-
-        /* ===== DESKTOP ===== */
         @media (min-width: 768px) {
-            body {
-                padding-bottom: 0;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-
-            .bottom-nav {
-                display: none;
-            }
+            body { padding-bottom: 0; }
+            .stats-grid { grid-template-columns: repeat(4, 1fr); }
+            .bottom-nav { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
     <header class="header">
         <div class="header-content">
-            <button class="back-btn" onclick="window.location.href='dashboard.html'">←</button>
+            <a href="Dashboard.html" class="back-btn">←</a>
             <span class="header-title">Trafic</span>
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
     <main class="container">
-
-        <!-- PERIOD SELECTOR -->
         <div class="period-selector">
             <button class="period-btn active" onclick="selectPeriod(this, 'today')">Aujourd'hui</button>
             <button class="period-btn" onclick="selectPeriod(this, 'week')">7 jours</button>
             <button class="period-btn" onclick="selectPeriod(this, 'month')">30 jours</button>
         </div>
 
-        <!-- STATS -->
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-icon">👁</div>
-                <div class="stat-value" id="totalVisitors">124</div>
+                <div class="stat-value" id="totalVisitors">0</div>
                 <div class="stat-label">Visiteurs</div>
-                <div class="stat-trend up">↑ +18% vs hier</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">📄</div>
-                <div class="stat-value" id="pageViews">342</div>
-                <div class="stat-label">Pages vues</div>
-                <div class="stat-trend up">↑ +12%</div>
+                <div class="stat-trend up" id="visitorsTrend"></div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">💬</div>
-                <div class="stat-value" id="chatStarted">32</div>
-                <div class="stat-label">Chats démarrés</div>
-                <div class="stat-trend down">↓ -5%</div>
+                <div class="stat-value" id="chatStarted">0</div>
+                <div class="stat-label">Chats demarres</div>
+                <div class="stat-trend up" id="chatTrend"></div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">🛒</div>
-                <div class="stat-value" id="conversionRate">6.5%</div>
+                <div class="stat-value" id="salesCount">0</div>
+                <div class="stat-label">Ventes</div>
+                <div class="stat-trend up" id="salesTrend"></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-value" id="conversionRate">0%</div>
                 <div class="stat-label">Taux conversion</div>
-                <div class="stat-trend up">↑ +2%</div>
+                <div class="stat-trend up" id="conversionTrend"></div>
             </div>
         </div>
 
-        <!-- CHART -->
         <div class="section">
             <div class="chart-card">
-                <div class="chart-title">Visiteurs par heure</div>
+                <div class="chart-title">Conversations par heure</div>
                 <div class="bar-chart" id="hourlyChart">
-                    <!-- Generated by JS -->
+                    <div class="loading">Chargement...</div>
                 </div>
             </div>
         </div>
 
-        <!-- PEAK HOURS -->
         <div class="section">
             <div class="section-header">
                 <h2 class="section-title">Heures de pointe</h2>
             </div>
             <div class="peak-hours" id="peakHours">
-                <!-- Generated by JS -->
+                <div class="loading">Chargement...</div>
             </div>
         </div>
 
-        <!-- DEVICES -->
         <div class="section">
             <div class="section-header">
                 <h2 class="section-title">Appareils</h2>
             </div>
-            <div class="device-breakdown">
+            <div class="device-breakdown" id="deviceBreakdown">
                 <div class="device-card">
                     <div class="device-icon">📱</div>
-                    <div class="device-percent">78%</div>
+                    <div class="device-percent" id="mobilePercent">0%</div>
                     <div class="device-label">Mobile</div>
                 </div>
                 <div class="device-card">
                     <div class="device-icon">💻</div>
-                    <div class="device-percent">18%</div>
+                    <div class="device-percent" id="desktopPercent">0%</div>
                     <div class="device-label">Ordinateur</div>
                 </div>
-                <div class="device-card">
-                    <div class="device-icon">📟</div>
-                    <div class="device-percent">4%</div>
-                    <div class="device-label">Tablette</div>
-                </div>
             </div>
         </div>
 
-        <!-- LOCATIONS -->
         <div class="section">
             <div class="section-header">
-                <h2 class="section-title">Villes</h2>
-            </div>
-            <div class="location-list" id="locationList">
-                <!-- Generated by JS -->
-            </div>
-        </div>
-
-        <!-- RECENT VISITORS -->
-        <div class="section">
-            <div class="section-header">
-                <h2 class="section-title">Visiteurs récents</h2>
+                <h2 class="section-title">Visiteurs recents</h2>
             </div>
             <div class="visitors-list" id="visitorsList">
-                <!-- Generated by JS -->
+                <div class="loading">Chargement...</div>
             </div>
         </div>
-
     </main>
 
-    <!-- BOTTOM NAVIGATION -->
     <nav class="bottom-nav">
-        <a href="dashboard.html" class="nav-item">
-            <div class="nav-icon">🏠</div>
-            <div class="nav-label">Accueil</div>
-        </a>
-        <a href="produits.html" class="nav-item">
-            <div class="nav-icon">📦</div>
-            <div class="nav-label">Produits</div>
-        </a>
-        <a href="commandes.html" class="nav-item">
-            <div class="nav-icon">🧾</div>
-            <div class="nav-label">Commandes</div>
-        </a>
-        <a href="conversations.html" class="nav-item">
-            <div class="nav-icon">💬</div>
-            <div class="nav-label">Messages</div>
-        </a>
-        <a href="trafic.html" class="nav-item active">
-            <div class="nav-icon">📊</div>
-            <div class="nav-label">Trafic</div>
-        </a>
+        <a href="Dashboard.html" class="nav-item"><div class="nav-icon">🏠</div><div class="nav-label">Accueil</div></a>
+        <a href="produits.html" class="nav-item"><div class="nav-icon">📦</div><div class="nav-label">Produits</div></a>
+        <a href="commande.html" class="nav-item"><div class="nav-icon">🧾</div><div class="nav-label">Commandes</div></a>
+        <a href="conversation.html" class="nav-item"><div class="nav-icon">💬</div><div class="nav-label">Messages</div></a>
+        <a href="trafic.html" class="nav-item active"><div class="nav-icon">📊</div><div class="nav-label">Trafic</div></a>
     </nav>
 
     <script>
-        // ===== DONNÉES SIMULÉES =====
-        const trafficData = {
-            hourly: [
-                { hour: '6h', count: 3 },
-                { hour: '8h', count: 8 },
-                { hour: '10h', count: 12 },
-                { hour: '12h', count: 25 },
-                { hour: '14h', count: 18 },
-                { hour: '16h', count: 15 },
-                { hour: '18h', count: 22 },
-                { hour: '20h', count: 28 },
-                { hour: '22h', count: 14 }
-            ],
-            peakHours: [
-                { time: '20h-21h', count: 28, top: true },
-                { time: '12h-13h', count: 25, top: false },
-                { time: '18h-19h', count: 22, top: false }
-            ],
-            locations: [
-                { name: 'Brazzaville', count: 68, percent: 55 },
-                { name: 'Pointe-Noire', count: 42, percent: 34 },
-                { name: 'Kinshasa', count: 10, percent: 8 },
-                { name: 'Autres', count: 4, percent: 3 }
-            ],
-            visitors: [
-                {
-                    id: 1,
-                    device: 'Mobile Android',
-                    browser: 'Chrome',
-                    city: 'Brazzaville',
-                    time: '14:32',
-                    date: "Aujourd'hui",
-                    products: ['Robe rouge fleurie', 'Sac à main noir'],
-                    hasChat: true
-                },
-                {
-                    id: 2,
-                    device: 'Mobile iPhone',
-                    browser: 'Safari',
-                    city: 'Pointe-Noire',
-                    time: '14:15',
-                    date: "Aujourd'hui",
-                    products: ['Ensemble wax'],
-                    hasChat: false
-                },
-                {
-                    id: 3,
-                    device: 'Ordinateur',
-                    browser: 'Firefox',
-                    city: 'Brazzaville',
-                    time: '13:48',
-                    date: "Aujourd'hui",
-                    products: ['Sandales dorées', 'Bracelet perles'],
-                    hasChat: true
-                },
-                {
-                    id: 4,
-                    device: 'Mobile Android',
-                    browser: 'Chrome',
-                    city: 'Kinshasa',
-                    time: '12:22',
-                    date: "Aujourd'hui",
-                    products: [],
-                    hasChat: false
-                },
-                {
-                    id: 5,
-                    device: 'Mobile Android',
-                    browser: 'Opera',
-                    city: 'Brazzaville',
-                    time: '11:05',
-                    date: "Aujourd'hui",
-                    products: ['Foulard soie'],
-                    hasChat: true
-                }
-            ]
-        };
+        var SUPABASE_URL = 'https://kolwacpvfxdrptldipzj.supabase.co';
+        var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvbHdhY3B2ZnhkcnB0bGRpcHpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4MjYzOTMsImV4cCI6MjA3NzQwMjM5M30.cXXOxBkX9KaddhfY5JoAvMGz-ohxdCoh5iQlHMUGHqE';
+        var supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // ===== INITIALISATION =====
-        function init() {
+        var vendor = null;
+        var conversations = [];
+        var products = {};
+        var currentPeriod = 'today';
+
+        async function init() {
+            var vendorData = localStorage.getItem('vendor');
+            if (!vendorData) {
+                window.location.href = 'login.html';
+                return;
+            }
+            vendor = JSON.parse(vendorData);
+            await loadProducts();
+            await loadConversations();
+        }
+
+        async function loadProducts() {
+            var result = await supabaseClient.from('teka_products').select('*').eq('vendor_id', vendor.id);
+            if (result.data) {
+                result.data.forEach(function(p) { products[p.id] = p; });
+            }
+        }
+
+        async function loadConversations() {
+            var result = await supabaseClient
+                .from('teka_conversations')
+                .select('*')
+                .eq('vendor_id', vendor.id)
+                .order('created_at', { ascending: false });
+
+            if (result.error) {
+                console.log('Erreur:', result.error);
+                return;
+            }
+
+            conversations = result.data || [];
+            updateStats();
             renderHourlyChart();
             renderPeakHours();
-            renderLocations();
+            renderDevices();
             renderVisitors();
         }
 
-        // ===== PERIOD SELECTOR =====
+        function getFilteredConversations() {
+            var now = new Date();
+            var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            var weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+            var monthAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+            return conversations.filter(function(c) {
+                var date = new Date(c.created_at);
+                if (currentPeriod === 'today') return date >= today;
+                if (currentPeriod === 'week') return date >= weekAgo;
+                if (currentPeriod === 'month') return date >= monthAgo;
+                return true;
+            });
+        }
+
+        function updateStats() {
+            var filtered = getFilteredConversations();
+            var total = filtered.length;
+            var sales = filtered.filter(function(c) { return c.status === 'sale'; }).length;
+            var convRate = total > 0 ? Math.round((sales / total) * 100) : 0;
+
+            document.getElementById('totalVisitors').textContent = total;
+            document.getElementById('chatStarted').textContent = total;
+            document.getElementById('salesCount').textContent = sales;
+            document.getElementById('conversionRate').textContent = convRate + '%';
+        }
+
         function selectPeriod(btn, period) {
-            document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.period-btn').forEach(function(b) { b.classList.remove('active'); });
             btn.classList.add('active');
-            // Ici on pourrait charger les données pour la période sélectionnée
+            currentPeriod = period;
+            updateStats();
+            renderHourlyChart();
+            renderPeakHours();
+            renderDevices();
+            renderVisitors();
         }
 
-        // ===== RENDER HOURLY CHART =====
         function renderHourlyChart() {
-            const chart = document.getElementById('hourlyChart');
-            const maxCount = Math.max(...trafficData.hourly.map(h => h.count));
+            var chart = document.getElementById('hourlyChart');
+            var filtered = getFilteredConversations();
 
-            chart.innerHTML = trafficData.hourly.map(h => {
-                const height = (h.count / maxCount) * 100;
-                const isHighlight = h.count === maxCount;
-                return `
-                    <div class="bar-item">
-                        <div class="bar ${isHighlight ? 'highlight' : ''}" style="height: ${height}%"></div>
-                        <span class="bar-label">${h.hour}</span>
-                    </div>
-                `;
-            }).join('');
+            if (filtered.length === 0) {
+                chart.innerHTML = '<div class="empty-state" style="width:100%;padding:20px;"><p>Aucune donnee</p></div>';
+                return;
+            }
+
+            // Compter par heure
+            var hourCounts = {};
+            for (var i = 0; i < 24; i++) { hourCounts[i] = 0; }
+
+            filtered.forEach(function(c) {
+                var hour = new Date(c.created_at).getHours();
+                hourCounts[hour]++;
+            });
+
+            // Afficher seulement quelques heures cles
+            var hours = [6, 8, 10, 12, 14, 16, 18, 20, 22];
+            var maxCount = Math.max.apply(null, hours.map(function(h) { return hourCounts[h]; }));
+            if (maxCount === 0) maxCount = 1;
+
+            var html = '';
+            hours.forEach(function(h) {
+                var count = hourCounts[h];
+                var height = (count / maxCount) * 100;
+                var isHighlight = count === maxCount && count > 0;
+                html += '<div class="bar-item">' +
+                    '<div class="bar ' + (isHighlight ? 'highlight' : '') + '" style="height: ' + Math.max(height, 5) + '%"></div>' +
+                    '<span class="bar-label">' + h + 'h</span>' +
+                '</div>';
+            });
+
+            chart.innerHTML = html;
         }
 
-        // ===== RENDER PEAK HOURS =====
         function renderPeakHours() {
-            const container = document.getElementById('peakHours');
-            container.innerHTML = trafficData.peakHours.map(h => `
-                <div class="peak-hour-card ${h.top ? 'top' : ''}">
-                    <div class="peak-hour-time">${h.time}</div>
-                    <div class="peak-hour-count">${h.count} visiteurs</div>
-                </div>
-            `).join('');
+            var container = document.getElementById('peakHours');
+            var filtered = getFilteredConversations();
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="peak-hour-card"><div class="peak-hour-time">--</div><div class="peak-hour-count">Aucune donnee</div></div>';
+                return;
+            }
+
+            // Compter par tranche horaire
+            var hourCounts = {};
+            filtered.forEach(function(c) {
+                var hour = new Date(c.created_at).getHours();
+                var slot = hour + 'h-' + (hour + 1) + 'h';
+                hourCounts[slot] = (hourCounts[slot] || 0) + 1;
+            });
+
+            // Trier et prendre les 3 premiers
+            var sorted = Object.keys(hourCounts).sort(function(a, b) {
+                return hourCounts[b] - hourCounts[a];
+            }).slice(0, 3);
+
+            var html = '';
+            sorted.forEach(function(slot, index) {
+                var isTop = index === 0;
+                html += '<div class="peak-hour-card ' + (isTop ? 'top' : '') + '">' +
+                    '<div class="peak-hour-time">' + slot + '</div>' +
+                    '<div class="peak-hour-count">' + hourCounts[slot] + ' visiteurs</div>' +
+                '</div>';
+            });
+
+            container.innerHTML = html || '<div class="peak-hour-card"><div class="peak-hour-time">--</div><div class="peak-hour-count">Aucune donnee</div></div>';
         }
 
-        // ===== RENDER LOCATIONS =====
-        function renderLocations() {
-            const container = document.getElementById('locationList');
-            container.innerHTML = trafficData.locations.map(l => `
-                <div class="location-item">
-                    <span class="location-name">${l.name}</span>
-                    <div class="location-bar-container">
-                        <div class="location-bar" style="width: ${l.percent}%"></div>
-                    </div>
-                    <span class="location-count">${l.count}</span>
-                </div>
-            `).join('');
+        function renderDevices() {
+            var filtered = getFilteredConversations();
+            var total = filtered.length;
+
+            var mobile = filtered.filter(function(c) {
+                return c.visitor_device && c.visitor_device.toLowerCase().indexOf('mobile') !== -1;
+            }).length;
+
+            var desktop = total - mobile;
+
+            var mobilePercent = total > 0 ? Math.round((mobile / total) * 100) : 0;
+            var desktopPercent = total > 0 ? Math.round((desktop / total) * 100) : 0;
+
+            document.getElementById('mobilePercent').textContent = mobilePercent + '%';
+            document.getElementById('desktopPercent').textContent = desktopPercent + '%';
         }
 
-        // ===== RENDER VISITORS =====
         function renderVisitors() {
-            const container = document.getElementById('visitorsList');
-            container.innerHTML = trafficData.visitors.map(v => `
-                <div class="visitor-card">
-                    <div class="visitor-icon">${v.device.includes('Mobile') ? '📱' : '💻'}</div>
-                    <div class="visitor-info">
-                        <div class="visitor-device">${v.device}</div>
-                        <div class="visitor-details">${v.browser} • ${v.city}</div>
-                        ${v.products.length > 0 ? `
-                            <div class="visitor-products">
-                                <div class="visitor-products-label">Produits consultés :</div>
-                                <div class="visitor-products-list">
-                                    ${v.products.map(p => `<span class="product-tag">${p}</span>`).join('')}
-                                </div>
-                            </div>
-                        ` : ''}
-                    </div>
-                    <div class="visitor-time">
-                        <div class="visitor-hour">${v.time}</div>
-                        <div class="visitor-date">${v.date}</div>
-                        ${v.hasChat ? `
-                            <button class="visitor-chat-btn" onclick="viewChat(${v.id})">
-                                💬 Voir chat
-                            </button>
-                        ` : ''}
-                    </div>
-                </div>
-            `).join('');
+            var container = document.getElementById('visitorsList');
+            var filtered = getFilteredConversations().slice(0, 10); // Les 10 plus recents
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">👁</div><h3 class="empty-state-title">Aucun visiteur</h3><p class="empty-state-text">Les visiteurs apparaitront ici</p></div>';
+                return;
+            }
+
+            var html = '';
+            filtered.forEach(function(conv) {
+                var product = conv.product_id ? products[conv.product_id] : null;
+                var deviceIcon = conv.visitor_device && conv.visitor_device.toLowerCase().indexOf('mobile') !== -1 ? '📱' : '💻';
+                var date = new Date(conv.created_at);
+                var time = date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+                var dateStr = formatDateShort(conv.created_at);
+
+                html += '<div class="visitor-card">' +
+                    '<div class="visitor-icon">' + deviceIcon + '</div>' +
+                    '<div class="visitor-info">' +
+                        '<div class="visitor-device">' + (conv.visitor_name || 'Visiteur') + '</div>' +
+                        '<div class="visitor-details">' + (conv.visitor_device || 'Appareil inconnu') + '</div>' +
+                        (product ? '<div class="visitor-details">Produit: ' + product.name + '</div>' : '') +
+                    '</div>' +
+                    '<div class="visitor-time">' +
+                        '<div class="visitor-hour">' + time + '</div>' +
+                        '<div class="visitor-date">' + dateStr + '</div>' +
+                        '<button class="visitor-chat-btn" onclick="viewChat(\'' + conv.id + '\')">Voir chat</button>' +
+                    '</div>' +
+                '</div>';
+            });
+
+            container.innerHTML = html;
         }
 
-        // ===== VIEW CHAT =====
-        function viewChat(visitorId) {
-            window.location.href = `conversations.html?visitor=${visitorId}`;
+        function formatDateShort(dateStr) {
+            var date = new Date(dateStr);
+            var now = new Date();
+            var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            var yesterday = new Date(today.getTime() - 86400000);
+
+            if (date >= today) return "Aujourd'hui";
+            if (date >= yesterday) return "Hier";
+            return date.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
         }
 
-        // ===== START =====
+        function viewChat(conversationId) {
+            window.location.href = 'conversation.html';
+        }
+
         init();
     </script>
 
 </body>
-
 </html>
