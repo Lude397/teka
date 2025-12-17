@@ -660,14 +660,14 @@
 
                 var ordersData = await supabaseClient
                     .from('teka_orders')
-                    .select('total_price')
+                    .select('total')
                     .eq('vendor_id', vendor.id)
                     .eq('status', 'delivered');
 
                 var totalRevenue = 0;
                 if (ordersData.data) {
                     ordersData.data.forEach(function(o) {
-                        totalRevenue += o.total_price || 0;
+                        totalRevenue += o.total || 0;
                     });
                 }
                 document.getElementById('totalRevenue').textContent = formatNumber(totalRevenue);
@@ -709,7 +709,7 @@
                             '<div class="order-client">' + order.customer_name + ' - ' + (order.customer_address || '') + '</div>' +
                         '</div>' +
                         '<div class="order-right">' +
-                            '<div class="order-amount">+' + formatNumber(order.total_price || 0) + ' FCFA</div>' +
+                            '<div class="order-amount">+' + formatNumber(order.total || 0) + ' FCFA</div>' +
                             '<div class="order-time">' + timeAgo(order.created_at) + '</div>' +
                         '</div>' +
                     '</div>';
