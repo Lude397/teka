@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Téka - Connexion Vendeur</title>
+    <title>Teka - Connexion Vendeur</title>
     
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,11 +27,7 @@
             --radius-sm: 8px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -43,10 +39,7 @@
             flex-direction: column;
         }
 
-        .header {
-            padding: 20px;
-            text-align: center;
-        }
+        .header { padding: 20px; text-align: center; }
 
         .logo {
             display: flex;
@@ -68,17 +61,8 @@
             font-size: 20px;
         }
 
-        .logo-text {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--secondary);
-        }
-
-        .logo-tagline {
-            font-size: 12px;
-            color: var(--gray);
-            margin-top: 4px;
-        }
+        .logo-text { font-size: 28px; font-weight: 700; color: var(--secondary); }
+        .logo-tagline { font-size: 12px; color: var(--gray); margin-top: 4px; }
 
         .main {
             flex: 1;
@@ -97,19 +81,8 @@
             padding: 32px 24px;
         }
 
-        .login-title {
-            font-size: 24px;
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 8px;
-        }
-
-        .login-subtitle {
-            font-size: 14px;
-            color: var(--gray);
-            text-align: center;
-            margin-bottom: 32px;
-        }
+        .login-title { font-size: 24px; font-weight: 600; text-align: center; margin-bottom: 8px; }
+        .login-subtitle { font-size: 14px; color: var(--gray); text-align: center; margin-bottom: 32px; }
 
         .tabs {
             display: flex;
@@ -139,25 +112,10 @@
             box-shadow: var(--shadow);
         }
 
-        .form {
-            display: none;
-        }
-
-        .form.active {
-            display: block;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: var(--secondary);
-        }
+        .form { display: none; }
+        .form.active { display: block; }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 8px; color: var(--secondary); }
 
         .form-input {
             width: 100%;
@@ -170,19 +128,9 @@
             outline: none;
         }
 
-        .form-input:focus {
-            border-color: var(--primary);
-        }
-
-        .form-hint {
-            font-size: 12px;
-            color: var(--gray);
-            margin-top: 6px;
-        }
-
-        .password-wrapper {
-            position: relative;
-        }
+        .form-input:focus { border-color: var(--primary); }
+        .form-hint { font-size: 12px; color: var(--gray); margin-top: 6px; }
+        .password-wrapper { position: relative; }
 
         .password-toggle {
             position: absolute;
@@ -209,15 +157,8 @@
             transition: all 0.2s;
         }
 
-        .btn-primary {
-            background: var(--primary);
-            color: var(--white);
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
+        .btn-primary { background: var(--primary); color: var(--white); }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
 
         .forgot-link {
             display: block;
@@ -243,11 +184,7 @@
             letter-spacing: 0.5px;
         }
 
-        .feature-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        .feature-list { display: flex; flex-direction: column; gap: 12px; }
 
         .feature-item {
             display: flex;
@@ -277,47 +214,17 @@
             display: none;
         }
 
-        .alert.success {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-            display: block;
-        }
+        .alert.success { background: rgba(16, 185, 129, 0.1); color: var(--success); display: block; }
+        .alert.error { background: rgba(239, 68, 68, 0.1); color: var(--error); display: block; }
 
-        .alert.error {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--error);
-            display: block;
-        }
-
-        .footer {
-            padding: 20px;
-            text-align: center;
-        }
-
-        .footer p {
-            font-size: 12px;
-            color: var(--gray);
-        }
-
-        .footer a {
-            color: var(--primary);
-            text-decoration: none;
-        }
+        .footer { padding: 20px; text-align: center; }
+        .footer p { font-size: 12px; color: var(--gray); }
+        .footer a { color: var(--primary); text-decoration: none; }
 
         @media (min-width: 768px) {
-            .header {
-                padding: 32px;
-            }
-
-            .login-card {
-                padding: 40px 32px;
-            }
-
-            .feature-list {
-                flex-direction: row;
-                justify-content: center;
-                gap: 24px;
-            }
+            .header { padding: 32px; }
+            .login-card { padding: 40px 32px; }
+            .feature-list { flex-direction: row; justify-content: center; gap: 24px; }
         }
     </style>
 
@@ -329,7 +236,7 @@
         <div class="logo">
             <div class="logo-icon">T</div>
             <div>
-                <div class="logo-text">Téka</div>
+                <div class="logo-text">Teka</div>
             </div>
         </div>
         <p class="logo-tagline">Ton assistant qui vend pour toi</p>
@@ -337,8 +244,8 @@
 
     <main class="main">
         <div class="login-card">
-            <h1 class="login-title">Bienvenue 👋</h1>
-            <p class="login-subtitle">Connecte-toi ou crée ton compte vendeur</p>
+            <h1 class="login-title">Bienvenue</h1>
+            <p class="login-subtitle">Connecte-toi ou cree ton compte vendeur</p>
 
             <div class="tabs">
                 <button class="tab active" onclick="switchTab('login')">Connexion</button>
@@ -349,19 +256,19 @@
 
             <form class="form active" id="loginForm">
                 <div class="form-group">
-                    <label class="form-label" for="loginEmail">Email ou téléphone</label>
-                    <input type="text" class="form-input" id="loginEmail" placeholder="exemple@email.com" required>
+                    <label class="form-label" for="loginEmail">Email ou Telephone</label>
+                    <input type="text" class="form-input" id="loginEmail" placeholder="exemple@email.com ou 06XXXXXXX" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="loginPassword">Mot de passe</label>
                     <div class="password-wrapper">
-                        <input type="password" class="form-input" id="loginPassword" placeholder="••••••••" required>
+                        <input type="password" class="form-input" id="loginPassword" placeholder="Ton mot de passe" required>
                         <button type="button" class="password-toggle" onclick="togglePassword('loginPassword', this)">👁</button>
                     </div>
                 </div>
 
-                <a href="#" class="forgot-link">Mot de passe oublié ?</a>
+                <a href="#" class="forgot-link">Mot de passe oublie ?</a>
 
                 <button type="button" class="btn btn-primary" onclick="login()">Se connecter</button>
             </form>
@@ -378,24 +285,24 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="registerPhone">Téléphone</label>
+                    <label class="form-label" for="registerPhone">Telephone (Mobile Money)</label>
                     <input type="tel" class="form-input" id="registerPhone" placeholder="06 XXX XX XX" required>
-                    <p class="form-hint">Pour recevoir les notifications de vente</p>
+                    <p class="form-hint">Pour recevoir les paiements et notifications</p>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="registerPassword">Mot de passe</label>
                     <div class="password-wrapper">
-                        <input type="password" class="form-input" id="registerPassword" placeholder="Minimum 6 caractères" minlength="6" required>
+                        <input type="password" class="form-input" id="registerPassword" placeholder="Minimum 6 caracteres" minlength="6" required>
                         <button type="button" class="password-toggle" onclick="togglePassword('registerPassword', this)">👁</button>
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-primary" onclick="register()">Créer mon compte</button>
+                <button type="button" class="btn btn-primary" onclick="register()">Creer mon compte</button>
             </form>
 
             <div class="features">
-                <p class="features-title">Pourquoi Téka ?</p>
+                <p class="features-title">Pourquoi Teka ?</p>
                 <div class="feature-list">
                     <div class="feature-item">
                         <span class="feature-icon">✓</span>
@@ -403,7 +310,7 @@
                     </div>
                     <div class="feature-item">
                         <span class="feature-icon">✓</span>
-                        <span>Notifications instantanées</span>
+                        <span>Notifications instantanees</span>
                     </div>
                     <div class="feature-item">
                         <span class="feature-icon">✓</span>
@@ -415,20 +322,18 @@
     </main>
 
     <footer class="footer">
-        <p>© 2025 Téka. <a href="#">Conditions d'utilisation</a></p>
+        <p>2025 Teka. Conditions d'utilisation</p>
     </footer>
 
     <script>
-        // Initialiser Supabase
-        const SUPABASE_URL = 'https://kolwacpvfxdrptldipzj.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvbHdhY3B2ZnhkcnB0bGRpcHpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4MjYzOTMsImV4cCI6MjA3NzQwMjM5M30.cXXOxBkX9KaddhfY5JoAvMGz-ohxdCoh5iQlHMUGHqE';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        var SUPABASE_URL = 'https://kolwacpvfxdrptldipzj.supabase.co';
+        var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvbHdhY3B2ZnhkcnB0bGRpcHpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4MjYzOTMsImV4cCI6MjA3NzQwMjM5M30.cXXOxBkX9KaddhfY5JoAvMGz-ohxdCoh5iQlHMUGHqE';
+        var supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // Switch tabs
         function switchTab(tab) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
             event.target.classList.add('active');
-            document.querySelectorAll('.form').forEach(f => f.classList.remove('active'));
+            document.querySelectorAll('.form').forEach(function(f) { f.classList.remove('active'); });
             if (tab === 'login') {
                 document.getElementById('loginForm').classList.add('active');
             } else {
@@ -437,9 +342,8 @@
             hideAlert();
         }
 
-        // Toggle password
         function togglePassword(inputId, btn) {
-            const input = document.getElementById(inputId);
+            var input = document.getElementById(inputId);
             if (input.type === 'password') {
                 input.type = 'text';
                 btn.textContent = '🙈';
@@ -449,43 +353,56 @@
             }
         }
 
-        // Alert
         function showAlert(message, type) {
-            const alert = document.getElementById('alert');
+            var alert = document.getElementById('alert');
             alert.textContent = message;
             alert.className = 'alert ' + type;
         }
 
         function hideAlert() {
-            const alert = document.getElementById('alert');
+            var alert = document.getElementById('alert');
             alert.className = 'alert';
             alert.textContent = '';
         }
 
-        // Login
         async function login() {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
+            var identifier = document.getElementById('loginEmail').value;
+            var password = document.getElementById('loginPassword').value;
 
-            if (!email || !password) {
+            if (!identifier || !password) {
                 showAlert('Remplis tous les champs', 'error');
                 return;
             }
 
             try {
-                const { data, error } = await supabase
-                    .from('teka_vendors')
-                    .select('*')
-                    .eq('email', email)
-                    .eq('password', password)
-                    .single();
+                // Verifier si c'est un email ou un telephone
+                var isEmail = identifier.indexOf('@') !== -1;
+                
+                var result;
+                if (isEmail) {
+                    // Chercher par email
+                    result = await supabaseClient
+                        .from('teka_vendors')
+                        .select('*')
+                        .eq('email', identifier)
+                        .eq('password', password)
+                        .single();
+                } else {
+                    // Chercher par telephone
+                    result = await supabaseClient
+                        .from('teka_vendors')
+                        .select('*')
+                        .eq('phone_number', identifier)
+                        .eq('password', password)
+                        .single();
+                }
 
-                if (error || !data) {
-                    showAlert('Email ou mot de passe incorrect', 'error');
+                if (result.error || !result.data) {
+                    showAlert('Email/telephone ou mot de passe incorrect', 'error');
                     return;
                 }
 
-                localStorage.setItem('vendor', JSON.stringify(data));
+                localStorage.setItem('vendor', JSON.stringify(result.data));
                 window.location.href = 'Dashboard.html';
 
             } catch (err) {
@@ -493,52 +410,51 @@
             }
         }
 
-        // Register
         async function register() {
-            const shopName = document.getElementById('shopName').value;
-            const email = document.getElementById('registerEmail').value;
-            const phone = document.getElementById('registerPhone').value;
-            const password = document.getElementById('registerPassword').value;
+            var shopName = document.getElementById('shopName').value;
+            var email = document.getElementById('registerEmail').value;
+            var phone = document.getElementById('registerPhone').value;
+            var password = document.getElementById('registerPassword').value;
 
-            if (!shopName || !email || !password) {
+            if (!shopName || !email || !phone || !password) {
                 showAlert('Remplis tous les champs', 'error');
                 return;
             }
 
             if (password.length < 6) {
-                showAlert('Mot de passe trop court (min 6 caractères)', 'error');
+                showAlert('Mot de passe trop court (min 6 caracteres)', 'error');
                 return;
             }
 
-            const shopSlug = shopName.toLowerCase().replace(/\s+/g, '-');
+            var shopSlug = shopName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 
             try {
-                const { data, error } = await supabase
+                var result = await supabaseClient
                     .from('teka_vendors')
                     .insert([{
                         shop_name: shopName,
                         shop_slug: shopSlug,
                         email: email,
-                        phone: phone,
+                        phone_number: phone,
                         password: password
                     }])
                     .select()
                     .single();
 
-                if (error) {
-                    if (error.code === '23505') {
-                        showAlert('Cet email existe déjà', 'error');
+                if (result.error) {
+                    if (result.error.code === '23505') {
+                        showAlert('Cet email existe deja', 'error');
                     } else {
                         showAlert('Erreur lors de l\'inscription', 'error');
-                        console.log(error);
+                        console.log(result.error);
                     }
                     return;
                 }
 
-                localStorage.setItem('vendor', JSON.stringify(data));
-                showAlert('Compte créé ! Redirection...', 'success');
+                localStorage.setItem('vendor', JSON.stringify(result.data));
+                showAlert('Compte cree ! Redirection...', 'success');
 
-                setTimeout(() => {
+                setTimeout(function() {
                     window.location.href = 'Dashboard.html';
                 }, 1500);
 
@@ -551,4 +467,3 @@
 
 </body>
 </html>
-
