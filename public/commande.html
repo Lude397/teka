@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Téka - Commandes</title>
-
+    <title>Teka - Mes Commandes</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* ===== VARIABLES ===== */
         :root {
             --primary: #FF6B35;
             --primary-dark: #E55A2B;
@@ -22,7 +20,6 @@
             --success: #10B981;
             --warning: #F59E0B;
             --error: #EF4444;
-            --info: #3B82F6;
             --white: #FFFFFF;
             --shadow: 0 2px 8px rgba(0,0,0,0.08);
             --shadow-lg: 0 4px 16px rgba(0,0,0,0.12);
@@ -30,1098 +27,244 @@
             --radius-sm: 8px;
         }
 
-        /* ===== RESET & BASE ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: var(--light); color: var(--secondary); line-height: 1.5; min-height: 100vh; padding-bottom: 80px; }
+        
+        .header { background: var(--white); padding: 16px 20px; box-shadow: var(--shadow); position: sticky; top: 0; z-index: 100; }
+        .header-content { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .back-btn { width: 40px; height: 40px; background: var(--light); border: none; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--secondary); }
+        .header-title { font-size: 18px; font-weight: 600; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px 16px; }
+
+        .stats-bar { display: flex; gap: 12px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 4px; }
+        .stat-chip { background: var(--white); padding: 8px 16px; border-radius: 20px; font-size: 13px; white-space: nowrap; box-shadow: var(--shadow); }
+        .stat-chip strong { color: var(--primary); }
+
+        .filter-tabs { display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 4px; }
+        .filter-tab { padding: 8px 16px; border: 2px solid var(--gray-light); background: var(--white); border-radius: 20px; font-family: inherit; font-size: 13px; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+        .filter-tab:hover { border-color: var(--primary); }
+        .filter-tab.active { background: var(--primary); border-color: var(--primary); color: var(--white); }
+
+        .orders-list { display: flex; flex-direction: column; gap: 12px; }
+        .order-card { background: var(--white); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); }
+        .order-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+        .order-id { font-size: 12px; color: var(--gray); }
+        .order-status { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+        .order-status.pending { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+        .order-status.confirmed { background: rgba(59, 130, 246, 0.1); color: #3B82F6; }
+        .order-status.shipped { background: rgba(139, 92, 246, 0.1); color: #8B5CF6; }
+        .order-status.delivered { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .order-status.cancelled { background: rgba(239, 68, 68, 0.1); color: var(--error); }
+
+        .order-product { display: flex; gap: 12px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--gray-light); }
+        .order-product-image { width: 60px; height: 60px; background: var(--gray-light); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 24px; overflow: hidden; }
+        .order-product-image img { width: 100%; height: 100%; object-fit: cover; }
+        .order-product-info { flex: 1; }
+        .order-product-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+        .order-product-details { font-size: 12px; color: var(--gray); }
+        .order-product-price { font-size: 16px; font-weight: 700; color: var(--primary); }
+
+        .order-customer { margin-bottom: 12px; }
+        .order-customer-name { font-size: 14px; font-weight: 600; }
+        .order-customer-details { font-size: 12px; color: var(--gray); }
+
+        .order-footer { display: flex; justify-content: space-between; align-items: center; }
+        .order-total { font-size: 14px; }
+        .order-total strong { color: var(--primary); font-size: 16px; }
+        .order-date { font-size: 11px; color: var(--gray); }
+
+        .order-actions { display: flex; gap: 8px; margin-top: 12px; }
+        .order-action-btn { flex: 1; padding: 10px; border: none; border-radius: var(--radius-sm); font-family: inherit; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+        .order-action-btn.primary { background: var(--primary); color: var(--white); }
+        .order-action-btn.secondary { background: var(--light); color: var(--secondary); }
+        .order-action-btn.danger { background: rgba(239, 68, 68, 0.1); color: var(--error); }
+
+        .empty-state { text-align: center; padding: 60px 20px; background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); }
+        .empty-state-icon { font-size: 64px; margin-bottom: 16px; }
+        .empty-state-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .empty-state-text { font-size: 14px; color: var(--gray); }
+        .loading { text-align: center; padding: 40px; color: var(--gray); }
+
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); box-shadow: 0 -2px 10px rgba(0,0,0,0.1); display: flex; z-index: 100; }
+        .nav-item { flex: 1; padding: 12px 8px; text-align: center; text-decoration: none; color: var(--gray); font-size: 10px; }
+        .nav-item.active { color: var(--primary); }
+        .nav-icon { font-size: 22px; margin-bottom: 4px; }
+        .nav-label { font-weight: 500; }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: var(--white); border-radius: var(--radius); padding: 24px; max-width: 400px; width: 100%; }
+        .modal-title { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+        .modal-text { font-size: 14px; color: var(--gray); margin-bottom: 20px; }
+        .modal-btn { flex: 1; padding: 12px; border: none; border-radius: var(--radius-sm); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+        .modal-btn.cancel { background: var(--light); color: var(--secondary); }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--light);
-            color: var(--secondary);
-            line-height: 1.5;
-            min-height: 100vh;
-            padding-bottom: 80px;
-        }
-
-        /* ===== HEADER ===== */
-        .header {
-            background: var(--white);
-            padding: 16px 20px;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .back-btn {
-            width: 40px;
-            height: 40px;
-            background: var(--light);
-            border: none;
-            border-radius: 50%;
-            font-size: 18px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .header-title {
-            font-size: 18px;
-            font-weight: 600;
-            flex: 1;
-        }
-
-        /* ===== CONTAINER ===== */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 16px;
-        }
-
-        /* ===== STATS SUMMARY ===== */
-        .stats-summary {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .summary-card {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 16px;
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-
-        .summary-card.highlight {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: var(--white);
-        }
-
-        .summary-value {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .summary-label {
-            font-size: 11px;
-            opacity: 0.8;
-        }
-
-        /* ===== TABS ===== */
-        .tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-            overflow-x: auto;
-            padding-bottom: 4px;
-        }
-
-        .tab {
-            padding: 10px 16px;
-            border: none;
-            background: var(--white);
-            border-radius: 20px;
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--gray);
-            cursor: pointer;
-            white-space: nowrap;
-            box-shadow: var(--shadow);
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .tab.active {
-            background: var(--secondary);
-            color: var(--white);
-        }
-
-        .tab-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .tab-dot.pending { background: var(--warning); }
-        .tab-dot.confirmed { background: var(--info); }
-        .tab-dot.delivered { background: var(--success); }
-        .tab-dot.cancelled { background: var(--error); }
-
-        /* ===== ORDERS LIST ===== */
-        .orders-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .order-card {
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-        }
-
-        .order-header {
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--gray-light);
-        }
-
-        .order-id {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .order-date {
-            font-size: 12px;
-            color: var(--gray);
-        }
-
-        .order-status {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .order-status.pending {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--warning);
-        }
-
-        .order-status.confirmed {
-            background: rgba(59, 130, 246, 0.1);
-            color: var(--info);
-        }
-
-        .order-status.delivered {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-        }
-
-        .order-status.cancelled {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--error);
-        }
-
-        .order-body {
-            padding: 16px;
-        }
-
-        .order-product {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .order-product-img {
-            width: 60px;
-            height: 60px;
-            background: var(--gray-light);
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            flex-shrink: 0;
-        }
-
-        .order-product-info {
-            flex: 1;
-        }
-
-        .order-product-name {
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 4px;
-        }
-
-        .order-product-details {
-            font-size: 12px;
-            color: var(--gray);
-        }
-
-        .order-product-price {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .order-client {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px;
-            background: var(--light);
-            border-radius: var(--radius-sm);
-            margin-bottom: 12px;
-        }
-
-        .order-client-avatar {
-            width: 36px;
-            height: 36px;
-            background: var(--gray-light);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-
-        .order-client-info {
-            flex: 1;
-        }
-
-        .order-client-name {
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .order-client-address {
-            font-size: 12px;
-            color: var(--gray);
-        }
-
-        .order-client-phone {
-            font-size: 13px;
-            color: var(--primary);
-            font-weight: 500;
-        }
-
-        .order-footer {
-            padding: 12px 16px;
-            border-top: 1px solid var(--gray-light);
-            display: flex;
-            gap: 8px;
-        }
-
-        .order-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .order-btn.secondary {
-            background: var(--light);
-            color: var(--secondary);
-        }
-
-        .order-btn.primary {
-            background: var(--primary);
-            color: var(--white);
-        }
-
-        .order-btn.success {
-            background: var(--success);
-            color: var(--white);
-        }
-
-        .order-btn.danger {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--error);
-        }
-
-        /* ===== EMPTY STATE ===== */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-        }
-
-        .empty-state-icon {
-            font-size: 64px;
-            margin-bottom: 16px;
-        }
-
-        .empty-state-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .empty-state-text {
-            font-size: 14px;
-            color: var(--gray);
-        }
-
-        /* ===== ORDER DETAIL MODAL ===== */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 200;
-            display: none;
-            align-items: flex-end;
-            justify-content: center;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--white);
-            width: 100%;
-            max-width: 500px;
-            max-height: 90vh;
-            border-radius: var(--radius) var(--radius) 0 0;
-            overflow-y: auto;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
-
-        .modal-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--gray-light);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            background: var(--white);
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .modal-close {
-            width: 36px;
-            height: 36px;
-            background: var(--light);
-            border: none;
-            border-radius: 50%;
-            font-size: 18px;
-            cursor: pointer;
-        }
-
-        .modal-body {
-            padding: 20px;
-        }
-
-        .detail-section {
-            margin-bottom: 24px;
-        }
-
-        .detail-section-title {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--gray);
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--gray-light);
-        }
-
-        .detail-row:last-child {
-            border-bottom: none;
-        }
-
-        .detail-label {
-            font-size: 14px;
-            color: var(--gray);
-        }
-
-        .detail-value {
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .detail-value.total {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .timeline {
-            position: relative;
-            padding-left: 24px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 7px;
-            top: 8px;
-            bottom: 8px;
-            width: 2px;
-            background: var(--gray-light);
-        }
-
-        .timeline-item {
-            position: relative;
-            padding-bottom: 16px;
-        }
-
-        .timeline-item:last-child {
-            padding-bottom: 0;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: -24px;
-            top: 4px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--gray-light);
-            border: 3px solid var(--white);
-        }
-
-        .timeline-dot.active {
-            background: var(--success);
-        }
-
-        .timeline-dot.current {
-            background: var(--primary);
-        }
-
-        .timeline-content {
-            font-size: 13px;
-        }
-
-        .timeline-title {
-            font-weight: 500;
-            margin-bottom: 2px;
-        }
-
-        .timeline-time {
-            font-size: 11px;
-            color: var(--gray);
-        }
-
-        .modal-footer {
-            padding: 16px 20px;
-            border-top: 1px solid var(--gray-light);
-            display: flex;
-            gap: 12px;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 14px;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-family: inherit;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .btn-secondary {
-            background: var(--light);
-            color: var(--secondary);
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: var(--white);
-        }
-
-        /* ===== BOTTOM NAV ===== */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--white);
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            display: flex;
-            z-index: 100;
-        }
-
-        .nav-item {
-            flex: 1;
-            padding: 12px 8px;
-            text-align: center;
-            text-decoration: none;
-            color: var(--gray);
-            font-size: 10px;
-        }
-
-        .nav-item.active {
-            color: var(--primary);
-        }
-
-        .nav-icon {
-            font-size: 22px;
-            margin-bottom: 4px;
-        }
-
-        .nav-label {
-            font-weight: 500;
-        }
-
-        /* ===== DESKTOP ===== */
         @media (min-width: 768px) {
-            body {
-                padding-bottom: 0;
-            }
-
-            .orders-list {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
-            }
-
-            .modal-content {
-                border-radius: var(--radius);
-                margin: auto;
-            }
-
-            .bottom-nav {
-                display: none;
-            }
+            body { padding-bottom: 0; }
+            .orders-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .bottom-nav { display: none; }
         }
     </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-    <!-- HEADER -->
     <header class="header">
         <div class="header-content">
-            <button class="back-btn" onclick="window.location.href='dashboard.html'">←</button>
-            <span class="header-title">Commandes</span>
+            <div class="header-left">
+                <a href="Dashboard.html" class="back-btn">←</a>
+                <span class="header-title">Mes Commandes</span>
+            </div>
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
     <main class="container">
-
-        <!-- STATS SUMMARY -->
-        <div class="stats-summary">
-            <div class="summary-card highlight">
-                <div class="summary-value" id="totalRevenue">45 000</div>
-                <div class="summary-label">FCFA ce mois</div>
-            </div>
-            <div class="summary-card">
-                <div class="summary-value" id="totalOrders">12</div>
-                <div class="summary-label">Commandes</div>
-            </div>
-            <div class="summary-card">
-                <div class="summary-value" id="pendingOrders">3</div>
-                <div class="summary-label">En attente</div>
-            </div>
+        <div class="stats-bar">
+            <div class="stat-chip"><strong id="totalOrders">0</strong> commandes</div>
+            <div class="stat-chip"><strong id="pendingOrders">0</strong> en attente</div>
+            <div class="stat-chip"><strong id="totalRevenue">0</strong> FCFA</div>
         </div>
 
-        <!-- TABS -->
-        <div class="tabs">
-            <button class="tab active" onclick="filterOrders(this, 'all')">
-                Toutes
-            </button>
-            <button class="tab" onclick="filterOrders(this, 'pending')">
-                <span class="tab-dot pending"></span> En attente
-            </button>
-            <button class="tab" onclick="filterOrders(this, 'confirmed')">
-                <span class="tab-dot confirmed"></span> Confirmées
-            </button>
-            <button class="tab" onclick="filterOrders(this, 'delivered')">
-                <span class="tab-dot delivered"></span> Livrées
-            </button>
-            <button class="tab" onclick="filterOrders(this, 'cancelled')">
-                <span class="tab-dot cancelled"></span> Annulées
-            </button>
+        <div class="filter-tabs">
+            <button class="filter-tab active" onclick="filterOrders('all')">Toutes</button>
+            <button class="filter-tab" onclick="filterOrders('pending')">En attente</button>
+            <button class="filter-tab" onclick="filterOrders('confirmed')">Confirmees</button>
+            <button class="filter-tab" onclick="filterOrders('shipped')">Expediees</button>
+            <button class="filter-tab" onclick="filterOrders('delivered')">Livrees</button>
+            <button class="filter-tab" onclick="filterOrders('cancelled')">Annulees</button>
         </div>
 
-        <!-- ORDERS LIST -->
         <div class="orders-list" id="ordersList">
-            <!-- Generated by JS -->
+            <div class="loading">Chargement...</div>
         </div>
-
     </main>
 
-    <!-- ORDER DETAIL MODAL -->
-    <div class="modal-overlay" id="orderModal">
+    <div class="modal-overlay" id="statusModal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="modalOrderId">Commande #1234</h2>
-                <button class="modal-close" onclick="closeOrderModal()">✕</button>
+            <h3 class="modal-title">Changer le statut</h3>
+            <p class="modal-text">Selectionne le nouveau statut :</p>
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;">
+                <button class="order-action-btn secondary" onclick="updateStatus('confirmed')">Confirmer</button>
+                <button class="order-action-btn secondary" onclick="updateStatus('shipped')">Expediee</button>
+                <button class="order-action-btn secondary" onclick="updateStatus('delivered')">Livree</button>
+                <button class="order-action-btn danger" onclick="updateStatus('cancelled')">Annuler</button>
             </div>
-            <div class="modal-body" id="modalBody">
-                <!-- Content generated by JS -->
-            </div>
-            <div class="modal-footer" id="modalFooter">
-                <!-- Buttons generated by JS -->
-            </div>
+            <button class="modal-btn cancel" onclick="closeStatusModal()" style="width: 100%;">Fermer</button>
         </div>
     </div>
 
-    <!-- BOTTOM NAVIGATION -->
     <nav class="bottom-nav">
-        <a href="dashboard.html" class="nav-item">
-            <div class="nav-icon">🏠</div>
-            <div class="nav-label">Accueil</div>
-        </a>
-        <a href="produits.html" class="nav-item">
-            <div class="nav-icon">📦</div>
-            <div class="nav-label">Produits</div>
-        </a>
-        <a href="commandes.html" class="nav-item active">
-            <div class="nav-icon">🧾</div>
-            <div class="nav-label">Commandes</div>
-        </a>
-        <a href="conversations.html" class="nav-item">
-            <div class="nav-icon">💬</div>
-            <div class="nav-label">Messages</div>
-        </a>
-        <a href="trafic.html" class="nav-item">
-            <div class="nav-icon">📊</div>
-            <div class="nav-label">Trafic</div>
-        </a>
+        <a href="Dashboard.html" class="nav-item"><div class="nav-icon">🏠</div><div class="nav-label">Accueil</div></a>
+        <a href="produits.html" class="nav-item"><div class="nav-icon">📦</div><div class="nav-label">Produits</div></a>
+        <a href="commande.html" class="nav-item active"><div class="nav-icon">🧾</div><div class="nav-label">Commandes</div></a>
+        <a href="conversation.html" class="nav-item"><div class="nav-icon">💬</div><div class="nav-label">Messages</div></a>
+        <a href="trafic.html" class="nav-item"><div class="nav-icon">📊</div><div class="nav-label">Trafic</div></a>
     </nav>
 
     <script>
-        // ===== DONNÉES COMMANDES =====
-        let orders = [
-            {
-                id: 'CMD-1247',
-                date: "Aujourd'hui, 14:32",
-                status: 'pending',
-                product: {
-                    name: 'Robe rouge fleurie',
-                    price: 5000,
-                    size: 'M',
-                    color: 'Rouge'
-                },
-                client: {
-                    name: 'Paul Makaya',
-                    phone: '06 123 45 67',
-                    address: 'Bacongo, Rue Mbochi'
-                },
-                delivery: 1500,
-                total: 6500,
-                timeline: [
-                    { title: 'Commande reçue', time: "Aujourd'hui, 14:32", done: true },
-                    { title: 'Paiement confirmé', time: "Aujourd'hui, 14:35", done: true },
-                    { title: 'En préparation', time: '', done: false, current: true },
-                    { title: 'Livrée', time: '', done: false }
-                ]
-            },
-            {
-                id: 'CMD-1246',
-                date: "Aujourd'hui, 11:30",
-                status: 'confirmed',
-                product: {
-                    name: 'Bracelet perles',
-                    price: 1500,
-                    size: '',
-                    color: 'Or'
-                },
-                client: {
-                    name: 'Sarah Loemba',
-                    phone: '05 987 65 43',
-                    address: 'Moungali, Avenue de la Paix'
-                },
-                delivery: 1000,
-                total: 2500,
-                timeline: [
-                    { title: 'Commande reçue', time: "Aujourd'hui, 11:30", done: true },
-                    { title: 'Paiement confirmé', time: "Aujourd'hui, 11:32", done: true },
-                    { title: 'En préparation', time: "Aujourd'hui, 12:00", done: true },
-                    { title: 'En livraison', time: '', done: false, current: true },
-                    { title: 'Livrée', time: '', done: false }
-                ]
-            },
-            {
-                id: 'CMD-1245',
-                date: 'Hier, 16:20',
-                status: 'delivered',
-                product: {
-                    name: 'Ensemble wax',
-                    price: 8000,
-                    size: 'L',
-                    color: ''
-                },
-                client: {
-                    name: 'Grâce Kivoula',
-                    phone: '06 555 44 33',
-                    address: 'Poto-Poto, Rue Bouenza'
-                },
-                delivery: 1500,
-                total: 9500,
-                timeline: [
-                    { title: 'Commande reçue', time: 'Hier, 16:20', done: true },
-                    { title: 'Paiement confirmé', time: 'Hier, 16:22', done: true },
-                    { title: 'En préparation', time: 'Hier, 17:00', done: true },
-                    { title: 'Livrée', time: 'Hier, 19:30', done: true }
-                ]
-            },
-            {
-                id: 'CMD-1244',
-                date: 'Hier, 10:15',
-                status: 'delivered',
-                product: {
-                    name: 'Sac à main noir',
-                    price: 3500,
-                    size: '',
-                    color: 'Noir'
-                },
-                client: {
-                    name: 'Marie Ngoma',
-                    phone: '05 111 22 33',
-                    address: 'Bacongo, Avenue Matsoua'
-                },
-                delivery: 1500,
-                total: 5000,
-                timeline: [
-                    { title: 'Commande reçue', time: 'Hier, 10:15', done: true },
-                    { title: 'Paiement confirmé', time: 'Hier, 10:18', done: true },
-                    { title: 'En préparation', time: 'Hier, 11:00', done: true },
-                    { title: 'Livrée', time: 'Hier, 14:00', done: true }
-                ]
-            },
-            {
-                id: 'CMD-1243',
-                date: '12/12/2024',
-                status: 'cancelled',
-                product: {
-                    name: 'Foulard soie',
-                    price: 2000,
-                    size: '',
-                    color: 'Bleu'
-                },
-                client: {
-                    name: 'Jean Mouanda',
-                    phone: '06 777 88 99',
-                    address: 'Ouenzé'
-                },
-                delivery: 1000,
-                total: 3000,
-                timeline: [
-                    { title: 'Commande reçue', time: '12/12, 09:00', done: true },
-                    { title: 'Annulée par le client', time: '12/12, 09:45', done: true }
-                ]
-            },
-            {
-                id: 'CMD-1242',
-                date: '11/12/2024',
-                status: 'pending',
-                product: {
-                    name: 'Sandales dorées',
-                    price: 2500,
-                    size: '39',
-                    color: 'Doré'
-                },
-                client: {
-                    name: 'Alice Bakala',
-                    phone: '05 444 55 66',
-                    address: 'Talangaï'
-                },
-                delivery: 1500,
-                total: 4000,
-                timeline: [
-                    { title: 'Commande reçue', time: '11/12, 15:30', done: true },
-                    { title: 'En attente de paiement', time: '', done: false, current: true }
-                ]
-            }
-        ];
+        var SUPABASE_URL = 'https://kolwacpvfxdrptldipzj.supabase.co';
+        var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvbHdhY3B2ZnhkcnB0bGRpcHpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4MjYzOTMsImV4cCI6MjA3NzQwMjM5M30.cXXOxBkX9KaddhfY5JoAvMGz-ohxdCoh5iQlHMUGHqE';
+        var supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // ===== INITIALISATION =====
-        function init() {
-            renderOrders();
-            updateStats();
-        }
+        var vendor = null;
+        var orders = [];
+        var products = {};
+        var currentFilter = 'all';
+        var selectedOrderId = null;
 
-        // ===== UPDATE STATS =====
-        function updateStats() {
-            const total = orders.filter(o => o.status !== 'cancelled').reduce((sum, o) => sum + o.total, 0);
-            const pending = orders.filter(o => o.status === 'pending').length;
-            
-            document.getElementById('totalRevenue').textContent = formatPrice(total).replace(' FCFA', '');
-            document.getElementById('totalOrders').textContent = orders.length;
-            document.getElementById('pendingOrders').textContent = pending;
-        }
-
-        // ===== FORMAT PRICE =====
-        function formatPrice(price) {
-            return price.toLocaleString('fr-FR') + ' FCFA';
-        }
-
-        // ===== GET STATUS LABEL =====
-        function getStatusLabel(status) {
-            switch(status) {
-                case 'pending': return 'En attente';
-                case 'confirmed': return 'Confirmée';
-                case 'delivered': return 'Livrée';
-                case 'cancelled': return 'Annulée';
-                default: return status;
-            }
-        }
-
-        // ===== RENDER ORDERS =====
-        function renderOrders(filtered = null) {
-            const list = document.getElementById('ordersList');
-            const data = filtered || orders;
-
-            if (data.length === 0) {
-                list.innerHTML = `
-                    <div class="empty-state" style="grid-column: 1 / -1;">
-                        <div class="empty-state-icon">🧾</div>
-                        <h3 class="empty-state-title">Aucune commande</h3>
-                        <p class="empty-state-text">Tes commandes apparaîtront ici</p>
-                    </div>
-                `;
+        async function init() {
+            var vendorData = localStorage.getItem('vendor');
+            if (!vendorData) {
+                window.location.href = 'login.html';
                 return;
             }
-
-            list.innerHTML = data.map(order => `
-                <div class="order-card">
-                    <div class="order-header">
-                        <div>
-                            <div class="order-id">${order.id}</div>
-                            <div class="order-date">${order.date}</div>
-                        </div>
-                        <span class="order-status ${order.status}">${getStatusLabel(order.status)}</span>
-                    </div>
-                    <div class="order-body">
-                        <div class="order-product">
-                            <div class="order-product-img">📷</div>
-                            <div class="order-product-info">
-                                <div class="order-product-name">${order.product.name}</div>
-                                <div class="order-product-details">
-                                    ${order.product.size ? `Taille: ${order.product.size}` : ''}
-                                    ${order.product.size && order.product.color ? ' • ' : ''}
-                                    ${order.product.color ? `Couleur: ${order.product.color}` : ''}
-                                </div>
-                            </div>
-                            <div class="order-product-price">${formatPrice(order.total)}</div>
-                        </div>
-                        <div class="order-client">
-                            <div class="order-client-avatar">👤</div>
-                            <div class="order-client-info">
-                                <div class="order-client-name">${order.client.name}</div>
-                                <div class="order-client-address">${order.client.address}</div>
-                            </div>
-                            <div class="order-client-phone">${order.client.phone}</div>
-                        </div>
-                    </div>
-                    <div class="order-footer">
-                        <button class="order-btn secondary" onclick="openOrderModal('${order.id}')">
-                            👁 Détails
-                        </button>
-                        ${order.status === 'pending' ? `
-                            <button class="order-btn primary" onclick="confirmOrder('${order.id}')">
-                                ✓ Confirmer
-                            </button>
-                        ` : ''}
-                        ${order.status === 'confirmed' ? `
-                            <button class="order-btn success" onclick="markDelivered('${order.id}')">
-                                🚚 Livrée
-                            </button>
-                        ` : ''}
-                    </div>
-                </div>
-            `).join('');
+            vendor = JSON.parse(vendorData);
+            await loadProducts();
+            await loadOrders();
         }
 
-        // ===== FILTER ORDERS =====
-        function filterOrders(btn, status) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            btn.classList.add('active');
-
-            if (status === 'all') {
-                renderOrders();
-            } else {
-                const filtered = orders.filter(o => o.status === status);
-                renderOrders(filtered);
+        async function loadProducts() {
+            var result = await supabaseClient.from('teka_products').select('*').eq('vendor_id', vendor.id);
+            if (result.data) {
+                result.data.forEach(function(p) { products[p.id] = p; });
             }
         }
 
-        // ===== ORDER ACTIONS =====
-        function confirmOrder(id) {
-            const order = orders.find(o => o.id === id);
-            if (order) {
-                order.status = 'confirmed';
-                renderOrders();
-                updateStats();
-                showToast('Commande confirmée ! ✓');
+        async function loadOrders() {
+            var result = await supabaseClient.from('teka_orders').select('*').eq('vendor_id', vendor.id).order('created_at', { ascending: false });
+            if (result.error) { console.log('Erreur:', result.error); return; }
+            orders = result.data || [];
+            updateStats();
+            renderOrders();
+        }
+
+        function updateStats() {
+            var total = orders.length;
+            var pending = orders.filter(function(o) { return o.status === 'pending'; }).length;
+            var revenue = orders.filter(function(o) { return o.status === 'delivered'; }).reduce(function(sum, o) { return sum + (o.total || 0); }, 0);
+            document.getElementById('totalOrders').textContent = total;
+            document.getElementById('pendingOrders').textContent = pending;
+            document.getElementById('totalRevenue').textContent = formatPrice(revenue);
+        }
+
+        function formatPrice(price) { return price.toLocaleString('fr-FR'); }
+        function formatDate(dateStr) {
+            var date = new Date(dateStr);
+            return date.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+        function getStatusLabel(status) {
+            var labels = { 'pending': 'En attente', 'confirmed': 'Confirmee', 'shipped': 'Expediee', 'delivered': 'Livree', 'cancelled': 'Annulee' };
+            return labels[status] || status;
+        }
+
+        function filterOrders(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.filter-tab').forEach(function(tab) { tab.classList.remove('active'); });
+            event.target.classList.add('active');
+            renderOrders();
+        }
+
+        function renderOrders() {
+            var list = document.getElementById('ordersList');
+            var filteredOrders = orders;
+            if (currentFilter !== 'all') {
+                filteredOrders = orders.filter(function(o) { return o.status === currentFilter; });
             }
-        }
-
-        function markDelivered(id) {
-            const order = orders.find(o => o.id === id);
-            if (order) {
-                order.status = 'delivered';
-                renderOrders();
-                updateStats();
-                showToast('Commande livrée ! 🚚');
+            if (filteredOrders.length === 0) {
+                list.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🧾</div><h3 class="empty-state-title">Aucune commande</h3><p class="empty-state-text">Les commandes de tes clients apparaitront ici</p></div>';
+                return;
             }
+            var html = '';
+            filteredOrders.forEach(function(order) {
+                var product = products[order.product_id] || {};
+                var productImage = product.images && product.images.length > 0 ? '<img src="' + product.images[0] + '" alt="">' : '📦';
+                html += '<div class="order-card"><div class="order-header"><span class="order-id">#' + order.id.slice(0, 8) + '</span><span class="order-status ' + order.status + '">' + getStatusLabel(order.status) + '</span></div><div class="order-product"><div class="order-product-image">' + productImage + '</div><div class="order-product-info"><div class="order-product-name">' + (product.name || 'Produit supprime') + '</div><div class="order-product-details">' + (order.size ? 'Taille: ' + order.size + ' - ' : '') + (order.color ? 'Couleur: ' + order.color + ' - ' : '') + 'Qte: ' + (order.quantity || 1) + '</div></div><div class="order-product-price">' + formatPrice(order.price || 0) + '</div></div><div class="order-customer"><div class="order-customer-name">Client: ' + (order.customer_name || 'Non renseigne') + '</div><div class="order-customer-details">Tel: ' + (order.customer_phone || 'Non renseigne') + ' | Adresse: ' + (order.customer_address || 'Non renseigne') + '</div></div><div class="order-footer"><div class="order-total">Total: <strong>' + formatPrice(order.total || 0) + ' FCFA</strong></div><div class="order-date">' + formatDate(order.created_at) + '</div></div><div class="order-actions"><button class="order-action-btn secondary" onclick="openStatusModal(\'' + order.id + '\')">Changer statut</button><a href="https://wa.me/' + (order.customer_phone || '').replace(/[^0-9]/g, '') + '" target="_blank" class="order-action-btn primary" style="text-align: center; text-decoration: none;">WhatsApp</a></div></div>';
+            });
+            list.innerHTML = html;
         }
 
-        // ===== OPEN ORDER MODAL =====
-        function openOrderModal(id) {
-            const order = orders.find(o => o.id === id);
-            if (!order) return;
-
-            document.getElementById('modalOrderId').textContent = order.id;
-
-            const body = document.getElementById('modalBody');
-            body.innerHTML = `
-                <div class="detail-section">
-                    <div class="detail-section-title">Produit</div>
-                    <div class="order-product">
-                        <div class="order-product-img">📷</div>
-                        <div class="order-product-info">
-                            <div class="order-product-name">${order.product.name}</div>
-                            <div class="order-product-details">
-                                ${order.product.size ? `Taille: ${order.product.size}` : ''}
-                                ${order.product.color ? ` • Couleur: ${order.product.color}` : ''}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="detail-section">
-                    <div class="detail-section-title">Client</div>
-                    <div class="order-client">
-                        <div class="order-client-avatar">👤</div>
-                        <div class="order-client-info">
-                            <div class="order-client-name">${order.client.name}</div>
-                            <div class="order-client-address">${order.client.address}</div>
-                        </div>
-                    </div>
-                    <a href="tel:${order.client.phone.replace(/\s/g, '')}" style="display: block; margin-top: 8px; text-align: center; color: var(--primary); font-weight: 500;">
-                        📞 Appeler ${order.client.phone}
-                    </a>
-                </div>
-
-                <div class="detail-section">
-                    <div class="detail-section-title">Paiement</div>
-                    <div class="detail-row">
-                        <span class="detail-label">Produit</span>
-                        <span class="detail-value">${formatPrice(order.product.price)}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Livraison</span>
-                        <span class="detail-value">${formatPrice(order.delivery)}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Total</span>
-                        <span class="detail-value total">${formatPrice(order.total)}</span>
-                    </div>
-                </div>
-
-                <div class="detail-section">
-                    <div class="detail-section-title">Suivi</div>
-                    <div class="timeline">
-                        ${order.timeline.map(t => `
-                            <div class="timeline-item">
-                                <div class="timeline-dot ${t.done ? 'active' : ''} ${t.current ? 'current' : ''}"></div>
-                                <div class="timeline-content">
-                                    <div class="timeline-title">${t.title}</div>
-                                    ${t.time ? `<div class="timeline-time">${t.time}</div>` : ''}
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-
-            // Footer buttons based on status
-            const footer = document.getElementById('modalFooter');
-            if (order.status === 'pending') {
-                footer.innerHTML = `
-                    <button class="btn btn-secondary" onclick="closeOrderModal()">Fermer</button>
-                    <button class="btn btn-primary" onclick="confirmOrder('${order.id}'); closeOrderModal();">Confirmer</button>
-                `;
-            } else if (order.status === 'confirmed') {
-                footer.innerHTML = `
-                    <button class="btn btn-secondary" onclick="closeOrderModal()">Fermer</button>
-                    <button class="btn btn-primary" onclick="markDelivered('${order.id}'); closeOrderModal();">Marquer livrée</button>
-                `;
-            } else {
-                footer.innerHTML = `
-                    <button class="btn btn-secondary" onclick="closeOrderModal()" style="flex: 1;">Fermer</button>
-                `;
-            }
-
-            document.getElementById('orderModal').classList.add('active');
+        function openStatusModal(orderId) {
+            selectedOrderId = orderId;
+            document.getElementById('statusModal').classList.add('active');
         }
 
-        // ===== CLOSE ORDER MODAL =====
-        function closeOrderModal() {
-            document.getElementById('orderModal').classList.remove('active');
+        function closeStatusModal() {
+            document.getElementById('statusModal').classList.remove('active');
+            selectedOrderId = null;
         }
 
-        // ===== TOAST =====
-        function showToast(message) {
-            let toast = document.getElementById('toast');
-            if (!toast) {
-                toast = document.createElement('div');
-                toast.id = 'toast';
-                toast.style.cssText = `
-                    position: fixed;
-                    bottom: 100px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    background: var(--secondary);
-                    color: white;
-                    padding: 12px 24px;
-                    border-radius: 8px;
-                    font-size: 14px;
-                    z-index: 1000;
-                    opacity: 0;
-                    transition: opacity 0.3s;
-                `;
-                document.body.appendChild(toast);
-            }
-
-            toast.textContent = message;
-            toast.style.opacity = '1';
-
-            setTimeout(() => {
-                toast.style.opacity = '0';
-            }, 2000);
+        async function updateStatus(newStatus) {
+            if (!selectedOrderId) return;
+            var result = await supabaseClient.from('teka_orders').update({ status: newStatus }).eq('id', selectedOrderId);
+            if (result.error) { alert('Erreur'); console.log('Erreur:', result.error); return; }
+            closeStatusModal();
+            await loadOrders();
         }
 
-        // ===== START =====
         init();
     </script>
 
 </body>
-
 </html>
