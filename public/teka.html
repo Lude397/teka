@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -26,11 +26,7 @@
             --radius-sm: 8px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -70,22 +66,10 @@
             font-size: 18px;
         }
 
-        .shop-info h1 {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--secondary);
-        }
+        .shop-info h1 { font-size: 18px; font-weight: 600; color: var(--secondary); }
+        .shop-info p { font-size: 12px; color: var(--gray); }
 
-        .shop-info p {
-            font-size: 12px;
-            color: var(--gray);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 16px;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 16px; }
 
         .assistant-banner {
             background: linear-gradient(135deg, var(--secondary) 0%, #2D2D44 100%);
@@ -97,12 +81,7 @@
             overflow: hidden;
         }
 
-        .assistant-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
+        .assistant-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
 
         .assistant-avatar {
             width: 50px;
@@ -115,32 +94,10 @@
             font-size: 24px;
         }
 
-        .assistant-title {
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        .assistant-status {
-            font-size: 12px;
-            color: var(--success);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .assistant-status::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: var(--success);
-            border-radius: 50%;
-        }
-
-        .assistant-message {
-            font-size: 14px;
-            margin-bottom: 16px;
-            opacity: 0.95;
-        }
+        .assistant-title { font-size: 16px; font-weight: 600; }
+        .assistant-status { font-size: 12px; color: var(--success); display: flex; align-items: center; gap: 4px; }
+        .assistant-status::before { content: ''; width: 8px; height: 8px; background: var(--success); border-radius: 50%; }
+        .assistant-message { font-size: 14px; margin-bottom: 16px; opacity: 0.95; }
 
         .assistant-btn {
             background: var(--primary);
@@ -159,18 +116,9 @@
             justify-content: center;
         }
 
-        .section-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--secondary);
-        }
+        .section-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; color: var(--secondary); }
 
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
+        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 
         .product-card {
             background: var(--white);
@@ -181,10 +129,7 @@
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .product-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
+        .product-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 
         .product-image {
             width: 100%;
@@ -194,11 +139,7 @@
             overflow: hidden;
         }
 
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .product-image img { width: 100%; height: 100%; object-fit: cover; }
 
         .product-image-placeholder {
             width: 100%;
@@ -222,36 +163,14 @@
             font-weight: 500;
         }
 
-        .product-stock.out {
-            background: #EF4444;
-        }
-
-        .product-info {
-            padding: 12px;
-        }
-
-        .product-name {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--secondary);
-            margin-bottom: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .product-price {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--primary);
-        }
+        .product-stock.out { background: #EF4444; }
+        .product-info { padding: 12px; }
+        .product-name { font-size: 14px; font-weight: 500; color: var(--secondary); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .product-price { font-size: 16px; font-weight: 700; color: var(--primary); }
 
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.5);
             z-index: 200;
             display: none;
@@ -259,9 +178,7 @@
             justify-content: center;
         }
 
-        .modal-overlay.active {
-            display: flex;
-        }
+        .modal-overlay.active { display: flex; }
 
         .modal-content {
             background: var(--white);
@@ -295,11 +212,7 @@
             cursor: zoom-in;
         }
 
-        .modal-images img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .modal-images img { width: 100%; height: 100%; object-fit: cover; }
 
         .modal-zoom-hint {
             position: absolute;
@@ -315,47 +228,13 @@
             gap: 4px;
         }
 
-        .modal-body {
-            padding: 20px;
-        }
-
-        .modal-name {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .modal-price {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 16px;
-        }
-
-        .modal-description {
-            font-size: 14px;
-            color: var(--gray);
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .modal-options {
-            margin-bottom: 20px;
-        }
-
-        .modal-option-title {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--gray);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-
-        .modal-sizes {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
+        .modal-body { padding: 20px; }
+        .modal-name { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+        .modal-price { font-size: 24px; font-weight: 700; color: var(--primary); margin-bottom: 16px; }
+        .modal-description { font-size: 14px; color: var(--gray); margin-bottom: 20px; line-height: 1.6; }
+        .modal-options { margin-bottom: 20px; }
+        .modal-option-title { font-size: 12px; font-weight: 600; color: var(--gray); margin-bottom: 8px; text-transform: uppercase; }
+        .modal-sizes { display: flex; gap: 8px; flex-wrap: wrap; }
 
         .size-btn {
             padding: 8px 16px;
@@ -367,10 +246,7 @@
             cursor: pointer;
         }
 
-        .size-btn:hover, .size-btn.active {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
+        .size-btn:hover, .size-btn.active { border-color: var(--primary); color: var(--primary); }
 
         .modal-ask-btn {
             background: var(--primary);
@@ -389,13 +265,9 @@
             justify-content: center;
         }
 
-        /* FULLSCREEN IMAGE */
         .image-fullscreen {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.95);
             z-index: 400;
             display: none;
@@ -403,9 +275,7 @@
             overflow-y: auto;
         }
 
-        .image-fullscreen.active {
-            display: flex;
-        }
+        .image-fullscreen.active { display: flex; }
 
         .fullscreen-close {
             position: fixed;
@@ -430,12 +300,7 @@
             padding: 60px 16px 16px;
         }
 
-        .fullscreen-image-container img {
-            max-width: 100%;
-            max-height: 60vh;
-            object-fit: contain;
-            border-radius: var(--radius);
-        }
+        .fullscreen-image-container img { max-width: 100%; max-height: 60vh; object-fit: contain; border-radius: var(--radius); }
 
         .fullscreen-info {
             background: var(--white);
@@ -444,43 +309,12 @@
             margin-top: auto;
         }
 
-        .fullscreen-name {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .fullscreen-price {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 16px;
-        }
-
-        .fullscreen-description {
-            font-size: 14px;
-            color: var(--gray);
-            margin-bottom: 16px;
-            line-height: 1.6;
-        }
-
-        .fullscreen-details {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .fullscreen-detail {
-            background: var(--light);
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-        }
-
-        .fullscreen-detail strong {
-            color: var(--primary);
-        }
+        .fullscreen-name { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+        .fullscreen-price { font-size: 22px; font-weight: 700; color: var(--primary); margin-bottom: 16px; }
+        .fullscreen-description { font-size: 14px; color: var(--gray); margin-bottom: 16px; line-height: 1.6; }
+        .fullscreen-details { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+        .fullscreen-detail { background: var(--light); padding: 8px 14px; border-radius: 20px; font-size: 13px; }
+        .fullscreen-detail strong { color: var(--primary); }
 
         .fullscreen-ask-btn {
             background: var(--primary);
@@ -501,24 +335,17 @@
 
         .chat-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.5);
             z-index: 300;
             display: none;
         }
 
-        .chat-overlay.active {
-            display: block;
-        }
+        .chat-overlay.active { display: block; }
 
         .chat-container {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 0; left: 0; right: 0;
             height: 85vh;
             max-height: 600px;
             background: var(--white);
@@ -528,9 +355,7 @@
             flex-direction: column;
         }
 
-        .chat-container.active {
-            display: flex;
-        }
+        .chat-container.active { display: flex; }
 
         .chat-header {
             padding: 16px 20px;
@@ -553,15 +378,8 @@
             font-size: 20px;
         }
 
-        .chat-header-info h3 {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .chat-header-info p {
-            font-size: 12px;
-            opacity: 0.8;
-        }
+        .chat-header-info h3 { font-size: 14px; font-weight: 600; }
+        .chat-header-info p { font-size: 12px; opacity: 0.8; }
 
         .chat-close {
             margin-left: auto;
@@ -603,6 +421,15 @@
             border-bottom-right-radius: 4px;
         }
 
+        .chat-message.system {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            align-self: center;
+            text-align: center;
+            font-size: 13px;
+            padding: 10px 16px;
+        }
+
         .chat-input-container {
             padding: 12px 16px;
             border-top: 1px solid var(--gray-light);
@@ -620,9 +447,7 @@
             outline: none;
         }
 
-        .chat-input:focus {
-            border-color: var(--primary);
-        }
+        .chat-input:focus { border-color: var(--primary); }
 
         .chat-send {
             background: var(--primary);
@@ -679,9 +504,7 @@
             animation: spin 1s linear infinite;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         .error-page {
             display: flex;
@@ -694,43 +517,18 @@
             padding: 20px;
         }
 
-        .error-page h1 {
-            font-size: 24px;
-            color: var(--secondary);
-        }
-
-        .error-page p {
-            color: var(--gray);
-        }
+        .error-page h1 { font-size: 24px; color: var(--secondary); }
+        .error-page p { color: var(--gray); }
 
         @media (min-width: 768px) {
-            .container {
-                padding: 24px;
-            }
-
-            .products-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 20px;
-            }
-
-            .chat-container {
-                width: 400px;
-                right: 24px;
-                left: auto;
-                bottom: 24px;
-                height: 500px;
-                border-radius: var(--radius);
-            }
-
-            .fullscreen-image-container img {
-                max-height: 70vh;
-            }
+            .container { padding: 24px; }
+            .products-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+            .chat-container { width: 400px; right: 24px; left: auto; bottom: 24px; height: 500px; border-radius: var(--radius); }
+            .fullscreen-image-container img { max-height: 70vh; }
         }
 
         @media (min-width: 1024px) {
-            .products-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
+            .products-grid { grid-template-columns: repeat(4, 1fr); }
         }
     </style>
 
@@ -786,7 +584,6 @@
         </main>
     </div>
 
-    <!-- PRODUCT MODAL -->
     <div class="modal-overlay" id="productModal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeProductModal()">X</button>
@@ -817,7 +614,6 @@
         </div>
     </div>
 
-    <!-- FULLSCREEN IMAGE -->
     <div class="image-fullscreen" id="imageFullscreen">
         <button class="fullscreen-close" onclick="closeFullscreen()">X</button>
         <div class="fullscreen-image-container">
@@ -834,7 +630,6 @@
         </div>
     </div>
 
-    <!-- CHAT -->
     <div class="chat-overlay" id="chatOverlay" onclick="closeChat()"></div>
     <div class="chat-container" id="chatContainer">
         <div class="chat-header">
@@ -853,7 +648,6 @@
     </div>
 
     <script>
-        // Supabase
         var SUPABASE_URL = 'https://kolwacpvfxdrptldipzj.supabase.co';
         var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvbHdhY3B2ZnhkcnB0bGRpcHpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4MjYzOTMsImV4cCI6MjA3NzQwMjM5M30.cXXOxBkX9KaddhfY5JoAvMGz-ohxdCoh5iQlHMUGHqE';
         var supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -863,9 +657,21 @@
         var currentProduct = null;
         var chatHistory = [];
         
-        // NOUVEAU: Variables pour la sauvegarde des conversations
         var sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
         var conversationId = null;
+
+        // Variables pour le flux de commande
+        var orderState = 'none'; // none, collecting_name, collecting_phone, collecting_address, confirming, waiting_payment
+        var pendingOrder = {
+            customer_name: '',
+            customer_phone: '',
+            customer_address: '',
+            product_id: null,
+            quantity: 1,
+            size: '',
+            color: ''
+        };
+        var currentOrderId = null;
 
         async function init() {
             var urlParams = new URLSearchParams(window.location.search);
@@ -987,7 +793,6 @@
                 zoomHint.style.display = 'none';
             }
 
-            // Tailles
             var sizesSection = document.getElementById('modalSizes');
             var sizesContainer = document.getElementById('modalSizesContainer');
             if (currentProduct.sizes && currentProduct.sizes.length > 0) {
@@ -999,7 +804,6 @@
                 sizesSection.style.display = 'none';
             }
 
-            // Couleurs
             var colorsSection = document.getElementById('modalColors');
             var colorsContainer = document.getElementById('modalColorsContainer');
             if (currentProduct.colors && currentProduct.colors.length > 0) {
@@ -1021,14 +825,15 @@
         function selectSize(btn) {
             document.querySelectorAll('#modalSizesContainer .size-btn').forEach(function(b) { b.classList.remove('active'); });
             btn.classList.add('active');
+            pendingOrder.size = btn.textContent;
         }
 
         function selectColor(btn) {
             document.querySelectorAll('#modalColorsContainer .size-btn').forEach(function(b) { b.classList.remove('active'); });
             btn.classList.add('active');
+            pendingOrder.color = btn.textContent;
         }
 
-        // Fullscreen
         function openFullscreen() {
             if (!currentProduct || !currentProduct.images || currentProduct.images.length === 0) return;
 
@@ -1037,7 +842,6 @@
             document.getElementById('fullscreenPrice').textContent = formatPrice(currentProduct.price);
             document.getElementById('fullscreenDescription').textContent = currentProduct.description || 'Pas de description disponible.';
 
-            // Details (tailles et couleurs)
             var detailsHtml = '';
             if (currentProduct.sizes && currentProduct.sizes.length > 0) {
                 detailsHtml += '<div class="fullscreen-detail"><strong>Tailles:</strong> ' + currentProduct.sizes.join(', ') + '</div>';
@@ -1058,7 +862,6 @@
             document.getElementById('imageFullscreen').classList.remove('active');
         }
 
-        // Chat
         function openChat() {
             document.getElementById('chatOverlay').classList.add('active');
             document.getElementById('chatContainer').classList.add('active');
@@ -1078,7 +881,8 @@
             closeProductModal();
             openChat();
             if (currentProduct) {
-                addBotMessage('Tu regardes "' + currentProduct.name + '" a ' + formatPrice(currentProduct.price) + '. Qu\'est-ce que tu veux savoir ?');
+                pendingOrder.product_id = currentProduct.id;
+                addBotMessage('Tu regardes "' + currentProduct.name + '" a ' + formatPrice(currentProduct.price) + '. Qu\'est-ce que tu veux savoir ? Tu peux aussi me dire "je veux acheter" si tu es interesse !');
             }
         }
 
@@ -1100,6 +904,15 @@
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
+        function addSystemMessage(text) {
+            var messagesContainer = document.getElementById('chatMessages');
+            var messageEl = document.createElement('div');
+            messageEl.className = 'chat-message system';
+            messageEl.textContent = text;
+            messagesContainer.appendChild(messageEl);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
         function sendMessage() {
             var input = document.getElementById('chatInput');
             var text = input.value.trim();
@@ -1107,12 +920,201 @@
 
             input.value = '';
             addUserMessage(text);
-            simulateBotResponse(text);
+            
+            // Verifier si on est dans un flux de commande
+            if (orderState !== 'none') {
+                handleOrderFlow(text);
+            } else {
+                // Verifier si c'est une intention d'achat
+                if (detectPurchaseIntent(text)) {
+                    startOrderFlow();
+                } else {
+                    simulateBotResponse(text);
+                }
+            }
         }
 
         function handleKeyPress(event) {
             if (event.key === 'Enter') {
                 sendMessage();
+            }
+        }
+
+        function detectPurchaseIntent(text) {
+            var keywords = ['acheter', 'commander', 'je prends', 'je veux', 'j\'achete', 'jachet', 'commande', 'achat', 'je le prends', 'je la prends'];
+            var lowerText = text.toLowerCase();
+            for (var i = 0; i < keywords.length; i++) {
+                if (lowerText.indexOf(keywords[i]) !== -1) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function startOrderFlow() {
+            if (!currentProduct) {
+                addBotMessage('Quel produit veux-tu acheter ? Clique sur un produit d\'abord pour que je sache lequel tu veux.');
+                return;
+            }
+            
+            pendingOrder.product_id = currentProduct.id;
+            orderState = 'collecting_name';
+            addBotMessage('Super choix ! Pour passer ta commande de "' + currentProduct.name + '", j\'ai besoin de quelques infos. C\'est quoi ton nom complet ?');
+        }
+
+        function handleOrderFlow(text) {
+            switch(orderState) {
+                case 'collecting_name':
+                    pendingOrder.customer_name = text;
+                    orderState = 'collecting_phone';
+                    addBotMessage('Merci ' + text + ' ! C\'est quoi ton numero de telephone ?');
+                    break;
+                    
+                case 'collecting_phone':
+                    pendingOrder.customer_phone = text;
+                    orderState = 'collecting_address';
+                    addBotMessage('Parfait ! Et ton adresse de livraison ? (Quartier, avenue, numero si possible)');
+                    break;
+                    
+                case 'collecting_address':
+                    pendingOrder.customer_address = text;
+                    orderState = 'confirming';
+                    showOrderSummary();
+                    break;
+                    
+                case 'confirming':
+                    if (text.toLowerCase().indexOf('oui') !== -1 || text.toLowerCase().indexOf('ok') !== -1 || text.toLowerCase().indexOf('confirme') !== -1) {
+                        createOrder();
+                    } else if (text.toLowerCase().indexOf('non') !== -1 || text.toLowerCase().indexOf('annul') !== -1) {
+                        orderState = 'none';
+                        addBotMessage('Pas de souci, commande annulee. N\'hesite pas si tu changes d\'avis !');
+                    } else {
+                        addBotMessage('Dis-moi "oui" pour confirmer ou "non" pour annuler.');
+                    }
+                    break;
+                    
+                case 'waiting_payment':
+                    if (text.toLowerCase().indexOf('paye') !== -1 || text.toLowerCase().indexOf('envoye') !== -1 || text.toLowerCase().indexOf('fait') !== -1 || text.toLowerCase().indexOf('ok') !== -1) {
+                        confirmPayment();
+                    } else {
+                        addBotMessage('D\'accord, prends ton temps. Dis-moi "c\'est fait" ou "j\'ai paye" quand tu as envoye l\'argent.');
+                    }
+                    break;
+            }
+            saveConversation();
+        }
+
+        function showOrderSummary() {
+            var product = products.find(function(p) { return p.id === pendingOrder.product_id; });
+            var deliveryFee = 1000;
+            var total = product.price + deliveryFee;
+            
+            var summary = 'Recapitulatif de ta commande:\n\n';
+            summary += '📦 ' + product.name + ' - ' + formatPrice(product.price) + '\n';
+            if (pendingOrder.size) summary += 'Taille: ' + pendingOrder.size + '\n';
+            if (pendingOrder.color) summary += 'Couleur: ' + pendingOrder.color + '\n';
+            summary += '🚚 Livraison: ' + formatPrice(deliveryFee) + '\n';
+            summary += '💰 Total: ' + formatPrice(total) + '\n\n';
+            summary += '👤 ' + pendingOrder.customer_name + '\n';
+            summary += '📞 ' + pendingOrder.customer_phone + '\n';
+            summary += '📍 ' + pendingOrder.customer_address + '\n\n';
+            summary += 'Tu confirmes cette commande ? (Oui/Non)';
+            
+            addBotMessage(summary);
+        }
+
+        async function createOrder() {
+            var product = products.find(function(p) { return p.id === pendingOrder.product_id; });
+            var deliveryFee = 1000;
+            var total = product.price + deliveryFee;
+            
+            try {
+                var orderData = {
+                    vendor_id: vendor.id,
+                    product_id: pendingOrder.product_id,
+                    customer_name: pendingOrder.customer_name,
+                    customer_phone: pendingOrder.customer_phone,
+                    customer_address: pendingOrder.customer_address,
+                    quantity: pendingOrder.quantity,
+                    size: pendingOrder.size || null,
+                    color: pendingOrder.color || null,
+                    total_price: total,
+                    delivery_fee: deliveryFee,
+                    status: 'pending'
+                };
+                
+                var result = await supabaseClient
+                    .from('teka_orders')
+                    .insert(orderData)
+                    .select()
+                    .single();
+                
+                if (result.error) {
+                    console.log('Erreur creation commande:', result.error);
+                    addBotMessage('Oups, une erreur est survenue. Reessaie s\'il te plait.');
+                    orderState = 'none';
+                    return;
+                }
+                
+                currentOrderId = result.data.id;
+                orderState = 'waiting_payment';
+                
+                addSystemMessage('Commande creee avec succes !');
+                
+                var paymentMsg = 'Ta commande est enregistree ! Pour la valider, envoie ' + formatPrice(total) + ' par Mobile Money au:\n\n';
+                paymentMsg += '📱 ' + (vendor.phone_number || vendor.phone || 'Numero non disponible') + '\n\n';
+                paymentMsg += 'Une fois le paiement effectue, dis-moi "c\'est fait" ou "j\'ai paye" pour que je previenne le vendeur.';
+                
+                addBotMessage(paymentMsg);
+                
+            } catch (error) {
+                console.log('Erreur:', error);
+                addBotMessage('Oups, une erreur est survenue. Reessaie s\'il te plait.');
+                orderState = 'none';
+            }
+        }
+
+        async function confirmPayment() {
+            try {
+                // Creer une notification pour le vendeur
+                var notifData = {
+                    vendor_id: vendor.id,
+                    order_id: currentOrderId,
+                    type: 'new_order',
+                    message: 'Nouvelle commande de ' + pendingOrder.customer_name + ' ! Verifie le paiement.',
+                    is_read: false
+                };
+                
+                await supabaseClient
+                    .from('teka_notifications')
+                    .insert(notifData);
+                
+                addSystemMessage('Notification envoyee au vendeur !');
+                addBotMessage('Merci ! J\'ai prevenu ' + vendor.shop_name + ' de ton paiement. Le vendeur va verifier et te contacter tres bientot pour organiser la livraison. Tu peux fermer cette conversation, on te rappelle !');
+                
+                // Mettre a jour le statut de la conversation
+                if (conversationId) {
+                    await supabaseClient
+                        .from('teka_conversations')
+                        .update({ status: 'sale' })
+                        .eq('id', conversationId);
+                }
+                
+                orderState = 'none';
+                pendingOrder = {
+                    customer_name: '',
+                    customer_phone: '',
+                    customer_address: '',
+                    product_id: null,
+                    quantity: 1,
+                    size: '',
+                    color: ''
+                };
+                currentOrderId = null;
+                
+            } catch (error) {
+                console.log('Erreur notification:', error);
+                addBotMessage('J\'ai eu un petit souci pour prevenir le vendeur, mais ta commande est bien enregistree. Le vendeur va te contacter bientot.');
             }
         }
 
@@ -1131,7 +1133,6 @@
             if (typingEl) typingEl.remove();
         }
 
-        // NOUVEAU: Fonction pour sauvegarder la conversation
         async function saveConversation() {
             if (!vendor) return;
 
@@ -1140,23 +1141,21 @@
             var conversationData = {
                 vendor_id: vendor.id,
                 session_id: sessionId,
-                visitor_name: 'Visiteur #' + sessionId.slice(-6),
+                visitor_name: pendingOrder.customer_name || 'Visiteur #' + sessionId.slice(-6),
                 visitor_device: deviceType,
                 product_id: currentProduct ? currentProduct.id : null,
-                status: 'pending',
+                status: orderState === 'none' ? 'pending' : 'pending',
                 messages: chatHistory,
                 updated_at: new Date().toISOString()
             };
 
             try {
                 if (conversationId) {
-                    // Mise a jour de la conversation existante
                     await supabaseClient
                         .from('teka_conversations')
                         .update(conversationData)
                         .eq('id', conversationId);
                 } else {
-                    // Nouvelle conversation
                     var result = await supabaseClient
                         .from('teka_conversations')
                         .insert(conversationData)
@@ -1191,14 +1190,15 @@
                 '- Termine toujours par une question ou suggestion\n' +
                 '- NE JAMAIS inventer de produits, reductions ou cadeaux\n' +
                 '- NE JAMAIS modifier les prix\n' +
-                '- Propose UNIQUEMENT les produits de la liste ci-dessous\n\n' +
+                '- Propose UNIQUEMENT les produits de la liste ci-dessous\n' +
+                '- Si le client veut acheter, dis-lui de taper "je veux acheter" pour lancer la commande\n\n' +
                 'LIVRAISON :\n' +
                 '- Brazzaville : 1000 FCFA (24-48h)\n' +
                 '- Pointe-Noire : 2000 FCFA (3-5 jours)\n' +
                 '- Autres villes : 3000 FCFA (5-7 jours)\n\n' +
                 'PAIEMENT :\n' +
                 '- Mobile Money (Airtel Money, MTN Money)\n' +
-                '- Paiement a la livraison\n\n' +
+                '- Paiement avant livraison\n\n' +
                 'PRODUITS DISPONIBLES :\n' + productsList;
 
             if (currentProduct) {
@@ -1224,15 +1224,15 @@
                     var botResponse = data.choices[0].message.content;
                     chatHistory.push({ role: 'assistant', content: botResponse });
                     addBotMessage(botResponse);
-                    saveConversation(); // NOUVEAU: Sauvegarde apres reponse du bot
+                    saveConversation();
                 } else {
                     addBotMessage("Desole, je n'ai pas compris. Tu peux reformuler ?");
-                    saveConversation(); // NOUVEAU: Sauvegarde meme en cas d'erreur
+                    saveConversation();
                 }
             } catch (error) {
                 hideTypingIndicator();
                 addBotMessage("Oups, j'ai un petit souci. Reessaie dans un instant !");
-                saveConversation(); // NOUVEAU: Sauvegarde meme en cas d'erreur
+                saveConversation();
                 console.error('Erreur API:', error);
             }
         }
