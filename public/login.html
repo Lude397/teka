@@ -392,7 +392,7 @@
                     result = await supabaseClient
                         .from('teka_vendors')
                         .select('*')
-                        .eq('phone_number', identifier)
+                        .eq('phone', identifier)
                         .eq('password', password)
                         .single();
                 }
@@ -435,7 +435,7 @@
                         shop_name: shopName,
                         shop_slug: shopSlug,
                         email: email,
-                        phone_number: phone,
+                        phone: phone,
                         password: password
                     }])
                     .select()
@@ -467,3 +467,4 @@
 
 </body>
 </html>
+
