@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Téka - Tableau de bord</title>
+    <title>Teka - Tableau de bord</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,11 +29,7 @@
             --radius-sm: 8px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -61,11 +57,7 @@
             justify-content: space-between;
         }
 
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .header-left { display: flex; align-items: center; gap: 12px; }
 
         .logo-icon {
             width: 40px;
@@ -80,16 +72,8 @@
             font-size: 16px;
         }
 
-        .header-title {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .header-title { font-size: 18px; font-weight: 600; }
+        .header-right { display: flex; align-items: center; gap: 12px; position: relative; }
 
         .notification-btn {
             width: 40px;
@@ -113,10 +97,12 @@
             font-size: 10px;
             font-weight: 600;
             border-radius: 50%;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
         }
+
+        .notification-badge.show { display: flex; }
 
         .profile-btn {
             width: 40px;
@@ -139,30 +125,13 @@
             padding: 8px;
         }
 
-        .logout-btn:hover {
-            color: var(--error);
-        }
+        .logout-btn:hover { color: var(--error); }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 16px;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px 16px; }
 
-        .welcome {
-            margin-bottom: 24px;
-        }
-
-        .welcome h1 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .welcome p {
-            font-size: 14px;
-            color: var(--gray);
-        }
+        .welcome { margin-bottom: 24px; }
+        .welcome h1 { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+        .welcome p { font-size: 14px; color: var(--gray); }
 
         .stats-grid {
             display: grid;
@@ -194,52 +163,18 @@
             margin-bottom: 12px;
         }
 
-        .stat-card:not(.highlight) .stat-icon {
-            background: var(--light);
-        }
+        .stat-card:not(.highlight) .stat-icon { background: var(--light); }
+        .stat-card.highlight .stat-icon { background: rgba(255,255,255,0.2); }
 
-        .stat-card.highlight .stat-icon {
-            background: rgba(255,255,255,0.2);
-        }
+        .stat-value { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+        .stat-label { font-size: 12px; opacity: 0.8; }
+        .stat-card:not(.highlight) .stat-label { color: var(--gray); }
 
-        .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
+        .stat-trend { display: flex; align-items: center; gap: 4px; font-size: 12px; margin-top: 8px; }
+        .stat-trend.up { color: var(--success); }
+        .stat-card.highlight .stat-trend { color: rgba(255,255,255,0.9); }
 
-        .stat-label {
-            font-size: 12px;
-            opacity: 0.8;
-        }
-
-        .stat-card:not(.highlight) .stat-label {
-            color: var(--gray);
-        }
-
-        .stat-trend {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 12px;
-            margin-top: 8px;
-        }
-
-        .stat-trend.up {
-            color: var(--success);
-        }
-
-        .stat-trend.down {
-            color: var(--error);
-        }
-
-        .stat-card.highlight .stat-trend {
-            color: rgba(255,255,255,0.9);
-        }
-
-        .section {
-            margin-bottom: 24px;
-        }
+        .section { margin-bottom: 24px; }
 
         .section-header {
             display: flex;
@@ -248,22 +183,10 @@
             margin-bottom: 16px;
         }
 
-        .section-title {
-            font-size: 16px;
-            font-weight: 600;
-        }
+        .section-title { font-size: 16px; font-weight: 600; }
+        .section-link { font-size: 13px; color: var(--primary); text-decoration: none; }
 
-        .section-link {
-            font-size: 13px;
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-        }
+        .quick-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
 
         .quick-action {
             background: var(--white);
@@ -276,9 +199,7 @@
             transition: transform 0.2s;
         }
 
-        .quick-action:hover {
-            transform: translateY(-2px);
-        }
+        .quick-action:hover { transform: translateY(-2px); }
 
         .quick-action-icon {
             width: 44px;
@@ -292,16 +213,9 @@
             font-size: 22px;
         }
 
-        .quick-action-label {
-            font-size: 11px;
-            font-weight: 500;
-        }
+        .quick-action-label { font-size: 11px; font-weight: 500; }
 
-        .orders-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        .orders-list { display: flex; flex-direction: column; gap: 12px; }
 
         .order-card {
             background: var(--white);
@@ -324,36 +238,12 @@
             font-size: 18px;
         }
 
-        .order-info {
-            flex: 1;
-        }
-
-        .order-product {
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 2px;
-        }
-
-        .order-client {
-            font-size: 12px;
-            color: var(--gray);
-        }
-
-        .order-right {
-            text-align: right;
-        }
-
-        .order-amount {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--success);
-            margin-bottom: 2px;
-        }
-
-        .order-time {
-            font-size: 11px;
-            color: var(--gray);
-        }
+        .order-info { flex: 1; }
+        .order-product { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+        .order-client { font-size: 12px; color: var(--gray); }
+        .order-right { text-align: right; }
+        .order-amount { font-size: 14px; font-weight: 600; color: var(--success); margin-bottom: 2px; }
+        .order-time { font-size: 11px; color: var(--gray); }
 
         .empty-state {
             text-align: center;
@@ -363,21 +253,9 @@
             box-shadow: var(--shadow);
         }
 
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-        }
-
-        .empty-state-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .empty-state-text {
-            font-size: 14px;
-            color: var(--gray);
-        }
+        .empty-state-icon { font-size: 48px; margin-bottom: 16px; }
+        .empty-state-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .empty-state-text { font-size: 14px; color: var(--gray); }
 
         .shop-link-card {
             background: var(--white);
@@ -400,22 +278,9 @@
             font-size: 20px;
         }
 
-        .shop-link-info {
-            flex: 1;
-        }
-
-        .shop-link-label {
-            font-size: 12px;
-            color: var(--gray);
-            margin-bottom: 2px;
-        }
-
-        .shop-link-url {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--primary);
-            word-break: break-all;
-        }
+        .shop-link-info { flex: 1; }
+        .shop-link-label { font-size: 12px; color: var(--gray); margin-bottom: 2px; }
+        .shop-link-url { font-size: 14px; font-weight: 500; color: var(--primary); word-break: break-all; }
 
         .shop-link-btn {
             background: var(--primary);
@@ -450,40 +315,144 @@
             transition: color 0.2s;
         }
 
-        .nav-item.active {
-            color: var(--primary);
+        .nav-item.active { color: var(--primary); }
+        .nav-icon { font-size: 22px; margin-bottom: 4px; }
+        .nav-label { font-weight: 500; }
+
+        /* NOTIFICATION POPUP */
+        .notif-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 500;
+            display: none;
+            align-items: center;
+            justify-content: center;
         }
 
-        .nav-icon {
-            font-size: 22px;
-            margin-bottom: 4px;
+        .notif-overlay.active { display: flex; }
+
+        .notif-popup {
+            background: var(--white);
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 400px;
+            padding: 24px;
+            text-align: center;
+            animation: popIn 0.3s ease;
         }
 
-        .nav-label {
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .notif-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 16px;
+        }
+
+        .notif-title { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+        .notif-message { font-size: 14px; color: var(--gray); margin-bottom: 20px; line-height: 1.6; }
+
+        .notif-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .notif-btn-secondary {
+            width: 100%;
+            padding: 14px;
+            background: var(--light);
+            color: var(--gray);
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 14px;
             font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* NOTIFICATION DROPDOWN */
+        .notif-dropdown {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            width: 320px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            z-index: 200;
+            display: none;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .notif-dropdown.active { display: block; }
+
+        .notif-dropdown-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notif-dropdown-title { font-size: 14px; font-weight: 600; }
+
+        .notif-mark-read {
+            font-size: 12px;
+            color: var(--primary);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .notif-item {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--gray-light);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .notif-item:hover { background: var(--light); }
+        .notif-item.unread { background: rgba(255, 107, 53, 0.05); }
+
+        .notif-item-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+        .notif-item-icon { font-size: 20px; }
+        .notif-item-type { font-size: 12px; font-weight: 600; color: var(--success); }
+        .notif-item-time { font-size: 11px; color: var(--gray); margin-left: auto; }
+        .notif-item-message { font-size: 13px; color: var(--secondary); }
+
+        .notif-empty {
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--gray);
+            font-size: 14px;
         }
 
         @media (min-width: 768px) {
-            body {
-                padding-bottom: 0;
-            }
-
-            .container {
-                padding: 24px;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 16px;
-            }
-
-            .welcome h1 {
-                font-size: 28px;
-            }
-
-            .bottom-nav {
-                display: none;
-            }
+            body { padding-bottom: 0; }
+            .container { padding: 24px; }
+            .stats-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+            .welcome h1 { font-size: 28px; }
+            .bottom-nav { display: none; }
         }
     </style>
     
@@ -495,24 +464,43 @@
         <div class="header-content">
             <div class="header-left">
                 <div class="logo-icon">T</div>
-                <span class="header-title">Téka</span>
+                <span class="header-title">Teka</span>
             </div>
             <div class="header-right">
-                <button class="notification-btn">
+                <button class="notification-btn" onclick="toggleNotifDropdown()">
                     🔔
                     <span class="notification-badge" id="notifBadge">0</span>
                 </button>
+                <div class="notif-dropdown" id="notifDropdown">
+                    <div class="notif-dropdown-header">
+                        <span class="notif-dropdown-title">Notifications</span>
+                        <button class="notif-mark-read" onclick="markAllAsRead()">Tout marquer lu</button>
+                    </div>
+                    <div id="notifList">
+                        <div class="notif-empty">Aucune notification</div>
+                    </div>
+                </div>
                 <button class="profile-btn" id="profileBtn">--</button>
-                <button class="logout-btn" onclick="logout()">Déconnexion</button>
+                <button class="logout-btn" onclick="logout()">Deconnexion</button>
             </div>
         </div>
     </header>
 
-    <main class="container">
+    <!-- NOTIFICATION POPUP -->
+    <div class="notif-overlay" id="notifOverlay">
+        <div class="notif-popup">
+            <div class="notif-icon">🎉</div>
+            <h2 class="notif-title" id="popupTitle">Nouvelle commande !</h2>
+            <p class="notif-message" id="popupMessage">Un client vient de passer une commande. Verifie le paiement !</p>
+            <button class="notif-btn" onclick="goToOrders()">Voir la commande</button>
+            <button class="notif-btn-secondary" onclick="closeNotifPopup()">Plus tard</button>
+        </div>
+    </div>
 
+    <main class="container">
         <div class="welcome">
-            <h1 id="welcomeTitle">Salut 👋</h1>
-            <p>Voici le résumé de ta boutique aujourd'hui</p>
+            <h1 id="welcomeTitle">Salut</h1>
+            <p>Voici le resume de ta boutique aujourd'hui</p>
         </div>
 
         <div class="stats-grid">
@@ -520,25 +508,25 @@
                 <div class="stat-icon">💰</div>
                 <div class="stat-value" id="totalRevenue">0</div>
                 <div class="stat-label">FCFA aujourd'hui</div>
-                <div class="stat-trend up">↑ Nouveau</div>
+                <div class="stat-trend up">Nouveau</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">🛒</div>
                 <div class="stat-value" id="totalOrders">0</div>
                 <div class="stat-label">Commandes</div>
-                <div class="stat-trend up">↑ Nouveau</div>
+                <div class="stat-trend up">Nouveau</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">📦</div>
                 <div class="stat-value" id="totalProducts">0</div>
                 <div class="stat-label">Produits</div>
-                <div class="stat-trend up">↑ Nouveau</div>
+                <div class="stat-trend up">Nouveau</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">💬</div>
                 <div class="stat-value" id="totalChats">0</div>
                 <div class="stat-label">Conversations</div>
-                <div class="stat-trend up">↑ Nouveau</div>
+                <div class="stat-trend up">Nouveau</div>
             </div>
         </div>
 
@@ -582,18 +570,17 @@
 
         <div class="section">
             <div class="section-header">
-                <h2 class="section-title">Dernières commandes</h2>
-                <a href="commande.html" class="section-link">Voir tout →</a>
+                <h2 class="section-title">Dernieres commandes</h2>
+                <a href="commande.html" class="section-link">Voir tout</a>
             </div>
             <div class="orders-list" id="ordersList">
                 <div class="empty-state">
                     <div class="empty-state-icon">📦</div>
                     <div class="empty-state-title">Aucune commande</div>
-                    <div class="empty-state-text">Tes commandes apparaîtront ici</div>
+                    <div class="empty-state-text">Tes commandes apparaitront ici</div>
                 </div>
             </div>
         </div>
-
     </main>
 
     <nav class="bottom-nav">
@@ -620,77 +607,78 @@
     </nav>
 
     <script>
-        // Initialiser Supabase
-        const SUPABASE_URL = 'https://kolwacpvfxdrptldipzj.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvbHdhY3B2ZnhkcnB0bGRpcHpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4MjYzOTMsImV4cCI6MjA3NzQwMjM5M30.cXXOxBkX9KaddhfY5JoAvMGz-ohxdCoh5iQlHMUGHqE';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        var SUPABASE_URL = 'https://kolwacpvfxdrptldipzj.supabase.co';
+        var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvbHdhY3B2ZnhkcnB0bGRpcHpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4MjYzOTMsImV4cCI6MjA3NzQwMjM5M30.cXXOxBkX9KaddhfY5JoAvMGz-ohxdCoh5iQlHMUGHqE';
+        var supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // Données du vendeur
-        let vendor = null;
+        var vendor = null;
+        var notifications = [];
+        var lastNotifCheck = null;
 
-        // Initialisation
         async function init() {
-            // Vérifier si le vendeur est connecté
-            const vendorData = localStorage.getItem('vendor');
+            var vendorData = localStorage.getItem('vendor');
             
             if (!vendorData) {
-                // Pas connecté, rediriger vers login
                 window.location.href = 'login.html';
                 return;
             }
 
             vendor = JSON.parse(vendorData);
-
-            // Afficher les infos du vendeur
             displayVendorInfo();
-
-            // Charger les statistiques
             await loadStats();
+            await loadNotifications();
+            
+            // Verifier les nouvelles notifications toutes les 10 secondes
+            setInterval(checkNewNotifications, 10000);
         }
 
-        // Afficher les infos du vendeur
         function displayVendorInfo() {
-            // Nom dans le welcome
-            const firstName = vendor.shop_name.split(' ')[0];
-            document.getElementById('welcomeTitle').textContent = `Salut, ${firstName} 👋`;
+            var firstName = vendor.shop_name.split(' ')[0];
+            document.getElementById('welcomeTitle').textContent = 'Salut, ' + firstName + ' !';
 
-            // Initiales dans le bouton profil
-            const initials = vendor.shop_name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+            var initials = vendor.shop_name.split(' ').map(function(w) { return w[0]; }).join('').toUpperCase().slice(0, 2);
             document.getElementById('profileBtn').textContent = initials;
 
-            // Lien de la boutique
-            document.getElementById('shopUrl').textContent = `teka-peach.vercel.app/teka.html?shop=${vendor.shop_slug}`;
+            document.getElementById('shopUrl').textContent = 'teka-peach.vercel.app/teka.html?shop=' + vendor.shop_slug;
         }
 
-        // Charger les statistiques
         async function loadStats() {
             try {
-                // Compter les produits
-                const { count: productsCount } = await supabase
+                var productsResult = await supabaseClient
                     .from('teka_products')
                     .select('*', { count: 'exact', head: true })
                     .eq('vendor_id', vendor.id);
 
-                document.getElementById('totalProducts').textContent = productsCount || 0;
+                document.getElementById('totalProducts').textContent = productsResult.count || 0;
 
-                // Compter les commandes
-                const { count: ordersCount } = await supabase
+                var ordersResult = await supabaseClient
                     .from('teka_orders')
                     .select('*', { count: 'exact', head: true })
                     .eq('vendor_id', vendor.id);
 
-                document.getElementById('totalOrders').textContent = ordersCount || 0;
+                document.getElementById('totalOrders').textContent = ordersResult.count || 0;
 
-                // Calculer le revenu total
-                const { data: orders } = await supabase
+                var ordersData = await supabaseClient
                     .from('teka_orders')
-                    .select('total')
-                    .eq('vendor_id', vendor.id);
+                    .select('total_price')
+                    .eq('vendor_id', vendor.id)
+                    .eq('status', 'delivered');
 
-                const totalRevenue = orders ? orders.reduce((sum, o) => sum + (o.total || 0), 0) : 0;
+                var totalRevenue = 0;
+                if (ordersData.data) {
+                    ordersData.data.forEach(function(o) {
+                        totalRevenue += o.total_price || 0;
+                    });
+                }
                 document.getElementById('totalRevenue').textContent = formatNumber(totalRevenue);
 
-                // Charger les dernières commandes
+                var chatsResult = await supabaseClient
+                    .from('teka_conversations')
+                    .select('*', { count: 'exact', head: true })
+                    .eq('vendor_id', vendor.id);
+
+                document.getElementById('totalChats').textContent = chatsResult.count || 0;
+
                 await loadRecentOrders();
 
             } catch (error) {
@@ -698,117 +686,240 @@
             }
         }
 
-        // Charger les dernières commandes
         async function loadRecentOrders() {
             try {
-                const { data: orders, error } = await supabase
+                var result = await supabaseClient
                     .from('teka_orders')
                     .select('*, teka_products(name)')
                     .eq('vendor_id', vendor.id)
                     .order('created_at', { ascending: false })
                     .limit(5);
 
-                if (error || !orders || orders.length === 0) {
-                    return; // Garder l'état vide
+                if (result.error || !result.data || result.data.length === 0) {
+                    return;
                 }
 
-                const ordersList = document.getElementById('ordersList');
-                ordersList.innerHTML = orders.map(order => `
-                    <div class="order-card">
-                        <div class="order-avatar">👤</div>
-                        <div class="order-info">
-                            <div class="order-product">${order.teka_products?.name || 'Produit'}</div>
-                            <div class="order-client">${order.customer_name} • ${order.customer_address || ''}</div>
-                        </div>
-                        <div class="order-right">
-                            <div class="order-amount">+${formatNumber(order.total)} FCFA</div>
-                            <div class="order-time">${timeAgo(order.created_at)}</div>
-                        </div>
-                    </div>
-                `).join('');
+                var ordersList = document.getElementById('ordersList');
+                var html = '';
+                result.data.forEach(function(order) {
+                    html += '<div class="order-card">' +
+                        '<div class="order-avatar">👤</div>' +
+                        '<div class="order-info">' +
+                            '<div class="order-product">' + (order.teka_products ? order.teka_products.name : 'Produit') + '</div>' +
+                            '<div class="order-client">' + order.customer_name + ' - ' + (order.customer_address || '') + '</div>' +
+                        '</div>' +
+                        '<div class="order-right">' +
+                            '<div class="order-amount">+' + formatNumber(order.total_price || 0) + ' FCFA</div>' +
+                            '<div class="order-time">' + timeAgo(order.created_at) + '</div>' +
+                        '</div>' +
+                    '</div>';
+                });
+                ordersList.innerHTML = html;
 
             } catch (error) {
                 console.log('Erreur chargement commandes:', error);
             }
         }
 
-        // Copier le lien de la boutique
+        // NOTIFICATIONS
+        async function loadNotifications() {
+            try {
+                var result = await supabaseClient
+                    .from('teka_notifications')
+                    .select('*')
+                    .eq('vendor_id', vendor.id)
+                    .order('created_at', { ascending: false })
+                    .limit(20);
+
+                if (result.error) {
+                    console.log('Erreur notifications:', result.error);
+                    return;
+                }
+
+                notifications = result.data || [];
+                updateNotificationUI();
+                
+                if (notifications.length > 0) {
+                    lastNotifCheck = new Date(notifications[0].created_at);
+                }
+
+            } catch (error) {
+                console.log('Erreur:', error);
+            }
+        }
+
+        async function checkNewNotifications() {
+            try {
+                var query = supabaseClient
+                    .from('teka_notifications')
+                    .select('*')
+                    .eq('vendor_id', vendor.id)
+                    .eq('is_read', false);
+
+                if (lastNotifCheck) {
+                    query = query.gt('created_at', lastNotifCheck.toISOString());
+                }
+
+                var result = await query.order('created_at', { ascending: false });
+
+                if (result.data && result.data.length > 0) {
+                    result.data.forEach(function(notif) {
+                        if (!notifications.find(function(n) { return n.id === notif.id; })) {
+                            notifications.unshift(notif);
+                            showNotifPopup(notif);
+                        }
+                    });
+                    
+                    lastNotifCheck = new Date(result.data[0].created_at);
+                    updateNotificationUI();
+                }
+
+            } catch (error) {
+                console.log('Erreur check notif:', error);
+            }
+        }
+
+        function updateNotificationUI() {
+            var unreadCount = notifications.filter(function(n) { return !n.is_read; }).length;
+            
+            var badge = document.getElementById('notifBadge');
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount > 9 ? '9+' : unreadCount;
+                badge.classList.add('show');
+            } else {
+                badge.classList.remove('show');
+            }
+
+            renderNotifList();
+        }
+
+        function renderNotifList() {
+            var container = document.getElementById('notifList');
+            
+            if (notifications.length === 0) {
+                container.innerHTML = '<div class="notif-empty">Aucune notification</div>';
+                return;
+            }
+
+            var html = '';
+            notifications.forEach(function(notif) {
+                var unreadClass = notif.is_read ? '' : 'unread';
+                html += '<div class="notif-item ' + unreadClass + '" onclick="handleNotifClick(\'' + notif.id + '\', \'' + notif.order_id + '\')">' +
+                    '<div class="notif-item-header">' +
+                        '<span class="notif-item-icon">🛒</span>' +
+                        '<span class="notif-item-type">Nouvelle commande</span>' +
+                        '<span class="notif-item-time">' + timeAgo(notif.created_at) + '</span>' +
+                    '</div>' +
+                    '<div class="notif-item-message">' + (notif.message || 'Nouvelle commande recue') + '</div>' +
+                '</div>';
+            });
+            container.innerHTML = html;
+        }
+
+        function toggleNotifDropdown() {
+            var dropdown = document.getElementById('notifDropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(e) {
+            var dropdown = document.getElementById('notifDropdown');
+            var btn = document.querySelector('.notification-btn');
+            if (!dropdown.contains(e.target) && !btn.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        async function handleNotifClick(notifId, orderId) {
+            await supabaseClient
+                .from('teka_notifications')
+                .update({ is_read: true })
+                .eq('id', notifId);
+
+            var notif = notifications.find(function(n) { return n.id === notifId; });
+            if (notif) notif.is_read = true;
+            updateNotificationUI();
+
+            window.location.href = 'commande.html';
+        }
+
+        async function markAllAsRead() {
+            await supabaseClient
+                .from('teka_notifications')
+                .update({ is_read: true })
+                .eq('vendor_id', vendor.id);
+
+            notifications.forEach(function(n) { n.is_read = true; });
+            updateNotificationUI();
+        }
+
+        function showNotifPopup(notif) {
+            document.getElementById('popupTitle').textContent = 'Nouvelle commande !';
+            document.getElementById('popupMessage').textContent = notif.message || 'Un client vient de passer une commande. Verifie le paiement !';
+            document.getElementById('notifOverlay').classList.add('active');
+        }
+
+        function closeNotifPopup() {
+            document.getElementById('notifOverlay').classList.remove('active');
+        }
+
+        function goToOrders() {
+            closeNotifPopup();
+            window.location.href = 'commande.html';
+        }
+
         function copyShopLink() {
-            const url = `https://teka-peach.vercel.app/teka.html?shop=${vendor.shop_slug}`;
+            var url = 'https://teka-peach.vercel.app/teka.html?shop=' + vendor.shop_slug;
             
             if (navigator.clipboard) {
-                navigator.clipboard.writeText(url).then(() => {
-                    showToast('Lien copié ! 📋');
+                navigator.clipboard.writeText(url).then(function() {
+                    showToast('Lien copie !');
                 });
             } else {
-                const input = document.createElement('input');
+                var input = document.createElement('input');
                 input.value = url;
                 document.body.appendChild(input);
                 input.select();
                 document.execCommand('copy');
                 document.body.removeChild(input);
-                showToast('Lien copié ! 📋');
+                showToast('Lien copie !');
             }
         }
 
-        // Déconnexion
         function logout() {
             localStorage.removeItem('vendor');
             window.location.href = 'login.html';
         }
 
-        // Toast notification
         function showToast(message) {
-            let toast = document.getElementById('toast');
+            var toast = document.getElementById('toast');
             if (!toast) {
                 toast = document.createElement('div');
                 toast.id = 'toast';
-                toast.style.cssText = `
-                    position: fixed;
-                    bottom: 100px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    background: var(--secondary);
-                    color: white;
-                    padding: 12px 24px;
-                    border-radius: 8px;
-                    font-size: 14px;
-                    z-index: 1000;
-                    opacity: 0;
-                    transition: opacity 0.3s;
-                `;
+                toast.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:var(--secondary);color:white;padding:12px 24px;border-radius:8px;font-size:14px;z-index:1000;opacity:0;transition:opacity 0.3s;';
                 document.body.appendChild(toast);
             }
-
             toast.textContent = message;
             toast.style.opacity = '1';
-
-            setTimeout(() => {
-                toast.style.opacity = '0';
-            }, 2000);
+            setTimeout(function() { toast.style.opacity = '0'; }, 2000);
         }
 
-        // Formater les nombres
         function formatNumber(num) {
             return num.toLocaleString('fr-FR');
         }
 
-        // Temps écoulé
         function timeAgo(dateString) {
-            const date = new Date(dateString);
-            const now = new Date();
-            const seconds = Math.floor((now - date) / 1000);
+            var date = new Date(dateString);
+            var now = new Date();
+            var seconds = Math.floor((now - date) / 1000);
 
-            if (seconds < 60) return "À l'instant";
-            if (seconds < 3600) return `Il y a ${Math.floor(seconds / 60)} min`;
-            if (seconds < 86400) return `Il y a ${Math.floor(seconds / 3600)}h`;
-            return `Il y a ${Math.floor(seconds / 86400)}j`;
+            if (seconds < 60) return "A l'instant";
+            if (seconds < 3600) return 'Il y a ' + Math.floor(seconds / 60) + ' min';
+            if (seconds < 86400) return 'Il y a ' + Math.floor(seconds / 3600) + 'h';
+            return 'Il y a ' + Math.floor(seconds / 86400) + 'j';
         }
 
-        // Démarrer
         init();
     </script>
 
 </body>
 </html>
-
