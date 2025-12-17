@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Téka - Boutique</title>
+    <title>Teka - Boutique</title>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -744,7 +744,7 @@
     </div>
 
     <div id="errorPage" class="error-page" style="display: none;">
-        <h1>😕 Boutique introuvable</h1>
+        <h1>Boutique introuvable</h1>
         <p>Cette boutique n'existe pas ou n'est plus disponible.</p>
     </div>
 
@@ -770,12 +770,12 @@
                         </div>
                     </div>
                     <p class="assistant-message">
-                        👋 Salut ! Je suis là pour t'aider à trouver ce que tu cherches. 
+                        Salut ! Je suis la pour t'aider a trouver ce que tu cherches. 
                         Pose-moi tes questions sur les produits, les tailles, la livraison...
                     </p>
                 </div>
                 <button class="assistant-btn" onclick="openChat()">
-                    💬 Discuter avec moi
+                    Discuter avec moi
                 </button>
             </section>
 
@@ -789,11 +789,11 @@
     <!-- PRODUCT MODAL -->
     <div class="modal-overlay" id="productModal">
         <div class="modal-content">
-            <button class="modal-close" onclick="closeProductModal()">✕</button>
+            <button class="modal-close" onclick="closeProductModal()">X</button>
             <div class="modal-images" onclick="openFullscreen()">
                 <img id="modalImage" src="" alt="">
                 <div id="modalImagePlaceholder" class="product-image-placeholder">📷</div>
-                <div class="modal-zoom-hint" id="zoomHint">🔍 Agrandir</div>
+                <div class="modal-zoom-hint" id="zoomHint">Agrandir</div>
             </div>
             <div class="modal-body">
                 <h2 class="modal-name" id="modalName"></h2>
@@ -811,7 +811,7 @@
                 </div>
                 
                 <button class="modal-ask-btn" onclick="askAboutProduct()">
-                    💬 Poser une question
+                    Poser une question
                 </button>
             </div>
         </div>
@@ -819,7 +819,7 @@
 
     <!-- FULLSCREEN IMAGE -->
     <div class="image-fullscreen" id="imageFullscreen">
-        <button class="fullscreen-close" onclick="closeFullscreen()">✕</button>
+        <button class="fullscreen-close" onclick="closeFullscreen()">X</button>
         <div class="fullscreen-image-container">
             <img id="fullscreenImage" src="" alt="">
         </div>
@@ -829,7 +829,7 @@
             <p class="fullscreen-description" id="fullscreenDescription"></p>
             <div class="fullscreen-details" id="fullscreenDetails"></div>
             <button class="fullscreen-ask-btn" onclick="closeFullscreen(); askAboutProduct();">
-                💬 Poser une question sur ce produit
+                Poser une question sur ce produit
             </button>
         </div>
     </div>
@@ -841,14 +841,14 @@
             <div class="chat-header-avatar">🤖</div>
             <div class="chat-header-info">
                 <h3>Assistant de <span id="chatShopName">la boutique</span></h3>
-                <p>Je réponds instantanément</p>
+                <p>Je reponds instantanement</p>
             </div>
-            <button class="chat-close" onclick="closeChat()">✕</button>
+            <button class="chat-close" onclick="closeChat()">X</button>
         </div>
         <div class="chat-messages" id="chatMessages"></div>
         <div class="chat-input-container">
             <input type="text" class="chat-input" id="chatInput" placeholder="Pose ta question..." onkeypress="handleKeyPress(event)">
-            <button class="chat-send" onclick="sendMessage()">➤</button>
+            <button class="chat-send" onclick="sendMessage()">></button>
         </div>
     </div>
 
@@ -856,16 +856,20 @@
         // Supabase
         var SUPABASE_URL = 'https://kolwacpvfxdrptldipzj.supabase.co';
         var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvbHdhY3B2ZnhkcnB0bGRpcHpqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4MjYzOTMsImV4cCI6MjA3NzQwMjM5M30.cXXOxBkX9KaddhfY5JoAvMGz-ohxdCoh5iQlHMUGHqE';
-        var supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        var supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        let vendor = null;
-        let products = [];
-        let currentProduct = null;
-        let chatHistory = [];
+        var vendor = null;
+        var products = [];
+        var currentProduct = null;
+        var chatHistory = [];
+        
+        // NOUVEAU: Variables pour la sauvegarde des conversations
+        var sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        var conversationId = null;
 
         async function init() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const shopSlug = urlParams.get('shop');
+            var urlParams = new URLSearchParams(window.location.search);
+            var shopSlug = urlParams.get('shop');
 
             if (!shopSlug) {
                 showError();
@@ -873,26 +877,26 @@
             }
 
             try {
-                const { data: vendorData, error: vendorError } = await supabase
+                var vendorResult = await supabaseClient
                     .from('teka_vendors')
                     .select('*')
                     .eq('shop_slug', shopSlug)
                     .single();
 
-                if (vendorError || !vendorData) {
+                if (vendorResult.error || !vendorResult.data) {
                     showError();
                     return;
                 }
 
-                vendor = vendorData;
+                vendor = vendorResult.data;
 
-                const { data: productsData } = await supabase
+                var productsResult = await supabaseClient
                     .from('teka_products')
                     .select('*')
                     .eq('vendor_id', vendor.id)
                     .order('created_at', { ascending: false });
 
-                products = productsData || [];
+                products = productsResult.data || [];
 
                 showMainContent();
                 updatePageInfo();
@@ -915,10 +919,10 @@
         }
 
         function updatePageInfo() {
-            const shopName = vendor.shop_name;
-            const initials = shopName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+            var shopName = vendor.shop_name;
+            var initials = shopName.split(' ').map(function(w) { return w[0]; }).join('').toUpperCase().slice(0, 2);
 
-            document.title = `${shopName} - Téka`;
+            document.title = shopName + ' - Teka';
             document.getElementById('shopName').textContent = shopName;
             document.getElementById('shopLogo').textContent = initials;
             document.getElementById('assistantShopName').textContent = shopName;
@@ -926,30 +930,34 @@
         }
 
         function renderProducts() {
-            const grid = document.getElementById('productsGrid');
+            var grid = document.getElementById('productsGrid');
 
             if (products.length === 0) {
                 grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--gray);">Aucun produit disponible pour le moment.</p>';
                 return;
             }
 
-            grid.innerHTML = products.map(product => `
-                <div class="product-card" onclick="openProductModal('${product.id}')">
-                    <div class="product-image">
-                        ${product.images && product.images.length > 0
-                            ? `<img src="${product.images[0]}" alt="${product.name}" loading="lazy">`
-                            : `<div class="product-image-placeholder">📷</div>`
-                        }
-                        <span class="product-stock ${product.stock > 0 ? '' : 'out'}">
-                            ${product.stock > 0 ? 'En stock' : 'Rupture'}
-                        </span>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">${product.name}</h3>
-                        <div class="product-price">${formatPrice(product.price)}</div>
-                    </div>
-                </div>
-            `).join('');
+            var html = '';
+            products.forEach(function(product) {
+                var imageHtml = product.images && product.images.length > 0
+                    ? '<img src="' + product.images[0] + '" alt="' + product.name + '" loading="lazy">'
+                    : '<div class="product-image-placeholder">📷</div>';
+                
+                var stockClass = product.stock > 0 ? '' : 'out';
+                var stockText = product.stock > 0 ? 'En stock' : 'Rupture';
+
+                html += '<div class="product-card" onclick="openProductModal(\'' + product.id + '\')">' +
+                    '<div class="product-image">' + imageHtml +
+                        '<span class="product-stock ' + stockClass + '">' + stockText + '</span>' +
+                    '</div>' +
+                    '<div class="product-info">' +
+                        '<h3 class="product-name">' + product.name + '</h3>' +
+                        '<div class="product-price">' + formatPrice(product.price) + '</div>' +
+                    '</div>' +
+                '</div>';
+            });
+
+            grid.innerHTML = html;
         }
 
         function formatPrice(price) {
@@ -957,16 +965,16 @@
         }
 
         function openProductModal(productId) {
-            currentProduct = products.find(p => p.id === productId);
+            currentProduct = products.find(function(p) { return p.id === productId; });
             if (!currentProduct) return;
 
             document.getElementById('modalName').textContent = currentProduct.name;
             document.getElementById('modalPrice').textContent = formatPrice(currentProduct.price);
             document.getElementById('modalDescription').textContent = currentProduct.description || 'Pas de description disponible.';
 
-            const imgEl = document.getElementById('modalImage');
-            const placeholderEl = document.getElementById('modalImagePlaceholder');
-            const zoomHint = document.getElementById('zoomHint');
+            var imgEl = document.getElementById('modalImage');
+            var placeholderEl = document.getElementById('modalImagePlaceholder');
+            var zoomHint = document.getElementById('zoomHint');
 
             if (currentProduct.images && currentProduct.images.length > 0) {
                 imgEl.src = currentProduct.images[0];
@@ -980,25 +988,25 @@
             }
 
             // Tailles
-            const sizesSection = document.getElementById('modalSizes');
-            const sizesContainer = document.getElementById('modalSizesContainer');
+            var sizesSection = document.getElementById('modalSizes');
+            var sizesContainer = document.getElementById('modalSizesContainer');
             if (currentProduct.sizes && currentProduct.sizes.length > 0) {
                 sizesSection.style.display = 'block';
-                sizesContainer.innerHTML = currentProduct.sizes.map(size =>
-                    `<button class="size-btn" onclick="selectSize(this)">${size}</button>`
-                ).join('');
+                sizesContainer.innerHTML = currentProduct.sizes.map(function(size) {
+                    return '<button class="size-btn" onclick="selectSize(this)">' + size + '</button>';
+                }).join('');
             } else {
                 sizesSection.style.display = 'none';
             }
 
             // Couleurs
-            const colorsSection = document.getElementById('modalColors');
-            const colorsContainer = document.getElementById('modalColorsContainer');
+            var colorsSection = document.getElementById('modalColors');
+            var colorsContainer = document.getElementById('modalColorsContainer');
             if (currentProduct.colors && currentProduct.colors.length > 0) {
                 colorsSection.style.display = 'block';
-                colorsContainer.innerHTML = currentProduct.colors.map(color =>
-                    `<button class="size-btn" onclick="selectColor(this)">${color}</button>`
-                ).join('');
+                colorsContainer.innerHTML = currentProduct.colors.map(function(color) {
+                    return '<button class="size-btn" onclick="selectColor(this)">' + color + '</button>';
+                }).join('');
             } else {
                 colorsSection.style.display = 'none';
             }
@@ -1011,12 +1019,12 @@
         }
 
         function selectSize(btn) {
-            document.querySelectorAll('#modalSizesContainer .size-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('#modalSizesContainer .size-btn').forEach(function(b) { b.classList.remove('active'); });
             btn.classList.add('active');
         }
 
         function selectColor(btn) {
-            document.querySelectorAll('#modalColorsContainer .size-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('#modalColorsContainer .size-btn').forEach(function(b) { b.classList.remove('active'); });
             btn.classList.add('active');
         }
 
@@ -1030,15 +1038,15 @@
             document.getElementById('fullscreenDescription').textContent = currentProduct.description || 'Pas de description disponible.';
 
             // Details (tailles et couleurs)
-            let detailsHtml = '';
+            var detailsHtml = '';
             if (currentProduct.sizes && currentProduct.sizes.length > 0) {
-                detailsHtml += `<div class="fullscreen-detail"><strong>Tailles:</strong> ${currentProduct.sizes.join(', ')}</div>`;
+                detailsHtml += '<div class="fullscreen-detail"><strong>Tailles:</strong> ' + currentProduct.sizes.join(', ') + '</div>';
             }
             if (currentProduct.colors && currentProduct.colors.length > 0) {
-                detailsHtml += `<div class="fullscreen-detail"><strong>Couleurs:</strong> ${currentProduct.colors.join(', ')}</div>`;
+                detailsHtml += '<div class="fullscreen-detail"><strong>Couleurs:</strong> ' + currentProduct.colors.join(', ') + '</div>';
             }
             if (currentProduct.stock > 0) {
-                detailsHtml += `<div class="fullscreen-detail"><strong>Stock:</strong> ${currentProduct.stock} disponibles</div>`;
+                detailsHtml += '<div class="fullscreen-detail"><strong>Stock:</strong> ' + currentProduct.stock + ' disponibles</div>';
             }
             document.getElementById('fullscreenDetails').innerHTML = detailsHtml;
 
@@ -1055,9 +1063,9 @@
             document.getElementById('chatOverlay').classList.add('active');
             document.getElementById('chatContainer').classList.add('active');
 
-            const messagesContainer = document.getElementById('chatMessages');
+            var messagesContainer = document.getElementById('chatMessages');
             if (messagesContainer.children.length === 0) {
-                addBotMessage(`Salut ! 👋 Je suis l'assistant de ${vendor.shop_name}. Comment puis-je t'aider ?`);
+                addBotMessage('Salut ! Je suis l\'assistant de ' + vendor.shop_name + '. Comment puis-je t\'aider ?');
             }
         }
 
@@ -1070,13 +1078,13 @@
             closeProductModal();
             openChat();
             if (currentProduct) {
-                addBotMessage(`Tu regardes "${currentProduct.name}" à ${formatPrice(currentProduct.price)}. 😊 Qu'est-ce que tu veux savoir ?`);
+                addBotMessage('Tu regardes "' + currentProduct.name + '" a ' + formatPrice(currentProduct.price) + '. Qu\'est-ce que tu veux savoir ?');
             }
         }
 
         function addBotMessage(text) {
-            const messagesContainer = document.getElementById('chatMessages');
-            const messageEl = document.createElement('div');
+            var messagesContainer = document.getElementById('chatMessages');
+            var messageEl = document.createElement('div');
             messageEl.className = 'chat-message bot';
             messageEl.textContent = text;
             messagesContainer.appendChild(messageEl);
@@ -1084,8 +1092,8 @@
         }
 
         function addUserMessage(text) {
-            const messagesContainer = document.getElementById('chatMessages');
-            const messageEl = document.createElement('div');
+            var messagesContainer = document.getElementById('chatMessages');
+            var messageEl = document.createElement('div');
             messageEl.className = 'chat-message user';
             messageEl.textContent = text;
             messagesContainer.appendChild(messageEl);
@@ -1093,8 +1101,8 @@
         }
 
         function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const text = input.value.trim();
+            var input = document.getElementById('chatInput');
+            var text = input.value.trim();
             if (!text) return;
 
             input.value = '';
@@ -1109,67 +1117,98 @@
         }
 
         function showTypingIndicator() {
-            const messagesContainer = document.getElementById('chatMessages');
-            const typingEl = document.createElement('div');
+            var messagesContainer = document.getElementById('chatMessages');
+            var typingEl = document.createElement('div');
             typingEl.className = 'typing-indicator';
             typingEl.id = 'typingIndicator';
-            typingEl.innerHTML = `
-                <div class="typing-dot"></div>
-                <div class="typing-dot"></div>
-                <div class="typing-dot"></div>
-            `;
+            typingEl.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
             messagesContainer.appendChild(typingEl);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
         function hideTypingIndicator() {
-            const typingEl = document.getElementById('typingIndicator');
+            var typingEl = document.getElementById('typingIndicator');
             if (typingEl) typingEl.remove();
+        }
+
+        // NOUVEAU: Fonction pour sauvegarder la conversation
+        async function saveConversation() {
+            if (!vendor) return;
+
+            var deviceType = /Mobile|Android|iPhone/i.test(navigator.userAgent) ? 'Mobile' : 'Ordinateur';
+
+            var conversationData = {
+                vendor_id: vendor.id,
+                session_id: sessionId,
+                visitor_name: 'Visiteur #' + sessionId.slice(-6),
+                visitor_device: deviceType,
+                product_id: currentProduct ? currentProduct.id : null,
+                status: 'pending',
+                messages: chatHistory,
+                updated_at: new Date().toISOString()
+            };
+
+            try {
+                if (conversationId) {
+                    // Mise a jour de la conversation existante
+                    await supabaseClient
+                        .from('teka_conversations')
+                        .update(conversationData)
+                        .eq('id', conversationId);
+                } else {
+                    // Nouvelle conversation
+                    var result = await supabaseClient
+                        .from('teka_conversations')
+                        .insert(conversationData)
+                        .select()
+                        .single();
+
+                    if (result.data) {
+                        conversationId = result.data.id;
+                    }
+                }
+            } catch (error) {
+                console.log('Erreur sauvegarde conversation:', error);
+            }
         }
 
         async function simulateBotResponse(userMessage) {
             showTypingIndicator();
 
-            const productsList = products.map(p => `- ${p.name} : ${p.price} FCFA (stock: ${p.stock})`).join('\n');
+            var productsList = products.map(function(p) {
+                return '- ' + p.name + ' : ' + p.price + ' FCFA (stock: ' + p.stock + ')';
+            }).join('\n');
 
-            let systemPrompt = `Tu es un EXPERT EN VENTE et le meilleur conseiller de la boutique "${vendor.shop_name}".
-
-Tu as 10 ans d'expérience en vente et tu sais exactement comment aider les clients à trouver ce qu'ils cherchent et conclure des ventes.
-
-PERSONNALITÉ :
-- Amical et professionnel
-- Tu tutoies le client
-- Enthousiaste sans être agressif
-- Tu utilises des émojis avec modération
-
-RÈGLES STRICTES :
-- Réponses courtes (2-3 phrases)
-- Termine toujours par une question ou suggestion
-- NE JAMAIS inventer de produits, réductions ou cadeaux
-- NE JAMAIS modifier les prix
-- Propose UNIQUEMENT les produits de la liste ci-dessous
-
-LIVRAISON :
-- Brazzaville : 1000 FCFA (24-48h)
-- Pointe-Noire : 2000 FCFA (3-5 jours)
-- Autres villes : 3000 FCFA (5-7 jours)
-
-PAIEMENT :
-- Mobile Money (Airtel Money, MTN Money)
-- Paiement à la livraison
-
-PRODUITS DISPONIBLES :
-${productsList}
-`;
+            var systemPrompt = 'Tu es un EXPERT EN VENTE et le meilleur conseiller de la boutique "' + vendor.shop_name + '".\n\n' +
+                'Tu as 10 ans d\'experience en vente et tu sais exactement comment aider les clients a trouver ce qu\'ils cherchent et conclure des ventes.\n\n' +
+                'PERSONNALITE :\n' +
+                '- Amical et professionnel\n' +
+                '- Tu tutoies le client\n' +
+                '- Enthousiaste sans etre agressif\n' +
+                '- Tu utilises des emojis avec moderation\n\n' +
+                'REGLES STRICTES :\n' +
+                '- Reponses courtes (2-3 phrases)\n' +
+                '- Termine toujours par une question ou suggestion\n' +
+                '- NE JAMAIS inventer de produits, reductions ou cadeaux\n' +
+                '- NE JAMAIS modifier les prix\n' +
+                '- Propose UNIQUEMENT les produits de la liste ci-dessous\n\n' +
+                'LIVRAISON :\n' +
+                '- Brazzaville : 1000 FCFA (24-48h)\n' +
+                '- Pointe-Noire : 2000 FCFA (3-5 jours)\n' +
+                '- Autres villes : 3000 FCFA (5-7 jours)\n\n' +
+                'PAIEMENT :\n' +
+                '- Mobile Money (Airtel Money, MTN Money)\n' +
+                '- Paiement a la livraison\n\n' +
+                'PRODUITS DISPONIBLES :\n' + productsList;
 
             if (currentProduct) {
-                systemPrompt += `\n\nLe client regarde : ${currentProduct.name} à ${currentProduct.price} FCFA.`;
+                systemPrompt += '\n\nLe client regarde : ' + currentProduct.name + ' a ' + currentProduct.price + ' FCFA.';
             }
 
             chatHistory.push({ role: 'user', content: userMessage });
 
             try {
-                const response = await fetch('/chat', {
+                var response = await fetch('/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -1178,19 +1217,22 @@ ${productsList}
                     })
                 });
 
-                const data = await response.json();
+                var data = await response.json();
                 hideTypingIndicator();
 
                 if (data.choices && data.choices[0]) {
-                    const botResponse = data.choices[0].message.content;
+                    var botResponse = data.choices[0].message.content;
                     chatHistory.push({ role: 'assistant', content: botResponse });
                     addBotMessage(botResponse);
+                    saveConversation(); // NOUVEAU: Sauvegarde apres reponse du bot
                 } else {
-                    addBotMessage("Désolé, je n'ai pas compris. Tu peux reformuler ?");
+                    addBotMessage("Desole, je n'ai pas compris. Tu peux reformuler ?");
+                    saveConversation(); // NOUVEAU: Sauvegarde meme en cas d'erreur
                 }
             } catch (error) {
                 hideTypingIndicator();
-                addBotMessage("Oups, j'ai un petit souci. Réessaie dans un instant !");
+                addBotMessage("Oups, j'ai un petit souci. Reessaie dans un instant !");
+                saveConversation(); // NOUVEAU: Sauvegarde meme en cas d'erreur
                 console.error('Erreur API:', error);
             }
         }
