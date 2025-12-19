@@ -69,6 +69,39 @@
         .shop-info h1 { font-size: 18px; font-weight: 600; color: var(--secondary); }
         .shop-info p { font-size: 12px; color: var(--gray); }
 
+        /* Icône panier dans le header */
+        .header-cart {
+            margin-left: auto;
+            position: relative;
+            cursor: pointer;
+            background: var(--light);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--primary);
+            color: var(--white);
+            font-size: 11px;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-badge.hidden { display: none; }
+
         .container { max-width: 1200px; margin: 0 auto; padding: 16px; }
 
         .assistant-banner {
@@ -125,7 +158,6 @@
             border-radius: var(--radius);
             overflow: hidden;
             box-shadow: var(--shadow);
-            cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
@@ -137,6 +169,7 @@
             background: var(--gray-light);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .product-image img { width: 100%; height: 100%; object-fit: cover; }
@@ -166,7 +199,301 @@
         .product-stock.out { background: #EF4444; }
         .product-info { padding: 12px; }
         .product-name { font-size: 14px; font-weight: 500; color: var(--secondary); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
         .product-price { font-size: 16px; font-weight: 700; color: var(--primary); }
+
+        .btn-add-cart {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-add-cart:active { transform: scale(0.9); }
+
+        /* Modal panier */
+        .cart-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 250;
+            display: none;
+        }
+
+        .cart-overlay.active { display: block; }
+
+        .cart-container {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            height: 90vh;
+            max-height: 700px;
+            background: var(--white);
+            border-radius: var(--radius) var(--radius) 0 0;
+            z-index: 251;
+            display: none;
+            flex-direction: column;
+        }
+
+        .cart-container.active { display: flex; }
+
+        .cart-header {
+            padding: 16px 20px;
+            background: var(--secondary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        .cart-header h3 { font-size: 16px; font-weight: 600; }
+        .cart-header-count { font-size: 12px; opacity: 0.8; }
+
+        .cart-close {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .cart-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray);
+        }
+
+        .cart-empty-icon { font-size: 60px; margin-bottom: 16px; }
+
+        .cart-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .cart-item-image {
+            width: 70px;
+            height: 70px;
+            border-radius: var(--radius-sm);
+            background: var(--gray-light);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .cart-item-image img { width: 100%; height: 100%; object-fit: cover; }
+
+        .cart-item-info { flex: 1; }
+        .cart-item-name { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+        .cart-item-price { font-size: 14px; color: var(--primary); font-weight: 600; }
+        .cart-item-variant { font-size: 12px; color: var(--gray); }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .qty-btn {
+            width: 28px;
+            height: 28px;
+            border: 1px solid var(--gray-light);
+            background: var(--white);
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qty-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+        .cart-item-qty { font-size: 14px; font-weight: 500; min-width: 24px; text-align: center; }
+
+        .cart-item-remove {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: #EF4444;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .cart-summary {
+            padding: 16px;
+            border-top: 2px solid var(--gray-light);
+            background: var(--light);
+        }
+
+        .cart-summary-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .cart-summary-line.total {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .cart-checkout-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+
+        /* Formulaire client dans panier */
+        .cart-form { padding: 16px; }
+        
+        .cart-form-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--secondary);
+        }
+
+        .cart-form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .cart-form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Écran paiement */
+        .payment-screen {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .payment-icon {
+            font-size: 60px;
+            margin-bottom: 16px;
+        }
+
+        .payment-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .payment-amount {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .payment-info {
+            background: var(--light);
+            padding: 16px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+        }
+
+        .payment-info-label {
+            font-size: 12px;
+            color: var(--gray);
+            margin-bottom: 4px;
+        }
+
+        .payment-info-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .payment-instructions {
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .payment-confirm-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--success);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .payment-back-btn {
+            width: 100%;
+            padding: 12px;
+            background: none;
+            color: var(--gray);
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* Lien produit dans chat */
+        .chat-product-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary);
+            color: var(--white);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 8px;
+            text-decoration: none;
+        }
+
+        .chat-product-link:hover { background: var(--primary-dark); }
 
         .modal-overlay {
             position: fixed;
@@ -248,7 +575,13 @@
 
         .size-btn:hover, .size-btn.active { border-color: var(--primary); color: var(--primary); }
 
-        .modal-ask-btn {
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-add-cart-btn {
+            flex: 1;
             background: var(--primary);
             color: var(--white);
             border: none;
@@ -261,8 +594,18 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            width: 100%;
             justify-content: center;
+        }
+
+        .modal-ask-btn {
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            padding: 16px 20px;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 16px;
+            cursor: pointer;
         }
 
         .image-fullscreen {
@@ -520,10 +863,29 @@
         .error-page h1 { font-size: 24px; color: var(--secondary); }
         .error-page p { color: var(--gray); }
 
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary);
+            color: var(--white);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            z-index: 500;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .toast.show { opacity: 1; }
+
         @media (min-width: 768px) {
             .container { padding: 24px; }
             .products-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
             .chat-container { width: 400px; right: 24px; left: auto; bottom: 24px; height: 500px; border-radius: var(--radius); }
+            .cart-container { width: 450px; right: 24px; left: auto; bottom: 24px; height: auto; max-height: 80vh; border-radius: var(--radius); }
             .fullscreen-image-container img { max-height: 70vh; }
         }
 
@@ -553,6 +915,10 @@
                 <div class="shop-info">
                     <h1 id="shopName">Chargement...</h1>
                     <p id="shopTagline">Boutique en ligne</p>
+                </div>
+                <div class="header-cart" onclick="openCart()">
+                    🛒
+                    <span class="cart-badge hidden" id="cartBadge">0</span>
                 </div>
             </div>
         </header>
@@ -584,9 +950,13 @@
         </main>
     </div>
 
+    <!-- Toast notification -->
+    <div class="toast" id="toast">Produit ajouté au panier</div>
+
+    <!-- Modal produit -->
     <div class="modal-overlay" id="productModal">
         <div class="modal-content">
-            <button class="modal-close" onclick="closeProductModal()">X</button>
+            <button class="modal-close" onclick="closeProductModal()">✕</button>
             <div class="modal-images" onclick="openFullscreen()">
                 <img id="modalImage" src="" alt="">
                 <div id="modalImagePlaceholder" class="product-image-placeholder">📷</div>
@@ -607,15 +977,21 @@
                     <div class="modal-sizes" id="modalColorsContainer"></div>
                 </div>
                 
-                <button class="modal-ask-btn" onclick="askAboutProduct()">
-                    Poser une question
-                </button>
+                <div class="modal-actions">
+                    <button class="modal-add-cart-btn" onclick="addToCartFromModal()">
+                        🛒 Ajouter au panier
+                    </button>
+                    <button class="modal-ask-btn" onclick="askAboutProduct()">
+                        💬
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Fullscreen image -->
     <div class="image-fullscreen" id="imageFullscreen">
-        <button class="fullscreen-close" onclick="closeFullscreen()">X</button>
+        <button class="fullscreen-close" onclick="closeFullscreen()">✕</button>
         <div class="fullscreen-image-container">
             <img id="fullscreenImage" src="" alt="">
         </div>
@@ -630,6 +1006,79 @@
         </div>
     </div>
 
+    <!-- Modal panier -->
+    <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+    <div class="cart-container" id="cartContainer">
+        <div class="cart-header">
+            <h3>🛒 Mon panier</h3>
+            <span class="cart-header-count" id="cartHeaderCount">(0 articles)</span>
+            <button class="cart-close" onclick="closeCart()">✕</button>
+        </div>
+        
+        <!-- Étape 1: Liste des produits -->
+        <div id="cartStepProducts" class="cart-body">
+            <div class="cart-empty" id="cartEmpty">
+                <div class="cart-empty-icon">🛒</div>
+                <p>Ton panier est vide</p>
+            </div>
+            <div id="cartItems"></div>
+        </div>
+        
+        <div id="cartSummarySection" class="cart-summary" style="display: none;">
+            <div class="cart-summary-line">
+                <span>Sous-total</span>
+                <span id="cartSubtotal">0 FCFA</span>
+            </div>
+            <div class="cart-summary-line">
+                <span>Livraison</span>
+                <span id="cartDelivery">1 000 FCFA</span>
+            </div>
+            <div class="cart-summary-line total">
+                <span>Total</span>
+                <span id="cartTotal">0 FCFA</span>
+            </div>
+            <button class="cart-checkout-btn" onclick="showCartForm()">
+                Passer la commande
+            </button>
+        </div>
+
+        <!-- Étape 2: Formulaire client -->
+        <div id="cartStepForm" class="cart-form" style="display: none;">
+            <h3 class="cart-form-title">Tes informations</h3>
+            <input type="text" class="cart-form-input" id="cartCustomerName" placeholder="Ton nom complet">
+            <input type="tel" class="cart-form-input" id="cartCustomerPhone" placeholder="Ton numéro de téléphone">
+            <input type="text" class="cart-form-input" id="cartCustomerAddress" placeholder="Ton adresse de livraison">
+            <button class="cart-checkout-btn" onclick="processCartOrder()">
+                Valider ma commande
+            </button>
+            <button class="payment-back-btn" onclick="showCartProducts()">
+                ← Retour au panier
+            </button>
+        </div>
+
+        <!-- Étape 3: Paiement -->
+        <div id="cartStepPayment" class="payment-screen" style="display: none;">
+            <div class="payment-icon">💰</div>
+            <h3 class="payment-title">Commande enregistrée !</h3>
+            <p class="payment-amount" id="paymentAmount">0 FCFA</p>
+            <div class="payment-info">
+                <div class="payment-info-label">Envoie ce montant par Mobile Money au</div>
+                <div class="payment-info-value" id="paymentPhone">...</div>
+            </div>
+            <p class="payment-instructions">
+                Une fois le paiement effectué, clique sur le bouton ci-dessous pour nous prévenir. 
+                Le vendeur vérifiera et te contactera pour la livraison.
+            </p>
+            <button class="payment-confirm-btn" onclick="confirmCartPayment()">
+                ✅ J'ai payé
+            </button>
+            <button class="payment-back-btn" onclick="closeCart()">
+                Fermer
+            </button>
+        </div>
+    </div>
+
+    <!-- Chat -->
     <div class="chat-overlay" id="chatOverlay" onclick="closeChat()"></div>
     <div class="chat-container" id="chatContainer">
         <div class="chat-header">
@@ -638,12 +1087,12 @@
                 <h3>Assistant de <span id="chatShopName">la boutique</span></h3>
                 <p>Je reponds instantanement</p>
             </div>
-            <button class="chat-close" onclick="closeChat()">X</button>
+            <button class="chat-close" onclick="closeChat()">✕</button>
         </div>
         <div class="chat-messages" id="chatMessages"></div>
         <div class="chat-input-container">
             <input type="text" class="chat-input" id="chatInput" placeholder="Pose ta question..." onkeypress="handleKeyPress(event)">
-            <button class="chat-send" onclick="sendMessage()">></button>
+            <button class="chat-send" onclick="sendMessage()">➤</button>
         </div>
     </div>
 
@@ -660,8 +1109,12 @@
         var sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
         var conversationId = null;
 
-        // Variables pour le flux de commande
-        var orderState = 'none'; // none, collecting_name, collecting_phone, collecting_address, confirming, waiting_payment
+        // Panier
+        var cart = [];
+        var deliveryFee = 1000;
+
+        // Variables pour le flux de commande (chat)
+        var orderState = 'none';
         var pendingOrder = {
             customer_name: '',
             customer_phone: '',
@@ -672,6 +1125,10 @@
             color: ''
         };
         var currentOrderId = null;
+
+        // Sélections dans le modal produit
+        var selectedSize = '';
+        var selectedColor = '';
 
         async function init() {
             var urlParams = new URLSearchParams(window.location.search);
@@ -707,6 +1164,7 @@
                 showMainContent();
                 updatePageInfo();
                 renderProducts();
+                loadCartFromStorage();
 
             } catch (error) {
                 console.log('Erreur:', error);
@@ -752,13 +1210,16 @@
                 var stockClass = product.stock > 0 ? '' : 'out';
                 var stockText = product.stock > 0 ? 'En stock' : 'Rupture';
 
-                html += '<div class="product-card" onclick="openProductModal(\'' + product.id + '\')">' +
-                    '<div class="product-image">' + imageHtml +
+                html += '<div class="product-card">' +
+                    '<div class="product-image" onclick="openProductModal(\'' + product.id + '\')">' + imageHtml +
                         '<span class="product-stock ' + stockClass + '">' + stockText + '</span>' +
                     '</div>' +
                     '<div class="product-info">' +
                         '<h3 class="product-name">' + product.name + '</h3>' +
-                        '<div class="product-price">' + formatPrice(product.price) + '</div>' +
+                        '<div class="product-footer">' +
+                            '<div class="product-price">' + formatPrice(product.price) + '</div>' +
+                            '<button class="btn-add-cart" onclick="quickAddToCart(\'' + product.id + '\')" ' + (product.stock <= 0 ? 'disabled style="opacity:0.5"' : '') + '>+</button>' +
+                        '</div>' +
                     '</div>' +
                 '</div>';
             });
@@ -770,9 +1231,268 @@
             return price.toLocaleString('fr-FR') + ' FCFA';
         }
 
+        // ==================== PANIER ====================
+
+        function loadCartFromStorage() {
+            var savedCart = localStorage.getItem('teka_cart_' + vendor.id);
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartBadge();
+            }
+        }
+
+        function saveCartToStorage() {
+            localStorage.setItem('teka_cart_' + vendor.id, JSON.stringify(cart));
+        }
+
+        function updateCartBadge() {
+            var badge = document.getElementById('cartBadge');
+            var count = cart.reduce(function(acc, item) { return acc + item.quantity; }, 0);
+            badge.textContent = count;
+            if (count > 0) {
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function quickAddToCart(productId) {
+            var product = products.find(function(p) { return p.id === productId; });
+            if (!product || product.stock <= 0) return;
+
+            addToCart(product, '', '');
+            showToast('Produit ajouté au panier');
+        }
+
+        function addToCartFromModal() {
+            if (!currentProduct || currentProduct.stock <= 0) return;
+            
+            addToCart(currentProduct, selectedSize, selectedColor);
+            showToast('Produit ajouté au panier');
+            closeProductModal();
+        }
+
+        function addToCart(product, size, color) {
+            var existingIndex = cart.findIndex(function(item) {
+                return item.product_id === product.id && item.size === size && item.color === color;
+            });
+
+            if (existingIndex >= 0) {
+                cart[existingIndex].quantity += 1;
+            } else {
+                cart.push({
+                    product_id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.images && product.images.length > 0 ? product.images[0] : null,
+                    size: size,
+                    color: color,
+                    quantity: 1
+                });
+            }
+
+            saveCartToStorage();
+            updateCartBadge();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            saveCartToStorage();
+            updateCartBadge();
+            renderCart();
+        }
+
+        function updateCartItemQty(index, delta) {
+            cart[index].quantity += delta;
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            saveCartToStorage();
+            updateCartBadge();
+            renderCart();
+        }
+
+        function openCart() {
+            document.getElementById('cartOverlay').classList.add('active');
+            document.getElementById('cartContainer').classList.add('active');
+            showCartProducts();
+            renderCart();
+        }
+
+        function closeCart() {
+            document.getElementById('cartOverlay').classList.remove('active');
+            document.getElementById('cartContainer').classList.remove('active');
+        }
+
+        function showCartProducts() {
+            document.getElementById('cartStepProducts').style.display = 'block';
+            document.getElementById('cartSummarySection').style.display = cart.length > 0 ? 'block' : 'none';
+            document.getElementById('cartStepForm').style.display = 'none';
+            document.getElementById('cartStepPayment').style.display = 'none';
+        }
+
+        function showCartForm() {
+            document.getElementById('cartStepProducts').style.display = 'none';
+            document.getElementById('cartSummarySection').style.display = 'none';
+            document.getElementById('cartStepForm').style.display = 'block';
+            document.getElementById('cartStepPayment').style.display = 'none';
+        }
+
+        function showCartPayment() {
+            document.getElementById('cartStepProducts').style.display = 'none';
+            document.getElementById('cartSummarySection').style.display = 'none';
+            document.getElementById('cartStepForm').style.display = 'none';
+            document.getElementById('cartStepPayment').style.display = 'block';
+        }
+
+        function renderCart() {
+            var itemsContainer = document.getElementById('cartItems');
+            var emptyContainer = document.getElementById('cartEmpty');
+            var summarySection = document.getElementById('cartSummarySection');
+            var headerCount = document.getElementById('cartHeaderCount');
+
+            var totalItems = cart.reduce(function(acc, item) { return acc + item.quantity; }, 0);
+            headerCount.textContent = '(' + totalItems + ' article' + (totalItems > 1 ? 's' : '') + ')';
+
+            if (cart.length === 0) {
+                emptyContainer.style.display = 'block';
+                itemsContainer.innerHTML = '';
+                summarySection.style.display = 'none';
+                return;
+            }
+
+            emptyContainer.style.display = 'none';
+            summarySection.style.display = 'block';
+
+            var html = '';
+            cart.forEach(function(item, index) {
+                var imageHtml = item.image 
+                    ? '<img src="' + item.image + '" alt="' + item.name + '">'
+                    : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:24px;">📷</div>';
+                
+                var variantText = '';
+                if (item.size) variantText += 'Taille: ' + item.size;
+                if (item.color) variantText += (variantText ? ' • ' : '') + 'Couleur: ' + item.color;
+
+                html += '<div class="cart-item">' +
+                    '<div class="cart-item-image">' + imageHtml + '</div>' +
+                    '<div class="cart-item-info">' +
+                        '<div class="cart-item-name">' + item.name + '</div>' +
+                        '<div class="cart-item-price">' + formatPrice(item.price) + '</div>' +
+                        (variantText ? '<div class="cart-item-variant">' + variantText + '</div>' : '') +
+                        '<div class="cart-item-actions">' +
+                            '<button class="qty-btn" onclick="updateCartItemQty(' + index + ', -1)">−</button>' +
+                            '<span class="cart-item-qty">' + item.quantity + '</span>' +
+                            '<button class="qty-btn" onclick="updateCartItemQty(' + index + ', 1)">+</button>' +
+                            '<button class="cart-item-remove" onclick="removeFromCart(' + index + ')">🗑</button>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>';
+            });
+
+            itemsContainer.innerHTML = html;
+
+            // Mettre à jour les totaux
+            var subtotal = cart.reduce(function(acc, item) { return acc + (item.price * item.quantity); }, 0);
+            var total = subtotal + deliveryFee;
+
+            document.getElementById('cartSubtotal').textContent = formatPrice(subtotal);
+            document.getElementById('cartDelivery').textContent = formatPrice(deliveryFee);
+            document.getElementById('cartTotal').textContent = formatPrice(total);
+        }
+
+        async function processCartOrder() {
+            var name = document.getElementById('cartCustomerName').value.trim();
+            var phone = document.getElementById('cartCustomerPhone').value.trim();
+            var address = document.getElementById('cartCustomerAddress').value.trim();
+
+            if (!name || !phone || !address) {
+                alert('Remplis tous les champs s\'il te plaît');
+                return;
+            }
+
+            var subtotal = cart.reduce(function(acc, item) { return acc + (item.price * item.quantity); }, 0);
+            var total = subtotal + deliveryFee;
+
+            try {
+                // Créer la commande pour chaque article du panier
+                for (var i = 0; i < cart.length; i++) {
+                    var item = cart[i];
+                    var orderData = {
+                        vendor_id: vendor.id,
+                        product_id: item.product_id,
+                        customer_name: name,
+                        customer_phone: phone,
+                        customer_address: address,
+                        quantity: item.quantity,
+                        size: item.size || null,
+                        color: item.color || null,
+                        price: item.price * item.quantity,
+                        delivery_fee: i === 0 ? deliveryFee : 0, // Frais de livraison une seule fois
+                        total: i === 0 ? total : item.price * item.quantity,
+                        status: 'pending'
+                    };
+
+                    await supabaseClient.from('teka_orders').insert(orderData);
+                }
+
+                // Afficher écran de paiement
+                document.getElementById('paymentAmount').textContent = formatPrice(total);
+                document.getElementById('paymentPhone').textContent = vendor.phone_number || vendor.phone || 'Non disponible';
+                showCartPayment();
+
+            } catch (error) {
+                console.log('Erreur création commande:', error);
+                alert('Une erreur est survenue. Réessaie.');
+            }
+        }
+
+        async function confirmCartPayment() {
+            try {
+                var notifData = {
+                    vendor_id: vendor.id,
+                    type: 'new_order',
+                    message: 'Nouvelle commande de ' + document.getElementById('cartCustomerName').value + ' ! Vérifie le paiement.',
+                    is_read: false
+                };
+
+                await supabaseClient.from('teka_notifications').insert(notifData);
+
+                // Vider le panier
+                cart = [];
+                saveCartToStorage();
+                updateCartBadge();
+
+                alert('Merci ! Le vendeur a été notifié et te contactera bientôt pour la livraison.');
+                closeCart();
+
+            } catch (error) {
+                console.log('Erreur notification:', error);
+                alert('Commande enregistrée ! Le vendeur te contactera bientôt.');
+                cart = [];
+                saveCartToStorage();
+                updateCartBadge();
+                closeCart();
+            }
+        }
+
+        function showToast(message) {
+            var toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(function() {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        // ==================== MODAL PRODUIT ====================
+
         function openProductModal(productId) {
             currentProduct = products.find(function(p) { return p.id === productId; });
             if (!currentProduct) return;
+
+            selectedSize = '';
+            selectedColor = '';
 
             document.getElementById('modalName').textContent = currentProduct.name;
             document.getElementById('modalPrice').textContent = formatPrice(currentProduct.price);
@@ -798,7 +1518,7 @@
             if (currentProduct.sizes && currentProduct.sizes.length > 0) {
                 sizesSection.style.display = 'block';
                 sizesContainer.innerHTML = currentProduct.sizes.map(function(size) {
-                    return '<button class="size-btn" onclick="selectSize(this)">' + size + '</button>';
+                    return '<button class="size-btn" onclick="selectSize(this, \'' + size + '\')">' + size + '</button>';
                 }).join('');
             } else {
                 sizesSection.style.display = 'none';
@@ -809,7 +1529,7 @@
             if (currentProduct.colors && currentProduct.colors.length > 0) {
                 colorsSection.style.display = 'block';
                 colorsContainer.innerHTML = currentProduct.colors.map(function(color) {
-                    return '<button class="size-btn" onclick="selectColor(this)">' + color + '</button>';
+                    return '<button class="size-btn" onclick="selectColor(this, \'' + color + '\')">' + color + '</button>';
                 }).join('');
             } else {
                 colorsSection.style.display = 'none';
@@ -822,16 +1542,18 @@
             document.getElementById('productModal').classList.remove('active');
         }
 
-        function selectSize(btn) {
+        function selectSize(btn, size) {
             document.querySelectorAll('#modalSizesContainer .size-btn').forEach(function(b) { b.classList.remove('active'); });
             btn.classList.add('active');
-            pendingOrder.size = btn.textContent;
+            selectedSize = size;
+            pendingOrder.size = size;
         }
 
-        function selectColor(btn) {
+        function selectColor(btn, color) {
             document.querySelectorAll('#modalColorsContainer .size-btn').forEach(function(b) { b.classList.remove('active'); });
             btn.classList.add('active');
-            pendingOrder.color = btn.textContent;
+            selectedColor = color;
+            pendingOrder.color = color;
         }
 
         function openFullscreen() {
@@ -862,6 +1584,8 @@
             document.getElementById('imageFullscreen').classList.remove('active');
         }
 
+        // ==================== CHAT ====================
+
         function openChat() {
             document.getElementById('chatOverlay').classList.add('active');
             document.getElementById('chatContainer').classList.add('active');
@@ -890,7 +1614,16 @@
             var messagesContainer = document.getElementById('chatMessages');
             var messageEl = document.createElement('div');
             messageEl.className = 'chat-message bot';
-            messageEl.textContent = text;
+            messageEl.innerHTML = text;
+            messagesContainer.appendChild(messageEl);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function addBotMessageWithProductLink(text, productId, productName) {
+            var messagesContainer = document.getElementById('chatMessages');
+            var messageEl = document.createElement('div');
+            messageEl.className = 'chat-message bot';
+            messageEl.innerHTML = text + '<br><span class="chat-product-link" onclick="openProductModal(\'' + productId + '\')">👁 Voir ' + productName + '</span>';
             messagesContainer.appendChild(messageEl);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
@@ -921,11 +1654,9 @@
             input.value = '';
             addUserMessage(text);
             
-            // Verifier si on est dans un flux de commande
             if (orderState !== 'none') {
                 handleOrderFlow(text);
             } else {
-                // Verifier si c'est une intention d'achat
                 if (detectPurchaseIntent(text)) {
                     startOrderFlow();
                 } else {
@@ -1006,18 +1737,17 @@
 
         function showOrderSummary() {
             var product = products.find(function(p) { return p.id === pendingOrder.product_id; });
-            var deliveryFee = 1000;
             var total = product.price + deliveryFee;
             
-            var summary = 'Recapitulatif de ta commande:\n\n';
-            summary += '📦 ' + product.name + ' - ' + formatPrice(product.price) + '\n';
-            if (pendingOrder.size) summary += 'Taille: ' + pendingOrder.size + '\n';
-            if (pendingOrder.color) summary += 'Couleur: ' + pendingOrder.color + '\n';
-            summary += '🚚 Livraison: ' + formatPrice(deliveryFee) + '\n';
-            summary += '💰 Total: ' + formatPrice(total) + '\n\n';
-            summary += '👤 ' + pendingOrder.customer_name + '\n';
-            summary += '📞 ' + pendingOrder.customer_phone + '\n';
-            summary += '📍 ' + pendingOrder.customer_address + '\n\n';
+            var summary = 'Recapitulatif de ta commande:<br><br>';
+            summary += '📦 ' + product.name + ' - ' + formatPrice(product.price) + '<br>';
+            if (pendingOrder.size) summary += 'Taille: ' + pendingOrder.size + '<br>';
+            if (pendingOrder.color) summary += 'Couleur: ' + pendingOrder.color + '<br>';
+            summary += '🚚 Livraison: ' + formatPrice(deliveryFee) + '<br>';
+            summary += '💰 Total: ' + formatPrice(total) + '<br><br>';
+            summary += '👤 ' + pendingOrder.customer_name + '<br>';
+            summary += '📞 ' + pendingOrder.customer_phone + '<br>';
+            summary += '📍 ' + pendingOrder.customer_address + '<br><br>';
             summary += 'Tu confirmes cette commande ? (Oui/Non)';
             
             addBotMessage(summary);
@@ -1025,7 +1755,6 @@
 
         async function createOrder() {
             var product = products.find(function(p) { return p.id === pendingOrder.product_id; });
-            var deliveryFee = 1000;
             var total = product.price + deliveryFee;
             
             try {
@@ -1062,8 +1791,8 @@
                 
                 addSystemMessage('Commande creee avec succes !');
                 
-                var paymentMsg = 'Ta commande est enregistree ! Pour la valider, envoie ' + formatPrice(total) + ' par Mobile Money au:\n\n';
-                paymentMsg += '📱 ' + (vendor.phone_number || vendor.phone || 'Numero non disponible') + '\n\n';
+                var paymentMsg = 'Ta commande est enregistree ! Pour la valider, envoie ' + formatPrice(total) + ' par Mobile Money au:<br><br>';
+                paymentMsg += '📱 ' + (vendor.phone_number || vendor.phone || 'Numero non disponible') + '<br><br>';
                 paymentMsg += 'Une fois le paiement effectue, dis-moi "c\'est fait" ou "j\'ai paye" pour que je previenne le vendeur.';
                 
                 addBotMessage(paymentMsg);
@@ -1077,7 +1806,6 @@
 
         async function confirmPayment() {
             try {
-                // Creer une notification pour le vendeur
                 var notifData = {
                     vendor_id: vendor.id,
                     order_id: currentOrderId,
@@ -1093,7 +1821,6 @@
                 addSystemMessage('Notification envoyee au vendeur !');
                 addBotMessage('Merci ! J\'ai prevenu ' + vendor.shop_name + ' de ton paiement. Le vendeur va verifier et te contacter tres bientot pour organiser la livraison. Tu peux fermer cette conversation, on te rappelle !');
                 
-                // Mettre a jour le statut de la conversation
                 if (conversationId) {
                     await supabaseClient
                         .from('teka_conversations')
@@ -1176,7 +1903,7 @@
             showTypingIndicator();
 
             var productsList = products.map(function(p) {
-                return '- ' + p.name + ' : ' + p.price + ' FCFA (stock: ' + p.stock + ')';
+                return '- ' + p.name + ' (ID: ' + p.id + ') : ' + p.price + ' FCFA (stock: ' + p.stock + ')';
             }).join('\n');
 
             var systemPrompt = 'Tu es un EXPERT EN VENTE et le meilleur conseiller de la boutique "' + vendor.shop_name + '".\n\n' +
@@ -1192,7 +1919,8 @@
                 '- NE JAMAIS inventer de produits, reductions ou cadeaux\n' +
                 '- NE JAMAIS modifier les prix\n' +
                 '- Propose UNIQUEMENT les produits de la liste ci-dessous\n' +
-                '- Si le client veut acheter, dis-lui de taper "je veux acheter" pour lancer la commande\n\n' +
+                '- Si le client veut acheter, dis-lui de taper "je veux acheter" pour lancer la commande\n' +
+                '- IMPORTANT: Quand tu recommandes un produit, inclus son ID entre crochets comme ceci: [PRODUCT_ID:xxx] pour que le système puisse créer un lien cliquable\n\n' +
                 'LIVRAISON :\n' +
                 '- Brazzaville : 1000 FCFA (24-48h)\n' +
                 '- Pointe-Noire : 2000 FCFA (3-5 jours)\n' +
@@ -1203,7 +1931,7 @@
                 'PRODUITS DISPONIBLES :\n' + productsList;
 
             if (currentProduct) {
-                systemPrompt += '\n\nLe client regarde : ' + currentProduct.name + ' a ' + currentProduct.price + ' FCFA.';
+                systemPrompt += '\n\nLe client regarde : ' + currentProduct.name + ' (ID: ' + currentProduct.id + ') a ' + currentProduct.price + ' FCFA.';
             }
 
             chatHistory.push({ role: 'user', content: userMessage });
@@ -1224,7 +1952,21 @@
                 if (data.choices && data.choices[0]) {
                     var botResponse = data.choices[0].message.content;
                     chatHistory.push({ role: 'assistant', content: botResponse });
-                    addBotMessage(botResponse);
+                    
+                    // Vérifier si la réponse contient un ID de produit
+                    var productIdMatch = botResponse.match(/\[PRODUCT_ID:([^\]]+)\]/);
+                    if (productIdMatch) {
+                        var productId = productIdMatch[1];
+                        var product = products.find(function(p) { return p.id === productId; });
+                        if (product) {
+                            var cleanResponse = botResponse.replace(/\[PRODUCT_ID:[^\]]+\]/g, '');
+                            addBotMessageWithProductLink(cleanResponse, productId, product.name);
+                        } else {
+                            addBotMessage(botResponse.replace(/\[PRODUCT_ID:[^\]]+\]/g, ''));
+                        }
+                    } else {
+                        addBotMessage(botResponse);
+                    }
                     saveConversation();
                 } else {
                     addBotMessage("Desole, je n'ai pas compris. Tu peux reformuler ?");
